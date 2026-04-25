@@ -4,46 +4,37 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.app.core.theme.ApplicationTheme
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun SensorForm(
-        sensorName: String,
-        onNameChange: (String) -> Unit,
-        latitude: String,
-        onLatChange: (String) -> Unit,
-        longitude: String,
-        onLonChange: (String) -> Unit,
+fun LoginForm(
+        username: String,
+        onUsernameChange: (String) -> Unit,
+        password: String,
+        onPasswordChange: (String) -> Unit,
         modifier: Modifier = Modifier
 ) {
   Column(modifier = modifier.fillMaxWidth().padding(top = 16.dp)) {
     OutlinedTextField(
-            label = { Text("Nama Sensor") },
-            value = sensorName,
-            onValueChange = onNameChange,
+            label = { Text("Username") },
+            value = username,
+            onValueChange = onUsernameChange,
             modifier = Modifier.fillMaxWidth().padding(bottom = 12.dp),
-            placeholder = { Text("Example: Sensor A") },
+            placeholder = { Text("Enter your username") },
             singleLine = true
     )
 
     OutlinedTextField(
-            label = { Text("Latitude") },
-            value = latitude,
-            onValueChange = onLatChange,
-            modifier = Modifier.fillMaxWidth().padding(bottom = 12.dp),
-            placeholder = { Text("Example: 1.23") },
-            singleLine = true
-    )
-
-    OutlinedTextField(
-            label = { Text("Longitude") },
-            value = longitude,
-            onValueChange = onLonChange,
+            label = { Text("Password") },
+            value = password,
+            onValueChange = onPasswordChange,
             modifier = Modifier.fillMaxWidth(),
-            placeholder = { Text("Example: 4.56") },
+            placeholder = { Text("Enter your password") },
+            visualTransformation = PasswordVisualTransformation(),
             singleLine = true
     )
   }
@@ -51,15 +42,13 @@ fun SensorForm(
 
 @Preview(showBackground = true)
 @Composable
-fun SensorFormPreview() {
+fun LoginFormPreview() {
   ApplicationTheme {
-    SensorForm(
-            sensorName = "Sensor A",
-            onNameChange = {},
-            latitude = "-6.200000",
-            onLatChange = {},
-            longitude = "106.816666",
-            onLonChange = {}
+    LoginForm(
+            username = "admin",
+            onUsernameChange = {},
+            password = "password123",
+            onPasswordChange = {}
     )
   }
 }

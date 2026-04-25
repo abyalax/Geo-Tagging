@@ -5,6 +5,7 @@ object Constants {
     const val EXTRA_LATITUDE = "latitude"
     const val EXTRA_LONGITUDE = "longitude"
     const val EXTRA_VERIFICATION_STATUS = "verification_status"
+    const val EXTRA_SURVEY_ID = "survey_id"
     // Default values
     const val DEFAULT_SENSOR_NAME = "Sensor Default"
     const val DEFAULT_LATITUDE = "-7.844392437170978"

@@ -1,7 +1,9 @@
 package com.app.features.dashboard.ui.screen
 
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.LocationOn
+import androidx.compose.material.icons.filled.Share
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -9,15 +11,16 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.app.core.theme.ApplicationTheme
+import com.app.features.dashboard.model.SurveyStatus
 
-/**
- * VerificationScreen Composable
- * - Render form verification sensor (optional: can checkbox or another input)
- * - Button for submit verification
- * - Return status ke DashboardActivity via ActivityResult
- */
 @Composable
-fun VerificationScreen(onSuccess: (String) -> Unit, onCancel: () -> Unit) {
+fun VerificationScreen(
+    onSuccess: (SurveyStatus) -> Unit, 
+    onCancel: () -> Unit,
+    onShare: () -> Unit = {},
+    onOpenMap: () -> Unit = {},
+    sensorName: String = ""
+) {
   var isVerifying by remember { mutableStateOf(false) }
 
   Surface(
@@ -34,14 +37,36 @@ fun VerificationScreen(onSuccess: (String) -> Unit, onCancel: () -> Unit) {
               horizontalAlignment = Alignment.CenterHorizontally
       ) {
         Text(
-                text = "Verifikasi Sensor",
+                text = "Verifikasi Survey",
                 style = MaterialTheme.typography.headlineMedium,
-                modifier = Modifier.padding(bottom = 24.dp)
+                modifier = Modifier.padding(bottom = 8.dp)
         )
+        
+        if (sensorName.isNotEmpty()) {
+            Text(
+                text = sensorName,
+                style = MaterialTheme.typography.titleMedium,
+                color = MaterialTheme.colorScheme.primary,
+                modifier = Modifier.padding(bottom = 12.dp)
+            )
+        }
+
+        // Action Buttons Row (Maps & WA)
+        Row(
+            modifier = Modifier.padding(bottom = 24.dp),
+            horizontalArrangement = Arrangement.spacedBy(16.dp)
+        ) {
+            FilledTonalIconButton(onClick = onOpenMap) {
+                Icon(Icons.Default.LocationOn, contentDescription = "Open Maps")
+            }
+            FilledTonalIconButton(onClick = onShare) {
+                Icon(Icons.Default.Share, contentDescription = "Share to WhatsApp")
+            }
+        }
 
         Card(modifier = Modifier.fillMaxWidth().padding(bottom = 24.dp)) {
           Text(
-                  text = "Lakukan verifikasi untuk memastikan sensor berfungsi dengan baik",
+                  text = "Lakukan verifikasi untuk memastikan kondisi lapangan sesuai dengan laporan",
                   style = MaterialTheme.typography.bodyMedium,
                   modifier = Modifier.padding(16.dp)
           )
@@ -56,9 +81,9 @@ fun VerificationScreen(onSuccess: (String) -> Unit, onCancel: () -> Unit) {
             Text(
                     text =
                             when (index) {
-                              0 -> "Cek koneksi sensor"
-                              1 -> "Kalibrasi perangkat"
-                              else -> "Verifikasi data"
+                              0 -> "Cek lokasi geo-tagging"
+                              1 -> "Validasi dokumentasi foto"
+                              else -> "Verifikasi data survey"
                             }
             )
           }
@@ -71,17 +96,22 @@ fun VerificationScreen(onSuccess: (String) -> Unit, onCancel: () -> Unit) {
           Button(
                   onClick = {
                     isVerifying = true
-                    onSuccess("SUCCESS")
-                    isVerifying = false
+                    onSuccess(SurveyStatus.VERIFIED)
                   },
                   modifier = Modifier.fillMaxWidth(),
                   enabled = !isVerifying,
-                  colors =
-                          ButtonDefaults.buttonColors(
-                                  containerColor = MaterialTheme.colorScheme.primary,
-                                  contentColor = MaterialTheme.colorScheme.onPrimary
-                          )
-          ) { Text(if (isVerifying) "Memverifikasi..." else "Verifikasi") }
+                  colors = ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.primary)
+          ) { Text("Setujui (Verified)") }
+          
+          Button(
+              onClick = {
+                isVerifying = true
+                onSuccess(SurveyStatus.REJECTED)
+              },
+              modifier = Modifier.fillMaxWidth(),
+              enabled = !isVerifying,
+              colors = ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.error)
+          ) { Text("Tolak (Rejected)") }
 
           OutlinedButton(
                   onClick = onCancel,
@@ -98,6 +128,6 @@ fun VerificationScreen(onSuccess: (String) -> Unit, onCancel: () -> Unit) {
 @Composable
 fun VerificationScreenPreview() {
     ApplicationTheme {
-        VerificationScreen(onSuccess = {}, onCancel = {})
+        VerificationScreen(onSuccess = {}, onCancel = {}, sensorName = "Jalan Sudirman")
     }
 }
