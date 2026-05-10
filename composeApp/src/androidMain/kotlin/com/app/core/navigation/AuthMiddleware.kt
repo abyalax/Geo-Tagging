@@ -1,15 +1,16 @@
 package com.app.core.navigation
 
 import android.content.Context
-import android.content.Intent
-import com.app.features.auth.login.activities.LoginActivity
+import android.util.Log
+import androidx.navigation.NavController
+import com.app.navigation.Routes
 
 /**
- * Authentication Middleware for protecting routes
- * Ensures user is logged in before accessing protected screens
+ * Authentication Middleware for protecting routes Ensures user is logged in before accessing
+ * protected screens
  */
 object AuthMiddleware {
-    
+
     /**
      * Check if user is logged in
      * @param context Application context
@@ -19,7 +20,26 @@ object AuthMiddleware {
         val prefs = context.getSharedPreferences("app_prefs", Context.MODE_PRIVATE)
         return prefs.getBoolean("is_logged_in", false)
     }
-    
+
+    /**
+     * Login user and save authentication state
+     * @param context Application context
+     * @param username Username to save
+     * @param password Password to save (NOTE: In production, use secure token-based auth instead)
+     */
+    fun login(context: Context, username: String, password: String) {
+        Log.d("AuthMiddleware", "login() called with username: '$username'")
+        val prefs = context.getSharedPreferences("app_prefs", Context.MODE_PRIVATE)
+        prefs.edit().apply {
+            putBoolean("is_logged_in", true)
+            putString("username", username)
+            putString("password", password)
+            apply()
+        }
+        Log.d("AuthMiddleware", "Login state saved successfully")
+        Log.d("AuthMiddleware", "isLoggedIn check: ${isLoggedIn(context)}")
+    }
+
     /**
      * Get logged in username
      * @param context Application context
@@ -33,37 +53,24 @@ object AuthMiddleware {
             null
         }
     }
-    
-    /**
-     * Redirect to login if not authenticated
-     * @param context Activity context
-     * @return true if user is authenticated, false if redirected to login
-     */
-    fun requireAuth(context: Context): Boolean {
-        return if (isLoggedIn(context)) {
-            true
-        } else {
-            // Redirect to login
-            val loginIntent = Intent(context, LoginActivity::class.java).apply {
-                flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-            }
-            context.startActivity(loginIntent)
-            false
-        }
-    }
-    
+
     /**
      * Logout user and clear session
      * @param context Application context
+     * @param navController Navigation controller to navigate to login
      */
-    fun logout(context: Context) {
+    fun logout(context: Context, navController: NavController) {
+        Log.d("AuthMiddleware", "logout() called")
         val prefs = context.getSharedPreferences("app_prefs", Context.MODE_PRIVATE)
+
+        // Clear all session data
         prefs.edit().clear().apply()
-        
-        // Redirect to login
-        val loginIntent = Intent(context, LoginActivity::class.java).apply {
-            flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+        Log.d("AuthMiddleware", "Session data cleared")
+
+        // ✅ FIXED: Use Routes sealed class instead of hardcoded string
+        navController.navigate(Routes.Login.route) {
+            popUpTo(Routes.Login.route) { inclusive = true }
         }
-        context.startActivity(loginIntent)
+        Log.d("AuthMiddleware", "Navigated to login route")
     }
 }

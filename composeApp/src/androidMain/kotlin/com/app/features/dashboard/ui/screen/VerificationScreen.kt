@@ -1,53 +1,38 @@
 package com.app.features.dashboard.ui.screen
 
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.LocationOn
-import androidx.compose.material.icons.filled.Share
-import androidx.compose.material3.Button
-import androidx.compose.material3.ButtonDefaults
-import androidx.compose.material3.Card
-import androidx.compose.material3.FilledTonalIconButton
-import androidx.compose.material3.Icon
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.OutlinedButton
-import androidx.compose.material3.Surface
-import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
+import androidx.compose.material3.*
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
 import com.app.core.navigation.AuthMiddleware
-import com.app.core.theme.ApplicationTheme
+import com.app.features.dashboard.data.SurveyRepository
 import com.app.features.dashboard.model.SurveyStatus
 import com.app.ui.components.BottomNavItem
 import com.app.ui.components.BottomNavigationBar
 import com.app.ui.components.TopAppBar
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun VerificationScreen(
-        onSuccess: (SurveyStatus) -> Unit,
-        onCancel: () -> Unit,
-        onShare: () -> Unit = {},
-        onOpenMap: () -> Unit = {},
-        locationName: String = "",
+        surveyId: String,
+        locationName: String,
+        onSuccess: (SurveyStatus) -> Unit = {},
+        onCancel: () -> Unit = {},
         username: String = "",
         onNavigateToHome: () -> Unit = {},
-        onNavigateToLogin: () -> Unit = {},
-        onNavigateToProfile: () -> Unit = {}
+        navController: NavController,
+        onNavigateToLogin: () -> Unit = {
+            navController.navigate("login") { popUpTo("login") { inclusive = true } }
+        },
+        onNavigateToProfile: (navController: NavController) -> Unit = {
+            navController.navigate("profile")
+        },
 ) {
     val context = LocalContext.current
     val actualUsername =
@@ -56,7 +41,7 @@ fun VerificationScreen(
                 AuthMiddleware.getUsername(context)
                         ?: run {
                             // This should not happen if properly protected, but as safety net
-                            AuthMiddleware.logout(context)
+                            AuthMiddleware.logout(context, navController)
                             return
                         }
             } else {
@@ -70,9 +55,10 @@ fun VerificationScreen(
             // Top App Bar
             TopAppBar(
                     username = actualUsername,
-                    onProfileClick = { /* Handle profile click */},
+                    onProfileClick = { onNavigateToProfile(navController) },
                     onNotificationClick = { /* Handle notification click */},
-                    onStatsClick = { /* Handle stats click */}
+                    onStatsClick = { /* Handle stats click */},
+                    onLogout = { onNavigateToLogin() }
             )
 
             // Main content with scroll
@@ -94,63 +80,30 @@ fun VerificationScreen(
                             style = MaterialTheme.typography.headlineMedium,
                             modifier = Modifier.padding(bottom = 8.dp)
                     )
+                    Text(
+                            text = locationName,
+                            style = MaterialTheme.typography.bodyLarge,
+                            color = MaterialTheme.colorScheme.onSurfaceVariant,
+                            modifier = Modifier.padding(bottom = 24.dp)
+                    )
 
-                    if (locationName.isNotEmpty()) {
-                        Text(
-                                text = locationName,
-                                style = MaterialTheme.typography.titleMedium,
-                                color = MaterialTheme.colorScheme.primary,
-                                modifier = Modifier.padding(bottom = 12.dp)
-                        )
-                    }
-
-                    // Action Buttons Row (Maps & WA)
-                    Row(
-                            modifier = Modifier.padding(bottom = 24.dp),
-                            horizontalArrangement = Arrangement.spacedBy(16.dp)
-                    ) {
-                        FilledTonalIconButton(onClick = onOpenMap) {
-                            Icon(Icons.Default.LocationOn, contentDescription = "Open Maps")
-                        }
-                        FilledTonalIconButton(onClick = onShare) {
-                            Icon(Icons.Default.Share, contentDescription = "Share to WhatsApp")
-                        }
-                    }
-
-                    Card(modifier = Modifier.fillMaxWidth().padding(bottom = 24.dp)) {
-                        Text(
-                                text =
-                                        "Lakukan verifikasi untuk memastikan kondisi lapangan sesuai dengan laporan",
-                                style = MaterialTheme.typography.bodyMedium,
-                                modifier = Modifier.padding(16.dp)
-                        )
-                    }
-
-                    repeat(3) { index ->
-                        Row(
-                                modifier = Modifier.fillMaxWidth().padding(bottom = 12.dp),
-                                verticalAlignment = Alignment.CenterVertically
-                        ) {
-                            Text(text = "✓", modifier = Modifier.padding(end = 12.dp))
-                            Text(
-                                    text =
-                                            when (index) {
-                                                0 -> "Cek lokasi geo-tagging"
-                                                1 -> "Validasi dokumentasi foto"
-                                                else -> "Verifikasi data survey"
-                                            }
-                            )
-                        }
-                    }
-
+                    // Action buttons
                     Column(
-                            modifier = Modifier.padding(top = 24.dp),
-                            verticalArrangement = Arrangement.spacedBy(12.dp)
+                            modifier = Modifier.fillMaxWidth(),
+                            verticalArrangement = Arrangement.spacedBy(8.dp)
                     ) {
                         Button(
                                 onClick = {
                                     isVerifying = true
+                                    val surveyIdInt = surveyId.toIntOrNull() ?: -1
+                                    if (surveyIdInt != -1) {
+                                        SurveyRepository.updateSurveyStatus(
+                                                surveyIdInt,
+                                                SurveyStatus.VERIFIED
+                                        )
+                                    }
                                     onSuccess(SurveyStatus.VERIFIED)
+                                    onNavigateToHome()
                                 },
                                 modifier = Modifier.fillMaxWidth(),
                                 enabled = !isVerifying,
@@ -163,7 +116,15 @@ fun VerificationScreen(
                         Button(
                                 onClick = {
                                     isVerifying = true
+                                    val surveyIdInt = surveyId.toIntOrNull() ?: -1
+                                    if (surveyIdInt != -1) {
+                                        SurveyRepository.updateSurveyStatus(
+                                                surveyIdInt,
+                                                SurveyStatus.REJECTED
+                                        )
+                                    }
                                     onSuccess(SurveyStatus.REJECTED)
+                                    onNavigateToHome()
                                 },
                                 modifier = Modifier.fillMaxWidth(),
                                 enabled = !isVerifying,
@@ -187,20 +148,18 @@ fun VerificationScreen(
                     selectedItem = BottomNavItem.Home,
                     onItemSelected = { item ->
                         when (item) {
-                            BottomNavItem.Home -> onNavigateToHome()
-                            BottomNavItem.Profile -> onNavigateToProfile()
-                            BottomNavItem.Login -> onNavigateToLogin()
+                            BottomNavItem.Login -> {
+                                onNavigateToLogin()
+                            }
+                            BottomNavItem.Home -> {
+                                onNavigateToHome()
+                            }
+                            BottomNavItem.Profile -> {
+                                onNavigateToProfile(navController)
+                            }
                         }
                     }
             )
         }
-    }
-}
-
-@Preview(showBackground = true)
-@Composable
-fun VerificationScreenPreview() {
-    ApplicationTheme {
-        VerificationScreen(onSuccess = {}, onCancel = {}, locationName = "Jalan Sudirman")
     }
 }

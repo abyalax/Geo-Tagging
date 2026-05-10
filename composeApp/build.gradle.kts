@@ -41,6 +41,7 @@ kotlin {
             dependencies {
                 implementation(libs.compose.uiToolingPreview)
                 implementation(libs.androidx.activity.compose)
+                implementation("androidx.navigation:navigation-compose:2.7.5")
             }
         }
         val commonTest by getting {

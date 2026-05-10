@@ -9,7 +9,9 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -38,7 +40,7 @@ fun ProfileScreen(
         onUsernameChange: (String) -> Unit = {},
         onPasswordChange: (String) -> Unit = {},
         onSaveProfile: () -> Unit = {},
-        onNavigateToHome: () -> Unit = {},
+        onNavigateBack: () -> Unit = {},
         onNavigateToLogin: () -> Unit = {},
         onLogout: () -> Unit = {}
 ) {
@@ -55,7 +57,11 @@ fun ProfileScreen(
 
                         // Profile Content
                         Column(
-                                modifier = Modifier.weight(1f).fillMaxWidth().padding(24.dp),
+                                modifier =
+                                        Modifier.weight(1f)
+                                                .fillMaxWidth()
+                                                .padding(24.dp)
+                                                .verticalScroll(rememberScrollState()),
                                 horizontalAlignment = Alignment.CenterHorizontally,
                                 verticalArrangement = Arrangement.spacedBy(24.dp)
                         ) {
@@ -123,7 +129,7 @@ fun ProfileScreen(
                                 onItemSelected = { item ->
                                         when (item) {
                                                 BottomNavItem.Login -> onNavigateToLogin()
-                                                BottomNavItem.Home -> onNavigateToHome()
+                                                BottomNavItem.Home -> onNavigateBack()
                                                 BottomNavItem.Profile -> {} // already on profile
                                         }
                                 }

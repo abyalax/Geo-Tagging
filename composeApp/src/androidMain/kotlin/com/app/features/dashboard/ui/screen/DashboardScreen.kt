@@ -52,7 +52,8 @@ fun DashboardScreen(
         selectedStatus: SurveyStatus? = null,
         onStatusFilterChange: (SurveyStatus?) -> Unit = {},
         username: String = "Field Officer",
-        onProfileClick: () -> Unit = {},
+        onNavigateToProfile: () -> Unit = {},
+        onNavigateToVerification: (String, String) -> Unit = { _, _ -> },
         onNavigateToLogin: () -> Unit = {},
         onNotificationClick: () -> Unit = {},
         onStatsClick: () -> Unit = {},
@@ -60,14 +61,16 @@ fun DashboardScreen(
         surveyStats: SurveyStats = SurveyStats()
 ) {
     // Debug logging
-    android.util.Log.d("DashboardScreen", "Username parameter: $username")
+    android.util.Log.d("DashboardScreen", "DashboardScreen called! Username: $username")
+    android.util.Log.d("DashboardScreen", "Surveys count: ${surveys.size}")
+    android.util.Log.d("DashboardScreen", "Is loading: $isLoading")
 
     Surface(modifier = Modifier.fillMaxSize(), color = MaterialTheme.colorScheme.background) {
         Column(modifier = Modifier.fillMaxSize()) {
             // Top App Bar
             TopAppBar(
                     username = username,
-                    onProfileClick = onProfileClick,
+                    onProfileClick = onNavigateToProfile,
                     onNotificationClick = onNotificationClick,
                     onStatsClick = onStatsClick,
                     onLogout = onLogout
@@ -169,7 +172,7 @@ fun DashboardScreen(
                                 // Already on home
                             }
                             BottomNavItem.Profile -> {
-                                onProfileClick()
+                                onNavigateToProfile()
                             }
                         }
                     }

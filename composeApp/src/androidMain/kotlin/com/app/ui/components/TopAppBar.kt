@@ -30,6 +30,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
 
 @Composable
 fun TopAppBar(
@@ -37,7 +38,8 @@ fun TopAppBar(
         onProfileClick: () -> Unit = {},
         onNotificationClick: () -> Unit = {},
         onStatsClick: () -> Unit = {},
-        onLogout: () -> Unit = {}
+        onLogout: () -> Unit = {},
+        navController: NavController? = null
 ) {
         val context = LocalContext.current
         val prefs = context.getSharedPreferences("app_prefs", Context.MODE_PRIVATE)
@@ -47,6 +49,9 @@ fun TopAppBar(
                 } else {
                         username
                 }
+
+        // ✅ FIXED: Removed automatic logout logic that was executing on every recomposition
+        // Logout now only happens when user explicitly clicks "Logout" in dropdown menu
 
         var showDropdown by remember { mutableStateOf(false) }
 
@@ -108,6 +113,8 @@ fun TopAppBar(
                                                         text = { Text("Logout") },
                                                         onClick = {
                                                                 showDropdown = false
+                                                                // ✅ Only call logout when user
+                                                                // explicitly clicks
                                                                 onLogout()
                                                         }
                                                 )
