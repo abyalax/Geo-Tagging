@@ -13,11 +13,11 @@ import kotlinx.coroutines.flow.collectLatest
 
 @Composable
 fun VerificationRoute(
-        surveyId: String,
-        locationName: String,
-        navigationManager: NavigationManager,
-        modifier: Modifier = Modifier,
-        viewModel: VerificationViewModel = viewModel()
+    surveyId: String,
+    locationName: String,
+    navigationManager: NavigationManager,
+    modifier: Modifier = Modifier,
+    viewModel: VerificationViewModel = viewModel()
 ) {
     val uiState by viewModel.uiState.collectAsState()
 
@@ -28,11 +28,11 @@ fun VerificationRoute(
     }
 
     VerificationScreen(
-            surveyId = surveyId,
-            locationName = locationName,
-            uiState = uiState,
-            onSuccess = viewModel::onSuccess,
-            onCancel = viewModel::onCancel,
-            modifier = modifier
+        surveyId = surveyId,
+        locationName = locationName,
+        uiState = uiState,
+        onSuccess = viewModel::onSuccess,
+        onCancel = viewModel::onCancel,
+        modifier = modifier
     )
 }

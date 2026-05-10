@@ -22,12 +22,18 @@ fun LoginForm(
     onPasswordChange: (String) -> Unit,
     modifier: Modifier = Modifier
 ) {
-    Column(modifier = modifier.fillMaxWidth().padding(top = 16.dp)) {
+    Column(
+        modifier = modifier
+            .fillMaxWidth()
+            .padding(top = 16.dp)
+    ) {
         OutlinedTextField(
             label = { Text("Username") },
             value = username,
             onValueChange = onUsernameChange,
-            modifier = Modifier.fillMaxWidth().padding(bottom = 12.dp),
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(bottom = 12.dp),
             placeholder = { Text("Enter your username") },
             singleLine = true
         )

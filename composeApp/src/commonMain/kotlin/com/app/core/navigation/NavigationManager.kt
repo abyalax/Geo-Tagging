@@ -1,5 +1,6 @@
 package com.app.core.navigation
 
+import Routes
 import androidx.navigation.NavController
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.SharedFlow
@@ -23,27 +24,33 @@ class NavigationManager {
                     popUpTo(Routes.Dashboard.route) { inclusive = true }
                 }
             }
+
             is NavigationEvent.NavigateToDashboard -> {
                 navController.navigate(Routes.Dashboard.route) {
                     popUpTo(Routes.Splash.route) { inclusive = true }
                 }
             }
+
             is NavigationEvent.NavigateToProfile -> {
                 navController.navigate(Routes.Profile.route)
             }
+
             is NavigationEvent.NavigateBack -> {
                 navController.popBackStack()
             }
+
             is NavigationEvent.NavigateToVerification -> {
                 navController.navigate(
                     Routes.Verification.createRoute(event.surveyId, event.locationName)
                 )
             }
+
             is NavigationEvent.NavigateWithPopUp -> {
                 navController.navigate(event.route) {
                     popUpTo(event.popUpTo) { inclusive = event.inclusive }
                 }
             }
+
             is NavigationEvent.ClearBackStackAndNavigate -> {
                 navController.navigate(Routes.Dashboard.route) {
                     popUpTo(0) { inclusive = true }

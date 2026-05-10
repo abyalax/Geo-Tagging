@@ -1,5 +1,6 @@
 package com.app.core.navigation
 
+import Routes
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
@@ -16,11 +17,11 @@ import com.app.features.verification.presentation.route.VerificationRoute
 
 @Composable
 fun AppNavHost(
-        navController: NavHostController = rememberNavController(),
-        startDestination: String = Routes.Splash.route,
-        navigationManager: NavigationManager,
-        getSessionUseCase: GetSessionUseCase,
-        modifier: Modifier = Modifier
+    navController: NavHostController = rememberNavController(),
+    startDestination: String = Routes.Splash.route,
+    navigationManager: NavigationManager,
+    getSessionUseCase: GetSessionUseCase,
+    modifier: Modifier = Modifier
 ) {
     LaunchedEffect(navigationManager.navigationEvents) {
         navigationManager.navigationEvents.collect { event ->
@@ -29,14 +30,14 @@ fun AppNavHost(
     }
 
     NavHost(
-            navController = navController,
-            startDestination = startDestination,
-            modifier = modifier
+        navController = navController,
+        startDestination = startDestination,
+        modifier = modifier
     ) {
         composable(Routes.Splash.route) {
             SplashScreenRoute(
-                    navigationManager = navigationManager,
-                    getSessionUseCase = getSessionUseCase
+                navigationManager = navigationManager,
+                getSessionUseCase = getSessionUseCase
             )
         }
 
@@ -46,15 +47,17 @@ fun AppNavHost(
 
         composable(Routes.Profile.route) { ProfileRoute(navigationManager = navigationManager) }
 
-        composable(route = Routes.Verification.route, arguments = Routes.Verification.arguments) {
-                backStackEntry ->
+        composable(
+            route = Routes.Verification.route,
+            arguments = Routes.Verification.arguments
+        ) { backStackEntry ->
             val surveyId = backStackEntry.arguments?.getString("surveyId") ?: ""
             val locationName = backStackEntry.arguments?.getString("locationName") ?: ""
 
             VerificationRoute(
-                    surveyId = surveyId,
-                    locationName = locationName,
-                    navigationManager = navigationManager
+                surveyId = surveyId,
+                locationName = locationName,
+                navigationManager = navigationManager
             )
         }
     }

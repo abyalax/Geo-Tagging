@@ -10,11 +10,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
-import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
@@ -30,8 +28,8 @@ import com.app.features.profile.ui.screen.ProfileScreen
 
 @Composable
 fun AppNavHost(
-        navController: NavHostController = rememberNavController(),
-        startDestination: String = Routes.Splash.route
+    navController: NavHostController = rememberNavController(),
+    startDestination: String = Routes.Splash.route
 ) {
     NavHost(navController = navController, startDestination = startDestination) {
         composable(Routes.Splash.route) { SplashScreen(navController = navController) }
@@ -39,21 +37,21 @@ fun AppNavHost(
         composable(Routes.Login.route) {
             val context = LocalContext.current
             LoginScreen(
-                    onNavigateToDashboard = { username, password ->
-                        Log.d("AppNavHost", "Login navigation callback triggered")
-                        Log.d("AppNavHost", "Username: '$username', Password: '$password'")
-                        // Save login state and navigate
-                        Log.d("AppNavHost", "Calling AuthMiddleware.login")
-                        AuthMiddleware.login(context, username, password)
-                        Log.d(
-                                "AppNavHost",
-                                "Navigating to Dashboard route: ${Routes.Dashboard.route}"
-                        )
-                        navController.navigate(Routes.Dashboard.route) {
-                            popUpTo(Routes.Login.route) { inclusive = true }
-                        }
-                        Log.d("AppNavHost", "Navigation command executed")
+                onNavigateToDashboard = { username, password ->
+                    Log.d("AppNavHost", "Login navigation callback triggered")
+                    Log.d("AppNavHost", "Username: '$username', Password: '$password'")
+                    // Save login state and navigate
+                    Log.d("AppNavHost", "Calling AuthMiddleware.login")
+                    AuthMiddleware.login(context, username, password)
+                    Log.d(
+                        "AppNavHost",
+                        "Navigating to Dashboard route: ${Routes.Dashboard.route}"
+                    )
+                    navController.navigate(Routes.Dashboard.route) {
+                        popUpTo(Routes.Login.route) { inclusive = true }
                     }
+                    Log.d("AppNavHost", "Navigation command executed")
+                }
             )
         }
 
@@ -70,76 +68,76 @@ fun AppNavHost(
             val surveyStats = viewModel.getSurveyStats()
 
             DashboardScreen(
-                    surveys = surveys,
-                    isLoading = isLoading,
-                    onSurveyClick = { survey ->
-                        navController.navigate(
-                                Routes.Verification.createRoute(survey.id.toString(), survey.title)
-                        )
-                    },
-                    onShareSurvey = { survey ->
-                        IntentNavigation.shareSurveyViaWhatsApp(context, survey)
-                    },
-                    onOpenSurveyMap = { survey ->
-                        IntentNavigation.openSurveyInGoogleMaps(context, survey)
-                    },
-                    searchQuery = searchQuery,
-                    onSearchChange = viewModel::searchSurveys,
-                    selectedStatus = selectedStatus,
-                    onStatusFilterChange = viewModel::filterByStatus,
-                    username = username,
-                    onNavigateToProfile = { navController.navigate(Routes.Profile.route) },
-                    onNavigateToVerification = { surveyId, locationName ->
-                        navController.navigate(
-                                Routes.Verification.createRoute(surveyId, locationName)
-                        )
-                    },
-                    onNavigateToLogin = {
-                        navController.navigate(Routes.Login.route) {
-                            popUpTo(Routes.Dashboard.route) { inclusive = true }
-                        }
-                    },
-                    onLogout = { AuthMiddleware.logout(context, navController) },
-                    surveyStats = surveyStats
+                surveys = surveys,
+                isLoading = isLoading,
+                onSurveyClick = { survey ->
+                    navController.navigate(
+                        Routes.Verification.createRoute(survey.id.toString(), survey.title)
+                    )
+                },
+                onShareSurvey = { survey ->
+                    IntentNavigation.shareSurveyViaWhatsApp(context, survey)
+                },
+                onOpenSurveyMap = { survey ->
+                    IntentNavigation.openSurveyInGoogleMaps(context, survey)
+                },
+                searchQuery = searchQuery,
+                onSearchChange = viewModel::searchSurveys,
+                selectedStatus = selectedStatus,
+                onStatusFilterChange = viewModel::filterByStatus,
+                username = username,
+                onNavigateToProfile = { navController.navigate(Routes.Profile.route) },
+                onNavigateToVerification = { surveyId, locationName ->
+                    navController.navigate(
+                        Routes.Verification.createRoute(surveyId, locationName)
+                    )
+                },
+                onNavigateToLogin = {
+                    navController.navigate(Routes.Login.route) {
+                        popUpTo(Routes.Dashboard.route) { inclusive = true }
+                    }
+                },
+                onLogout = { AuthMiddleware.logout(context, navController) },
+                surveyStats = surveyStats
             )
         }
 
         composable(Routes.Profile.route) {
             val context = LocalContext.current
             val prefs =
-                    context.getSharedPreferences("app_prefs", android.content.Context.MODE_PRIVATE)
+                context.getSharedPreferences("app_prefs", android.content.Context.MODE_PRIVATE)
             val username = prefs.getString("username", "") ?: "User"
             val password = prefs.getString("password", "") ?: ""
 
             ProfileScreen(
-                    username = username,
-                    password = password,
-                    onUsernameChange = { newUsername ->
-                        prefs.edit().putString("username", newUsername).apply()
-                    },
-                    onPasswordChange = { newPassword ->
-                        prefs.edit().putString("password", newPassword).apply()
-                    },
-                    onSaveProfile = {
-                        // Profile already saved via onUsernameChange/onPasswordChange
-                    },
-                    onNavigateBack = { navController.popBackStack() },
-                    onNavigateToLogin = {
-                        navController.navigate(Routes.Login.route) {
-                            popUpTo(Routes.Profile.route) { inclusive = true }
-                        }
-                    },
-                    onLogout = { AuthMiddleware.logout(context, navController) }
+                username = username,
+                password = password,
+                onUsernameChange = { newUsername ->
+                    prefs.edit().putString("username", newUsername).apply()
+                },
+                onPasswordChange = { newPassword ->
+                    prefs.edit().putString("password", newPassword).apply()
+                },
+                onSaveProfile = {
+                    // Profile already saved via onUsernameChange/onPasswordChange
+                },
+                onNavigateBack = { navController.popBackStack() },
+                onNavigateToLogin = {
+                    navController.navigate(Routes.Login.route) {
+                        popUpTo(Routes.Profile.route) { inclusive = true }
+                    }
+                },
+                onLogout = { AuthMiddleware.logout(context, navController) }
             )
         }
 
         composable(
-                route = Routes.Verification.route,
-                arguments =
-                        listOf(
-                                navArgument("surveyId") { type = NavType.StringType },
-                                navArgument("locationName") { type = NavType.StringType }
-                        )
+            route = Routes.Verification.route,
+            arguments =
+                listOf(
+                    navArgument("surveyId") { type = NavType.StringType },
+                    navArgument("locationName") { type = NavType.StringType }
+                )
         ) { backStackEntry ->
             val context = LocalContext.current
             val surveyId = backStackEntry.arguments?.getString("surveyId") ?: ""
@@ -147,27 +145,27 @@ fun AppNavHost(
             val username = AuthMiddleware.getUsername(context) ?: ""
 
             VerificationScreen(
-                    surveyId = surveyId,
-                    locationName = locationName,
-                    username = username,
-                    onSuccess = { _ ->
-                        // Handle verification success
-                    },
-                    onCancel = { navController.popBackStack() },
-                    onNavigateToHome = {
-                        navController.navigate(Routes.Dashboard.route) {
-                            popUpTo(Routes.Verification.route) { inclusive = true }
-                        }
-                    },
-                    navController = navController,
-                    onNavigateToLogin = {
-                        navController.navigate(Routes.Login.route) {
-                            popUpTo(Routes.Verification.route) { inclusive = true }
-                        }
-                    },
-                    onNavigateToProfile = { controller ->
-                        controller.navigate(Routes.Profile.route)
+                surveyId = surveyId,
+                locationName = locationName,
+                username = username,
+                onSuccess = { _ ->
+                    // Handle verification success
+                },
+                onCancel = { navController.popBackStack() },
+                onNavigateToHome = {
+                    navController.navigate(Routes.Dashboard.route) {
+                        popUpTo(Routes.Verification.route) { inclusive = true }
                     }
+                },
+                navController = navController,
+                onNavigateToLogin = {
+                    navController.navigate(Routes.Login.route) {
+                        popUpTo(Routes.Verification.route) { inclusive = true }
+                    }
+                },
+                onNavigateToProfile = { controller ->
+                    controller.navigate(Routes.Profile.route)
+                }
             )
         }
     }
@@ -191,7 +189,9 @@ fun SplashScreen(navController: NavHostController) {
     }
 
     Box(
-            modifier = Modifier.fillMaxSize().background(MaterialTheme.colorScheme.primary),
-            contentAlignment = Alignment.Center
+        modifier = Modifier
+            .fillMaxSize()
+            .background(MaterialTheme.colorScheme.primary),
+        contentAlignment = Alignment.Center
     ) { CircularProgressIndicator(color = MaterialTheme.colorScheme.onPrimary) }
 }

@@ -14,23 +14,23 @@ object ImplicitIntents {
             context.startActivity(mapIntent)
         } else {
             val webIntent =
-                    Intent(
-                            Intent.ACTION_VIEW,
-                            Uri.parse("https://maps.google.com/?q=$latitude,$longitude")
-                    )
+                Intent(
+                    Intent.ACTION_VIEW,
+                    Uri.parse("https://maps.google.com/?q=$latitude,$longitude")
+                )
             context.startActivity(webIntent)
         }
     }
 
     fun shareSurvey(
-            context: Context,
-            title: String,
-            description: String,
-            latitude: Double,
-            longitude: Double
+        context: Context,
+        title: String,
+        description: String,
+        latitude: Double,
+        longitude: Double
     ) {
         val shareText =
-                """
+            """
             Survey Detail:
             Title: $title
             Description: $description
@@ -39,25 +39,25 @@ object ImplicitIntents {
         """.trimIndent()
 
         val sendIntent =
-                Intent().apply {
-                    action = Intent.ACTION_SEND
-                    putExtra(Intent.EXTRA_TEXT, shareText)
-                    type = "text/plain"
-                }
+            Intent().apply {
+                action = Intent.ACTION_SEND
+                putExtra(Intent.EXTRA_TEXT, shareText)
+                type = "text/plain"
+            }
 
         val shareIntent = Intent.createChooser(sendIntent, "Share Survey via")
         context.startActivity(shareIntent)
     }
 
     fun shareToWhatsApp(
-            context: Context,
-            title: String,
-            description: String,
-            latitude: Double,
-            longitude: Double
+        context: Context,
+        title: String,
+        description: String,
+        latitude: Double,
+        longitude: Double
     ) {
         val shareText =
-                """
+            """
             *Survey Detail*
             *Title:* $title
             *Description:* $description
@@ -66,12 +66,12 @@ object ImplicitIntents {
         """.trimIndent()
 
         val sendIntent =
-                Intent().apply {
-                    action = Intent.ACTION_SEND
-                    putExtra(Intent.EXTRA_TEXT, shareText)
-                    type = "text/plain"
-                    setPackage("com.whatsapp")
-                }
+            Intent().apply {
+                action = Intent.ACTION_SEND
+                putExtra(Intent.EXTRA_TEXT, shareText)
+                type = "text/plain"
+                setPackage("com.whatsapp")
+            }
 
         try {
             context.startActivity(sendIntent)

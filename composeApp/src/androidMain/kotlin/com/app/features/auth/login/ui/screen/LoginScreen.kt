@@ -34,65 +34,72 @@ fun LoginScreen(onNavigateToDashboard: (String, String) -> Unit) {
         Column(modifier = Modifier.fillMaxSize()) {
             // Main content with weight
             Column(
-                    modifier = Modifier.weight(1f).fillMaxWidth().padding(16.dp),
-                    verticalArrangement = Arrangement.Center,
-                    horizontalAlignment = Alignment.CenterHorizontally
+                modifier = Modifier
+                    .weight(1f)
+                    .fillMaxWidth()
+                    .padding(16.dp),
+                verticalArrangement = Arrangement.Center,
+                horizontalAlignment = Alignment.CenterHorizontally
             ) {
                 Text("Officer Login", style = MaterialTheme.typography.headlineSmall)
 
                 LoginForm(
-                        username = username,
-                        onUsernameChange = { username = it },
-                        password = password,
-                        onPasswordChange = { password = it }
+                    username = username,
+                    onUsernameChange = { username = it },
+                    password = password,
+                    onPasswordChange = { password = it }
                 )
 
                 Button(
-                        onClick = {
-                            Log.d("LoginScreen", "Login button clicked")
-                            Log.d("LoginScreen", "Username: '$username', Password: '$password'")
-                            // Simple validation
-                            if (username.isNotEmpty() && password.isNotEmpty()) {
-                                Log.d(
-                                        "LoginScreen",
-                                        "Validation passed, calling onNavigateToDashboard"
-                                )
-                                onNavigateToDashboard(username, password)
-                            } else {
-                                Log.d(
-                                        "LoginScreen",
-                                        "Validation failed - empty username or password"
-                                )
-                            }
-                        },
-                        modifier = Modifier.fillMaxWidth().padding(top = 16.dp),
-                        colors =
-                                ButtonDefaults.buttonColors(
-                                        containerColor = MaterialTheme.colorScheme.primary,
-                                        contentColor = MaterialTheme.colorScheme.onPrimary
-                                )
+                    onClick = {
+                        Log.d("LoginScreen", "Login button clicked")
+                        Log.d("LoginScreen", "Username: '$username', Password: '$password'")
+                        // Simple validation
+                        if (username.isNotEmpty() && password.isNotEmpty()) {
+                            Log.d(
+                                "LoginScreen",
+                                "Validation passed, calling onNavigateToDashboard"
+                            )
+                            onNavigateToDashboard(username, password)
+                        } else {
+                            Log.d(
+                                "LoginScreen",
+                                "Validation failed - empty username or password"
+                            )
+                        }
+                    },
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(top = 16.dp),
+                    colors =
+                        ButtonDefaults.buttonColors(
+                            containerColor = MaterialTheme.colorScheme.primary,
+                            contentColor = MaterialTheme.colorScheme.onPrimary
+                        )
                 ) { Text("Login") }
             }
 
             // Bottom Navigation
             BottomNavigationBar(
-                    selectedItem = BottomNavItem.Login,
-                    onItemSelected = { item ->
-                        when (item) {
-                            BottomNavItem.Login -> {
-                                // Already on login
-                            }
-                            BottomNavItem.Home -> {
-                                // Navigate to dashboard (home) - but only if logged in
-                                if (username.isNotEmpty() && password.isNotEmpty()) {
-                                    onNavigateToDashboard(username, password)
-                                }
-                            }
-                            BottomNavItem.Profile -> {
-                                // Can't access profile without login
+                selectedItem = BottomNavItem.Login,
+                onItemSelected = { item ->
+                    when (item) {
+                        BottomNavItem.Login -> {
+                            // Already on login
+                        }
+
+                        BottomNavItem.Home -> {
+                            // Navigate to dashboard (home) - but only if logged in
+                            if (username.isNotEmpty() && password.isNotEmpty()) {
+                                onNavigateToDashboard(username, password)
                             }
                         }
+
+                        BottomNavItem.Profile -> {
+                            // Can't access profile without login
+                        }
                     }
+                }
             )
         }
     }

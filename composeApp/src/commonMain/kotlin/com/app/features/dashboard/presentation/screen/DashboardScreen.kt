@@ -4,7 +4,6 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.*
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -15,28 +14,28 @@ import com.app.features.dashboard.domain.model.Survey
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun DashboardScreen(
-        uiState: DashboardUiState,
-        onSurveyClick: (Survey) -> Unit,
-        onShareSurvey: (Survey) -> Unit,
-        onOpenSurveyMap: (Survey) -> Unit,
-        onSearchChange: (String) -> Unit,
-        onStatusFilterChange: (com.app.features.dashboard.domain.model.SurveyStatus?) -> Unit,
-        onNavigateToProfile: () -> Unit,
-        onNavigateToVerification: (String, String) -> Unit,
-        onNavigateToLogin: () -> Unit,
-        onLogout: () -> Unit,
-        modifier: Modifier = Modifier
+    uiState: DashboardUiState,
+    onSurveyClick: (Survey) -> Unit,
+    onShareSurvey: (Survey) -> Unit,
+    onOpenSurveyMap: (Survey) -> Unit,
+    onSearchChange: (String) -> Unit,
+    onStatusFilterChange: (com.app.features.dashboard.domain.model.SurveyStatus?) -> Unit,
+    onNavigateToProfile: () -> Unit,
+    onNavigateToVerification: (String, String) -> Unit,
+    onNavigateToLogin: () -> Unit,
+    onLogout: () -> Unit,
+    modifier: Modifier = Modifier
 ) {
     Column(modifier = modifier.fillMaxSize().padding(16.dp)) {
         // Header
         Row(
-                modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.SpaceBetween,
-                verticalAlignment = Alignment.CenterVertically
+            modifier = Modifier.fillMaxWidth(),
+            horizontalArrangement = Arrangement.SpaceBetween,
+            verticalAlignment = Alignment.CenterVertically
         ) {
             Text(
-                    text = "Welcome, ${uiState.username}",
-                    style = MaterialTheme.typography.headlineSmall
+                text = "Welcome, ${uiState.username}",
+                style = MaterialTheme.typography.headlineSmall
             )
 
             Row {
@@ -51,17 +50,17 @@ fun DashboardScreen(
         // Search and Filter
         Row(modifier = Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically) {
             OutlinedTextField(
-                    value = uiState.searchQuery,
-                    onValueChange = onSearchChange,
-                    label = { Text("Search surveys...") },
-                    modifier = Modifier.weight(1f)
+                value = uiState.searchQuery,
+                onValueChange = onSearchChange,
+                label = { Text("Search surveys...") },
+                modifier = Modifier.weight(1f)
             )
 
             Spacer(modifier = Modifier.width(8.dp))
 
             FilterButton(
-                    selectedStatus = uiState.selectedStatus,
-                    onStatusFilterChange = onStatusFilterChange
+                selectedStatus = uiState.selectedStatus,
+                onStatusFilterChange = onStatusFilterChange
             )
         }
 
@@ -74,24 +73,27 @@ fun DashboardScreen(
                     CircularProgressIndicator()
                 }
             }
+
             uiState.error != null -> {
                 Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
                     Text(text = "Error: ${uiState.error}", color = MaterialTheme.colorScheme.error)
                 }
             }
+
             uiState.filteredSurveys.isEmpty() -> {
                 Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
                     Text("No surveys found")
                 }
             }
+
             else -> {
                 LazyColumn {
                     items(uiState.filteredSurveys) { survey ->
                         SurveyItem(
-                                survey = survey,
-                                onSurveyClick = onSurveyClick,
-                                onShareSurvey = onShareSurvey,
-                                onOpenSurveyMap = onOpenSurveyMap
+                            survey = survey,
+                            onSurveyClick = onSurveyClick,
+                            onShareSurvey = onShareSurvey,
+                            onOpenSurveyMap = onOpenSurveyMap
                         )
                     }
                 }
@@ -103,24 +105,24 @@ fun DashboardScreen(
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 private fun FilterButton(
-        selectedStatus: com.app.features.dashboard.domain.model.SurveyStatus?,
-        onStatusFilterChange: (com.app.features.dashboard.domain.model.SurveyStatus?) -> Unit
+    selectedStatus: com.app.features.dashboard.domain.model.SurveyStatus?,
+    onStatusFilterChange: (com.app.features.dashboard.domain.model.SurveyStatus?) -> Unit
 ) {
     val statuses =
-            listOf(
-                    null,
-                    com.app.features.dashboard.domain.model.SurveyStatus.OPEN,
-                    com.app.features.dashboard.domain.model.SurveyStatus.VERIFIED,
-                    com.app.features.dashboard.domain.model.SurveyStatus.REJECTED
-            )
+        listOf(
+            null,
+            com.app.features.dashboard.domain.model.SurveyStatus.OPEN,
+            com.app.features.dashboard.domain.model.SurveyStatus.VERIFIED,
+            com.app.features.dashboard.domain.model.SurveyStatus.REJECTED
+        )
 
     val statusLabels =
-            mapOf(
-                    null to "All",
-                    com.app.features.dashboard.domain.model.SurveyStatus.OPEN to "Open",
-                    com.app.features.dashboard.domain.model.SurveyStatus.VERIFIED to "Verified",
-                    com.app.features.dashboard.domain.model.SurveyStatus.REJECTED to "Rejected"
-            )
+        mapOf(
+            null to "All",
+            com.app.features.dashboard.domain.model.SurveyStatus.OPEN to "Open",
+            com.app.features.dashboard.domain.model.SurveyStatus.VERIFIED to "Verified",
+            com.app.features.dashboard.domain.model.SurveyStatus.REJECTED to "Rejected"
+        )
 
     var expanded by remember { mutableStateOf(false) }
 
@@ -130,11 +132,11 @@ private fun FilterButton(
         DropdownMenu(expanded = expanded, onDismissRequest = { expanded = false }) {
             statuses.forEach { status ->
                 DropdownMenuItem(
-                        text = { Text(statusLabels[status] ?: "All") },
-                        onClick = {
-                            onStatusFilterChange(status)
-                            expanded = false
-                        }
+                    text = { Text(statusLabels[status] ?: "All") },
+                    onClick = {
+                        onStatusFilterChange(status)
+                        expanded = false
+                    }
                 )
             }
         }
@@ -144,14 +146,14 @@ private fun FilterButton(
 @Composable
 @OptIn(ExperimentalMaterial3Api::class)
 private fun SurveyItem(
-        survey: Survey,
-        onSurveyClick: (Survey) -> Unit,
-        onShareSurvey: (Survey) -> Unit,
-        onOpenSurveyMap: (Survey) -> Unit
+    survey: Survey,
+    onSurveyClick: (Survey) -> Unit,
+    onShareSurvey: (Survey) -> Unit,
+    onOpenSurveyMap: (Survey) -> Unit
 ) {
     Card(
-            modifier = Modifier.fillMaxWidth().padding(vertical = 4.dp),
-            onClick = { onSurveyClick(survey) }
+        modifier = Modifier.fillMaxWidth().padding(vertical = 4.dp),
+        onClick = { onSurveyClick(survey) }
     ) {
         Column(modifier = Modifier.padding(16.dp)) {
             Text(text = survey.title, style = MaterialTheme.typography.titleMedium)
@@ -159,30 +161,32 @@ private fun SurveyItem(
             Spacer(modifier = Modifier.height(4.dp))
 
             Text(
-                    text = survey.description,
-                    style = MaterialTheme.typography.bodyMedium,
-                    color = MaterialTheme.colorScheme.onSurfaceVariant
+                text = survey.description,
+                style = MaterialTheme.typography.bodyMedium,
+                color = MaterialTheme.colorScheme.onSurfaceVariant
             )
 
             Spacer(modifier = Modifier.height(8.dp))
 
             Row(
-                    modifier = Modifier.fillMaxWidth(),
-                    horizontalArrangement = Arrangement.SpaceBetween,
-                    verticalAlignment = Alignment.CenterVertically
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.SpaceBetween,
+                verticalAlignment = Alignment.CenterVertically
             ) {
                 Text(
-                        text = survey.status.name,
-                        style = MaterialTheme.typography.bodySmall,
-                        color =
-                                when (survey.status) {
-                                    com.app.features.dashboard.domain.model.SurveyStatus.OPEN ->
-                                            MaterialTheme.colorScheme.primary
-                                    com.app.features.dashboard.domain.model.SurveyStatus.VERIFIED ->
-                                            MaterialTheme.colorScheme.tertiary
-                                    com.app.features.dashboard.domain.model.SurveyStatus.REJECTED ->
-                                            MaterialTheme.colorScheme.error
-                                }
+                    text = survey.status.name,
+                    style = MaterialTheme.typography.bodySmall,
+                    color =
+                        when (survey.status) {
+                            com.app.features.dashboard.domain.model.SurveyStatus.OPEN ->
+                                MaterialTheme.colorScheme.primary
+
+                            com.app.features.dashboard.domain.model.SurveyStatus.VERIFIED ->
+                                MaterialTheme.colorScheme.tertiary
+
+                            com.app.features.dashboard.domain.model.SurveyStatus.REJECTED ->
+                                MaterialTheme.colorScheme.error
+                        }
                 )
 
                 Row {

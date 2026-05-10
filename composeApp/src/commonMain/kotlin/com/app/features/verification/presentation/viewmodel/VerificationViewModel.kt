@@ -1,12 +1,10 @@
 package com.app.features.verification.presentation.viewmodel
 
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
 import com.app.core.navigation.NavigationEvent
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.launch
 
 data class VerificationUiState(
     val isLoading: Boolean = false,
@@ -15,10 +13,10 @@ data class VerificationUiState(
 )
 
 class VerificationViewModel : ViewModel() {
-    
+
     private val _uiState = MutableStateFlow(VerificationUiState())
     val uiState: StateFlow<VerificationUiState> = _uiState.asStateFlow()
-    
+
     private val _navigationEvents = MutableStateFlow<NavigationEvent?>(null)
     val navigationEvents: StateFlow<NavigationEvent?> = _navigationEvents.asStateFlow()
 

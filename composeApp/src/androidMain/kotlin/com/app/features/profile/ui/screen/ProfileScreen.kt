@@ -35,111 +35,115 @@ import com.app.ui.components.TopAppBar
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ProfileScreen(
-        username: String = "User",
-        password: String = "",
-        onUsernameChange: (String) -> Unit = {},
-        onPasswordChange: (String) -> Unit = {},
-        onSaveProfile: () -> Unit = {},
-        onNavigateBack: () -> Unit = {},
-        onNavigateToLogin: () -> Unit = {},
-        onLogout: () -> Unit = {}
+    username: String = "User",
+    password: String = "",
+    onUsernameChange: (String) -> Unit = {},
+    onPasswordChange: (String) -> Unit = {},
+    onSaveProfile: () -> Unit = {},
+    onNavigateBack: () -> Unit = {},
+    onNavigateToLogin: () -> Unit = {},
+    onLogout: () -> Unit = {}
 ) {
-        Surface(modifier = Modifier.fillMaxSize(), color = MaterialTheme.colorScheme.background) {
-                Column(modifier = Modifier.fillMaxSize()) {
-                        // Top App Bar
-                        TopAppBar(
-                                username = username,
-                                onProfileClick = { /* Handle profile click */},
-                                onNotificationClick = { /* Handle notification click */},
-                                onStatsClick = { /* Handle stats click */},
-                                onLogout = onLogout
-                        )
+    Surface(modifier = Modifier.fillMaxSize(), color = MaterialTheme.colorScheme.background) {
+        Column(modifier = Modifier.fillMaxSize()) {
+            // Top App Bar
+            TopAppBar(
+                username = username,
+                onProfileClick = { /* Handle profile click */ },
+                onNotificationClick = { /* Handle notification click */ },
+                onStatsClick = { /* Handle stats click */ },
+                onLogout = onLogout
+            )
 
-                        // Profile Content
-                        Column(
-                                modifier =
-                                        Modifier.weight(1f)
-                                                .fillMaxWidth()
-                                                .padding(24.dp)
-                                                .verticalScroll(rememberScrollState()),
-                                horizontalAlignment = Alignment.CenterHorizontally,
-                                verticalArrangement = Arrangement.spacedBy(24.dp)
-                        ) {
-                                // Avatar
-                                Box(
-                                        modifier =
-                                                Modifier.size(120.dp)
-                                                        .background(
-                                                                color =
-                                                                        MaterialTheme.colorScheme
-                                                                                .primary,
-                                                                shape = CircleShape
-                                                        ),
-                                        contentAlignment = Alignment.Center
-                                ) {
-                                        Text(
-                                                text = username.take(2).uppercase(),
-                                                style = MaterialTheme.typography.headlineLarge,
-                                                color = MaterialTheme.colorScheme.onPrimary,
-                                                fontWeight = FontWeight.Bold,
-                                                fontSize = 36.sp
-                                        )
-                                }
-
-                                // Username Field
-                                OutlinedTextField(
-                                        value = username,
-                                        onValueChange = onUsernameChange,
-                                        label = { Text("Username") },
-                                        modifier = Modifier.fillMaxWidth(),
-                                        singleLine = true
-                                )
-
-                                // Password Field
-                                OutlinedTextField(
-                                        value = password,
-                                        onValueChange = onPasswordChange,
-                                        label = { Text("Password") },
-                                        visualTransformation = PasswordVisualTransformation(),
-                                        modifier = Modifier.fillMaxWidth(),
-                                        singleLine = true
-                                )
-
-                                // Save Button
-                                Button(
-                                        onClick = onSaveProfile,
-                                        modifier = Modifier.fillMaxWidth().height(50.dp),
-                                        colors =
-                                                ButtonDefaults.buttonColors(
-                                                        containerColor =
-                                                                MaterialTheme.colorScheme.primary
-                                                )
-                                ) {
-                                        Text(
-                                                text = "Save Profile",
-                                                style = MaterialTheme.typography.titleMedium,
-                                                color = MaterialTheme.colorScheme.onPrimary
-                                        )
-                                }
-                        }
-
-                        // Bottom Navigation
-                        BottomNavigationBar(
-                                selectedItem = BottomNavItem.Profile,
-                                onItemSelected = { item ->
-                                        when (item) {
-                                                BottomNavItem.Login -> onNavigateToLogin()
-                                                BottomNavItem.Home -> onNavigateBack()
-                                                BottomNavItem.Profile -> {} // already on profile
-                                        }
-                                }
-                        )
+            // Profile Content
+            Column(
+                modifier =
+                    Modifier
+                        .weight(1f)
+                        .fillMaxWidth()
+                        .padding(24.dp)
+                        .verticalScroll(rememberScrollState()),
+                horizontalAlignment = Alignment.CenterHorizontally,
+                verticalArrangement = Arrangement.spacedBy(24.dp)
+            ) {
+                // Avatar
+                Box(
+                    modifier =
+                        Modifier
+                            .size(120.dp)
+                            .background(
+                                color =
+                                    MaterialTheme.colorScheme
+                                        .primary,
+                                shape = CircleShape
+                            ),
+                    contentAlignment = Alignment.Center
+                ) {
+                    Text(
+                        text = username.take(2).uppercase(),
+                        style = MaterialTheme.typography.headlineLarge,
+                        color = MaterialTheme.colorScheme.onPrimary,
+                        fontWeight = FontWeight.Bold,
+                        fontSize = 36.sp
+                    )
                 }
+
+                // Username Field
+                OutlinedTextField(
+                    value = username,
+                    onValueChange = onUsernameChange,
+                    label = { Text("Username") },
+                    modifier = Modifier.fillMaxWidth(),
+                    singleLine = true
+                )
+
+                // Password Field
+                OutlinedTextField(
+                    value = password,
+                    onValueChange = onPasswordChange,
+                    label = { Text("Password") },
+                    visualTransformation = PasswordVisualTransformation(),
+                    modifier = Modifier.fillMaxWidth(),
+                    singleLine = true
+                )
+
+                // Save Button
+                Button(
+                    onClick = onSaveProfile,
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(50.dp),
+                    colors =
+                        ButtonDefaults.buttonColors(
+                            containerColor =
+                                MaterialTheme.colorScheme.primary
+                        )
+                ) {
+                    Text(
+                        text = "Save Profile",
+                        style = MaterialTheme.typography.titleMedium,
+                        color = MaterialTheme.colorScheme.onPrimary
+                    )
+                }
+            }
+
+            // Bottom Navigation
+            BottomNavigationBar(
+                selectedItem = BottomNavItem.Profile,
+                onItemSelected = { item ->
+                    when (item) {
+                        BottomNavItem.Login -> onNavigateToLogin()
+                        BottomNavItem.Home -> onNavigateBack()
+                        BottomNavItem.Profile -> {} // already on profile
+                    }
+                }
+            )
         }
+    }
 }
 
 @Preview(showBackground = true)
 @Composable
 fun ProfileScreenPreview() {
-        ApplicationTheme { ProfileScreen(username = "John Doe", password = "password123") }
+    ApplicationTheme { ProfileScreen(username = "John Doe", password = "password123") }
 }

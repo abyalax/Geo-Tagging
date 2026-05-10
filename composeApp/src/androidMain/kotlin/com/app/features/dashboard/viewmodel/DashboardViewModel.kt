@@ -88,14 +88,14 @@ class DashboardViewModel : ViewModel() {
         viewModelScope.launch {
             val allSurveys = SurveyRepository.getAllSurveys()
             _filteredSurveys.value =
-                    if (query.isBlank()) {
-                        allSurveys
-                    } else {
-                        allSurveys.filter {
-                            it.title.contains(query, ignoreCase = true) ||
-                                    it.description.contains(query, ignoreCase = true)
-                        }
+                if (query.isBlank()) {
+                    allSurveys
+                } else {
+                    allSurveys.filter {
+                        it.title.contains(query, ignoreCase = true) ||
+                                it.description.contains(query, ignoreCase = true)
                     }
+                }
         }
     }
 
@@ -105,11 +105,11 @@ class DashboardViewModel : ViewModel() {
         viewModelScope.launch {
             val allSurveys = SurveyRepository.getAllSurveys()
             _filteredSurveys.value =
-                    if (status == null) {
-                        allSurveys
-                    } else {
-                        allSurveys.filter { it.status == status }
-                    }
+                if (status == null) {
+                    allSurveys
+                } else {
+                    allSurveys.filter { it.status == status }
+                }
         }
     }
 
@@ -117,10 +117,10 @@ class DashboardViewModel : ViewModel() {
     fun getSurveyStats(): SurveyStats {
         val surveys = _surveyList.value
         return SurveyStats(
-                total = surveys.size,
-                open = surveys.count { it.status == SurveyStatus.OPEN },
-                verified = surveys.count { it.status == SurveyStatus.VERIFIED },
-                rejected = surveys.count { it.status == SurveyStatus.REJECTED }
+            total = surveys.size,
+            open = surveys.count { it.status == SurveyStatus.OPEN },
+            verified = surveys.count { it.status == SurveyStatus.VERIFIED },
+            rejected = surveys.count { it.status == SurveyStatus.REJECTED }
         )
     }
 

@@ -12,15 +12,15 @@ import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 
 data class ProfileUiState(
-        val username: String = "",
-        val password: String = "",
-        val isLoading: Boolean = false,
-        val error: String? = null
+    val username: String = "",
+    val password: String = "",
+    val isLoading: Boolean = false,
+    val error: String? = null
 )
 
 class ProfileViewModel(
-        private val authRepository: AuthRepository,
-        private val getSessionUseCase: GetSessionUseCase
+    private val authRepository: AuthRepository,
+    private val getSessionUseCase: GetSessionUseCase
 ) : ViewModel() {
 
     private val _uiState = MutableStateFlow(ProfileUiState())
@@ -38,10 +38,10 @@ class ProfileViewModel(
             try {
                 val session = getSessionUseCase().first()
                 _uiState.value =
-                        _uiState.value.copy(
-                                username = session.username ?: "",
-                                password = session.password ?: ""
-                        )
+                    _uiState.value.copy(
+                        username = session.username ?: "",
+                        password = session.password ?: ""
+                    )
             } catch (e: Exception) {
                 _uiState.value = _uiState.value.copy(error = e.message)
             }
@@ -61,11 +61,11 @@ class ProfileViewModel(
         viewModelScope.launch {
             try {
                 authRepository
-                        .updateProfile(currentState.username, currentState.password)
-                        .onSuccess { _uiState.value = currentState.copy(error = null) }
-                        .onFailure { error ->
-                            _uiState.value = currentState.copy(error = error.message)
-                        }
+                    .updateProfile(currentState.username, currentState.password)
+                    .onSuccess { _uiState.value = currentState.copy(error = null) }
+                    .onFailure { error ->
+                        _uiState.value = currentState.copy(error = error.message)
+                    }
             } catch (e: Exception) {
                 _uiState.value = currentState.copy(error = e.message)
             }

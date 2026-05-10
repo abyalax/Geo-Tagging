@@ -18,11 +18,11 @@ import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 
 class DashboardViewModel(
-        private val getSurveysUseCase: GetSurveysUseCase,
-        private val getSessionUseCase: GetSessionUseCase,
-        private val logoutUseCase: LogoutUseCase,
-        private val shareSurveyUseCase: ShareSurveyUseCase,
-        private val openSurveyMapUseCase: OpenSurveyMapUseCase
+    private val getSurveysUseCase: GetSurveysUseCase,
+    private val getSessionUseCase: GetSessionUseCase,
+    private val logoutUseCase: LogoutUseCase,
+    private val shareSurveyUseCase: ShareSurveyUseCase,
+    private val openSurveyMapUseCase: OpenSurveyMapUseCase
 ) : ViewModel() {
 
     private val _uiState = MutableStateFlow<DashboardUiState>(DashboardUiState())
@@ -44,12 +44,12 @@ class DashboardViewModel(
                 val session = getSessionUseCase().first()
 
                 _uiState.value =
-                        _uiState.value.copy(
-                                surveys = surveys,
-                                filteredSurveys = surveys,
-                                username = session.username ?: "Field Officer",
-                                isLoading = false
-                        )
+                    _uiState.value.copy(
+                        surveys = surveys,
+                        filteredSurveys = surveys,
+                        username = session.username ?: "Field Officer",
+                        isLoading = false
+                    )
             } catch (e: Exception) {
                 _uiState.value = _uiState.value.copy(error = e.message, isLoading = false)
             }
@@ -58,10 +58,10 @@ class DashboardViewModel(
 
     fun onSurveyClick(survey: Survey) {
         _navigationEvents.value =
-                NavigationEvent.NavigateToVerification(
-                        surveyId = survey.id.toString(),
-                        locationName = survey.title
-                )
+            NavigationEvent.NavigateToVerification(
+                surveyId = survey.id.toString(),
+                locationName = survey.title
+            )
     }
 
     fun onShareSurvey(survey: Survey) {
@@ -88,10 +88,10 @@ class DashboardViewModel(
 
     fun onNavigateToVerification(surveyId: String, locationName: String) {
         _navigationEvents.value =
-                NavigationEvent.NavigateToVerification(
-                        surveyId = surveyId,
-                        locationName = locationName
-                )
+            NavigationEvent.NavigateToVerification(
+                surveyId = surveyId,
+                locationName = locationName
+            )
     }
 
     fun onNavigateToLogin() {
@@ -101,34 +101,34 @@ class DashboardViewModel(
     fun onLogout() {
         viewModelScope.launch {
             logoutUseCase()
-                    .onSuccess { _navigationEvents.value = NavigationEvent.NavigateToLogin }
-                    .onFailure { error ->
-                        _uiState.value = _uiState.value.copy(error = error.message)
-                    }
+                .onSuccess { _navigationEvents.value = NavigationEvent.NavigateToLogin }
+                .onFailure { error ->
+                    _uiState.value = _uiState.value.copy(error = error.message)
+                }
         }
     }
 
     private fun filterSurveys() {
         val currentState = _uiState.value
         val filtered =
-                currentState.surveys.filter { survey ->
-                    val matchesSearch =
-                            currentState.searchQuery.isBlank() ||
-                                    survey.title.contains(
-                                            currentState.searchQuery,
-                                            ignoreCase = true
-                                    ) ||
-                                    survey.description.contains(
-                                            currentState.searchQuery,
-                                            ignoreCase = true
-                                    )
+            currentState.surveys.filter { survey ->
+                val matchesSearch =
+                    currentState.searchQuery.isBlank() ||
+                            survey.title.contains(
+                                currentState.searchQuery,
+                                ignoreCase = true
+                            ) ||
+                            survey.description.contains(
+                                currentState.searchQuery,
+                                ignoreCase = true
+                            )
 
-                    val matchesStatus =
-                            currentState.selectedStatus == null ||
-                                    survey.status == currentState.selectedStatus
+                val matchesStatus =
+                    currentState.selectedStatus == null ||
+                            survey.status == currentState.selectedStatus
 
-                    matchesSearch && matchesStatus
-                }
+                matchesSearch && matchesStatus
+            }
 
         _uiState.value = currentState.copy(filteredSurveys = filtered)
     }

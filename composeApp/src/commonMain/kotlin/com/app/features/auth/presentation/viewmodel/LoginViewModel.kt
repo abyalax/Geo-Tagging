@@ -4,7 +4,6 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.app.core.domain.usecase.auth.LoginUseCase
 import com.app.core.navigation.NavigationEvent
-import com.app.core.domain.model.UserSession
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -20,10 +19,10 @@ data class LoginUiState(
 class LoginViewModel(
     private val loginUseCase: LoginUseCase
 ) : ViewModel() {
-    
+
     private val _uiState = MutableStateFlow(LoginUiState())
     val uiState: StateFlow<LoginUiState> = _uiState.asStateFlow()
-    
+
     private val _navigationEvents = MutableStateFlow<NavigationEvent?>(null)
     val navigationEvents: StateFlow<NavigationEvent?> = _navigationEvents.asStateFlow()
 
@@ -44,7 +43,7 @@ class LoginViewModel(
 
         viewModelScope.launch {
             _uiState.value = currentState.copy(isLoading = true)
-            
+
             try {
                 loginUseCase(currentState.username, currentState.password)
                     .onSuccess {

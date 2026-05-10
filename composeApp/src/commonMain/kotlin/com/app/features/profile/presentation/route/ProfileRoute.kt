@@ -13,9 +13,9 @@ import kotlinx.coroutines.flow.collectLatest
 
 @Composable
 fun ProfileRoute(
-        navigationManager: NavigationManager,
-        modifier: Modifier = Modifier,
-        viewModel: ProfileViewModel = viewModel()
+    navigationManager: NavigationManager,
+    modifier: Modifier = Modifier,
+    viewModel: ProfileViewModel = viewModel()
 ) {
     val uiState by viewModel.uiState.collectAsState()
 
@@ -26,11 +26,11 @@ fun ProfileRoute(
     }
 
     ProfileScreen(
-            uiState = uiState,
-            onUsernameChange = viewModel::onUsernameChange,
-            onPasswordChange = viewModel::onPasswordChange,
-            onSaveClick = viewModel::onSaveClick,
-            onNavigateBack = viewModel::onNavigateBack,
-            modifier = modifier
+        uiState = uiState,
+        onUsernameChange = viewModel::onUsernameChange,
+        onPasswordChange = viewModel::onPasswordChange,
+        onSaveClick = viewModel::onSaveClick,
+        onNavigateBack = viewModel::onNavigateBack,
+        modifier = modifier
     )
 }

@@ -13,9 +13,9 @@ import kotlinx.coroutines.flow.collectLatest
 
 @Composable
 fun DashboardRoute(
-        navigationManager: NavigationManager,
-        modifier: Modifier = Modifier,
-        viewModel: DashboardViewModel = viewModel()
+    navigationManager: NavigationManager,
+    modifier: Modifier = Modifier,
+    viewModel: DashboardViewModel = viewModel()
 ) {
     val uiState by viewModel.uiState.collectAsState()
 
@@ -26,18 +26,18 @@ fun DashboardRoute(
     }
 
     DashboardScreen(
-            uiState = uiState,
-            onSurveyClick = { survey -> viewModel.onSurveyClick(survey) },
-            onShareSurvey = { survey -> viewModel.onShareSurvey(survey) },
-            onOpenSurveyMap = { survey -> viewModel.onOpenSurveyMap(survey) },
-            onSearchChange = { query -> viewModel.onSearchChange(query) },
-            onStatusFilterChange = { status -> viewModel.onStatusFilterChange(status) },
-            onNavigateToProfile = { viewModel.onNavigateToProfile() },
-            onNavigateToVerification = { surveyId, locationName ->
-                viewModel.onNavigateToVerification(surveyId, locationName)
-            },
-            onNavigateToLogin = { viewModel.onNavigateToLogin() },
-            onLogout = { viewModel.onLogout() },
-            modifier = modifier
+        uiState = uiState,
+        onSurveyClick = { survey -> viewModel.onSurveyClick(survey) },
+        onShareSurvey = { survey -> viewModel.onShareSurvey(survey) },
+        onOpenSurveyMap = { survey -> viewModel.onOpenSurveyMap(survey) },
+        onSearchChange = { query -> viewModel.onSearchChange(query) },
+        onStatusFilterChange = { status -> viewModel.onStatusFilterChange(status) },
+        onNavigateToProfile = { viewModel.onNavigateToProfile() },
+        onNavigateToVerification = { surveyId, locationName ->
+            viewModel.onNavigateToVerification(surveyId, locationName)
+        },
+        onNavigateToLogin = { viewModel.onNavigateToLogin() },
+        onLogout = { viewModel.onLogout() },
+        modifier = modifier
     )
 }

@@ -10,7 +10,7 @@ object IntentNavigation {
     /** Share survey information via WhatsApp */
     fun shareSurveyViaWhatsApp(context: Context, survey: Survey) {
         val shareText =
-                """
+            """
             📍 Survey Report
             📍 Lokasi: ${survey.title}
             📝 Deskripsi: ${survey.description}
@@ -22,11 +22,11 @@ object IntentNavigation {
         """.trimIndent()
 
         val intent =
-                Intent(Intent.ACTION_SEND).apply {
-                    type = "text/plain"
-                    putExtra(Intent.EXTRA_TEXT, shareText)
-                    setPackage("com.whatsapp")
-                }
+            Intent(Intent.ACTION_SEND).apply {
+                type = "text/plain"
+                putExtra(Intent.EXTRA_TEXT, shareText)
+                setPackage("com.whatsapp")
+            }
 
         try {
             context.startActivity(intent)
@@ -39,24 +39,24 @@ object IntentNavigation {
     /** Open survey location in Google Maps */
     fun openSurveyInGoogleMaps(context: Context, survey: Survey) {
         val intent =
-                Intent(
-                                Intent.ACTION_VIEW,
-                                Uri.parse(
-                                        "geo:${survey.latitude},${survey.longitude}?q=${survey.latitude},${survey.longitude}(${survey.title})"
-                                )
-                        )
-                        .apply { setPackage("com.google.android.apps.maps") }
+            Intent(
+                Intent.ACTION_VIEW,
+                Uri.parse(
+                    "geo:${survey.latitude},${survey.longitude}?q=${survey.latitude},${survey.longitude}(${survey.title})"
+                )
+            )
+                .apply { setPackage("com.google.android.apps.maps") }
         context.startActivity(intent)
     }
 
     /** General share functionality for fallback */
     private fun shareSurveyGeneral(context: Context, survey: Survey, shareText: String) {
         val fallbackIntent =
-                Intent(Intent.ACTION_SEND).apply {
-                    type = "text/plain"
-                    putExtra(Intent.EXTRA_TEXT, shareText)
-                    putExtra(Intent.EXTRA_SUBJECT, "Survey Report: ${survey.title}")
-                }
+            Intent(Intent.ACTION_SEND).apply {
+                type = "text/plain"
+                putExtra(Intent.EXTRA_TEXT, shareText)
+                putExtra(Intent.EXTRA_SUBJECT, "Survey Report: ${survey.title}")
+            }
         context.startActivity(Intent.createChooser(fallbackIntent, "Bagikan Survey"))
     }
 }

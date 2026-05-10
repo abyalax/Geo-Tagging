@@ -29,77 +29,80 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 
 sealed class BottomNavItem(val route: String, val icon: ImageVector, val label: String) {
-        object Login : BottomNavItem("login", Icons.Default.ArrowBack, "Login")
-        object Home : BottomNavItem("home", Icons.Default.Home, "Home")
-        object Profile : BottomNavItem("profile", Icons.Default.Person, "Profile")
+    object Login : BottomNavItem("login", Icons.Default.ArrowBack, "Login")
+    object Home : BottomNavItem("home", Icons.Default.Home, "Home")
+    object Profile : BottomNavItem("profile", Icons.Default.Person, "Profile")
 }
 
 @Composable
 fun BottomNavigationBar(
-        items: List<BottomNavItem> =
-                listOf(BottomNavItem.Login, BottomNavItem.Home, BottomNavItem.Profile),
-        selectedItem: BottomNavItem = BottomNavItem.Home,
-        onItemSelected: (BottomNavItem) -> Unit = {},
-        modifier: Modifier = Modifier
+    items: List<BottomNavItem> =
+        listOf(BottomNavItem.Login, BottomNavItem.Home, BottomNavItem.Profile),
+    selectedItem: BottomNavItem = BottomNavItem.Home,
+    onItemSelected: (BottomNavItem) -> Unit = {},
+    modifier: Modifier = Modifier
 ) {
-        Surface(
-                modifier = modifier.fillMaxWidth(),
-                color = MaterialTheme.colorScheme.surface,
-                shadowElevation = 8.dp
+    Surface(
+        modifier = modifier.fillMaxWidth(),
+        color = MaterialTheme.colorScheme.surface,
+        shadowElevation = 8.dp
+    ) {
+        Box(
+            modifier =
+                Modifier
+                    .fillMaxWidth()
+                    .height(80.dp)
+                    .padding(horizontal = 20.dp, vertical = 12.dp)
         ) {
-                Box(
-                        modifier =
-                                Modifier.fillMaxWidth()
-                                        .height(80.dp)
-                                        .padding(horizontal = 20.dp, vertical = 12.dp)
-                ) {
-                        Row(
-                                modifier = Modifier.fillMaxSize(),
-                                horizontalArrangement = Arrangement.SpaceEvenly,
-                                verticalAlignment = Alignment.CenterVertically
-                        ) {
-                                items.forEach { item ->
-                                        BottomNavItem(
-                                                item = item,
-                                                isSelected = item == selectedItem,
-                                                onClick = { onItemSelected(item) }
-                                        )
-                                }
-                        }
+            Row(
+                modifier = Modifier.fillMaxSize(),
+                horizontalArrangement = Arrangement.SpaceEvenly,
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                items.forEach { item ->
+                    BottomNavItem(
+                        item = item,
+                        isSelected = item == selectedItem,
+                        onClick = { onItemSelected(item) }
+                    )
                 }
+            }
         }
+    }
 }
 
 @Composable
 private fun BottomNavItem(item: BottomNavItem, isSelected: Boolean, onClick: () -> Unit) {
-        Column(
-                horizontalAlignment = Alignment.CenterHorizontally,
-                verticalArrangement = Arrangement.Center,
-                modifier =
-                        Modifier.padding(horizontal = 12.dp, vertical = 8.dp).clickable {
-                                onClick()
-                        }
-        ) {
-                IconButton(onClick = { onClick() }) {
-                        Icon(
-                                imageVector = item.icon,
-                                contentDescription = item.label,
-                                tint = MaterialTheme.colorScheme.onPrimaryContainer,
-                                modifier = Modifier.size(24.dp)
-                        )
+    Column(
+        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.Center,
+        modifier =
+            Modifier
+                .padding(horizontal = 12.dp, vertical = 8.dp)
+                .clickable {
+                    onClick()
                 }
-
-                if (isSelected) {
-                        Spacer(modifier = Modifier.height(4.dp))
-                        Text(
-                                text = item.label,
-                                style = MaterialTheme.typography.labelSmall,
-                                color = MaterialTheme.colorScheme.primary,
-                                fontWeight = FontWeight.Medium,
-                                fontSize = 10.sp
-                        )
-                } else {
-                        Spacer(modifier = Modifier.height(8.dp))
-                }
+    ) {
+        IconButton(onClick = { onClick() }) {
+            Icon(
+                imageVector = item.icon,
+                contentDescription = item.label,
+                tint = MaterialTheme.colorScheme.onPrimaryContainer,
+                modifier = Modifier.size(24.dp)
+            )
         }
+
+        if (isSelected) {
+            Spacer(modifier = Modifier.height(4.dp))
+            Text(
+                text = item.label,
+                style = MaterialTheme.typography.labelSmall,
+                color = MaterialTheme.colorScheme.primary,
+                fontWeight = FontWeight.Medium,
+                fontSize = 10.sp
+            )
+        } else {
+            Spacer(modifier = Modifier.height(8.dp))
+        }
+    }
 }

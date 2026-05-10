@@ -51,6 +51,10 @@ If conflict occurs:
 
 - **`prompts/refactor.md`** - Refactoring guidelines and checklist
 
+### 🔄 Development Workflows
+
+- **`workflows/development.md`** - Complete development workflows and task patterns
+
 ## Project Context
 
 ### Application Overview
@@ -80,10 +84,11 @@ If conflict occurs:
 
 ### For Development
 
-1. **Always reference architecture rules first** - `rules/architecture.md`
-2. **Follow coding standards** - `rules/coding-style.md`
-3. **Use existing patterns** - Check `examples/` before creating new implementations
-4. **Maintain consistency** - Follow established project patterns
+1. **Use workflows for common tasks** - `workflows/development.md` for step-by-step guides
+2. **Always reference architecture rules first** - `rules/architecture.md`
+3. **Follow coding standards** - `rules/coding-style.md`
+4. **Use existing patterns** - Check `examples/` before creating new implementations
+5. **Maintain consistency** - Follow established project patterns
 
 ### For Documentation
 
@@ -103,6 +108,7 @@ If conflict occurs:
 
 ### Most Important Files
 
+- **`workflows/development.md`** - Step-by-step development workflows
 - **`rules/architecture.md`** - Architecture guidelines (highest priority)
 - **`skills/clean-architecture.md`** - Implementation patterns
 - **`examples/clean-architecture-examples.md`** - Code examples
@@ -110,8 +116,10 @@ If conflict occurs:
 
 ### Common Workflows
 
-1. **Adding New Feature**: Follow Clean Architecture → Use examples → Update documentation
+1. **Adding New Feature**: Use `workflows/development.md` Workflow 1 → Follow Clean Architecture → Update documentation
 2. **Refactoring**: Use `prompts/refactor.md` → Follow coding standards → Update examples
-3. **Debugging**: Check architecture rules → Review similar examples → Document findings
+3. **Navigation Issues**: Use `workflows/development.md` Workflow 2 → Check routes and parameters
+4. **Performance Debugging**: Use `workflows/development.md` Workflow 3 → Profile and optimize
+5. **Security Issues**: Use `workflows/development.md` Workflow 4 → Implement secure practices
 
-_Last updated: May 10, 2026_
+_Last updated: May 11, 2026_

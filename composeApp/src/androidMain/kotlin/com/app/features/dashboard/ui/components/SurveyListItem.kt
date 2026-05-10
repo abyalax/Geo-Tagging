@@ -34,62 +34,73 @@ import com.app.features.dashboard.model.SurveyStatus
 
 @Composable
 fun SurveyListItem(
-        survey: Survey,
-        modifier: Modifier = Modifier,
-        onClick: (Survey) -> Unit = {},
-        onShare: (Survey) -> Unit = {},
-        onOpenMap: (Survey) -> Unit = {}
+    survey: Survey,
+    modifier: Modifier = Modifier,
+    onClick: (Survey) -> Unit = {},
+    onShare: (Survey) -> Unit = {},
+    onOpenMap: (Survey) -> Unit = {}
 ) {
     Card(
-            modifier =
-                    modifier.fillMaxWidth().clickable { onClick(survey) }.padding(vertical = 4.dp),
-            elevation = CardDefaults.cardElevation(defaultElevation = 2.dp)
+        modifier =
+            modifier
+                .fillMaxWidth()
+                .clickable { onClick(survey) }
+                .padding(vertical = 4.dp),
+        elevation = CardDefaults.cardElevation(defaultElevation = 2.dp)
     ) {
-        Column(modifier = Modifier.fillMaxWidth().padding(12.dp)) {
+        Column(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(12.dp)
+        ) {
             // Title & Status Row
             Row(
-                    modifier = Modifier.fillMaxWidth(),
-                    horizontalArrangement = Arrangement.SpaceBetween,
-                    verticalAlignment = Alignment.Top
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.SpaceBetween,
+                verticalAlignment = Alignment.Top
             ) {
                 Text(
-                        text = survey.title,
-                        style = MaterialTheme.typography.titleSmall,
-                        maxLines = 1,
-                        overflow = TextOverflow.Ellipsis,
-                        modifier = Modifier.weight(1f).padding(end = 8.dp)
+                    text = survey.title,
+                    style = MaterialTheme.typography.titleSmall,
+                    maxLines = 1,
+                    overflow = TextOverflow.Ellipsis,
+                    modifier = Modifier
+                        .weight(1f)
+                        .padding(end = 8.dp)
                 )
                 StatusBadge(status = survey.status)
             }
 
             // Description
             Text(
-                    text = survey.description,
-                    style = MaterialTheme.typography.bodySmall,
-                    maxLines = 2,
-                    overflow = TextOverflow.Ellipsis,
-                    color = MaterialTheme.colorScheme.onSurfaceVariant,
-                    modifier = Modifier.fillMaxWidth().padding(top = 4.dp, bottom = 8.dp)
+                text = survey.description,
+                style = MaterialTheme.typography.bodySmall,
+                maxLines = 2,
+                overflow = TextOverflow.Ellipsis,
+                color = MaterialTheme.colorScheme.onSurfaceVariant,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(top = 4.dp, bottom = 8.dp)
             )
 
             // Action Buttons Row
             Row(
-                    modifier = Modifier.fillMaxWidth(),
-                    horizontalArrangement = Arrangement.End,
-                    verticalAlignment = Alignment.CenterVertically
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.End,
+                verticalAlignment = Alignment.CenterVertically
             ) {
                 ActionButton(
-                        icon = Icons.Default.LocationOn,
-                        label = "Maps",
-                        onClick = { onOpenMap(survey) }
+                    icon = Icons.Default.LocationOn,
+                    label = "Maps",
+                    onClick = { onOpenMap(survey) }
                 )
 
                 Spacer(modifier = Modifier.width(8.dp))
 
                 ActionButton(
-                        icon = Icons.Default.Share,
-                        label = "WA",
-                        onClick = { onShare(survey) }
+                    icon = Icons.Default.Share,
+                    label = "WA",
+                    onClick = { onShare(survey) }
                 )
             }
         }
@@ -99,9 +110,9 @@ fun SurveyListItem(
 @Composable
 fun ActionButton(icon: ImageVector, label: String, onClick: () -> Unit) {
     FilledTonalButton(
-            onClick = onClick,
-            contentPadding = PaddingValues(horizontal = 8.dp, vertical = 4.dp),
-            modifier = Modifier.height(32.dp)
+        onClick = onClick,
+        contentPadding = PaddingValues(horizontal = 8.dp, vertical = 4.dp),
+        modifier = Modifier.height(32.dp)
     ) {
         Icon(imageVector = icon, contentDescription = label, modifier = Modifier.size(16.dp))
         Spacer(modifier = Modifier.width(4.dp))
@@ -112,25 +123,25 @@ fun ActionButton(icon: ImageVector, label: String, onClick: () -> Unit) {
 @Composable
 fun StatusBadge(status: SurveyStatus, modifier: Modifier = Modifier) {
     val backgroundColor =
-            when (status) {
-                SurveyStatus.OPEN -> androidx.compose.ui.graphics.Color.Green.copy(alpha = 0.1f)
-                SurveyStatus.VERIFIED -> MaterialTheme.colorScheme.primary.copy(alpha = 0.2f)
-                SurveyStatus.REJECTED -> MaterialTheme.colorScheme.error.copy(alpha = 0.2f)
-            }
+        when (status) {
+            SurveyStatus.OPEN -> androidx.compose.ui.graphics.Color.Green.copy(alpha = 0.1f)
+            SurveyStatus.VERIFIED -> MaterialTheme.colorScheme.primary.copy(alpha = 0.2f)
+            SurveyStatus.REJECTED -> MaterialTheme.colorScheme.error.copy(alpha = 0.2f)
+        }
 
     val textColor =
-            when (status) {
-                SurveyStatus.OPEN -> androidx.compose.ui.graphics.Color.Green
-                SurveyStatus.VERIFIED -> MaterialTheme.colorScheme.primary
-                SurveyStatus.REJECTED -> MaterialTheme.colorScheme.error
-            }
+        when (status) {
+            SurveyStatus.OPEN -> androidx.compose.ui.graphics.Color.Green
+            SurveyStatus.VERIFIED -> MaterialTheme.colorScheme.primary
+            SurveyStatus.REJECTED -> MaterialTheme.colorScheme.error
+        }
 
     Surface(modifier = modifier, shape = MaterialTheme.shapes.extraSmall, color = backgroundColor) {
         Text(
-                text = status.name,
-                style = MaterialTheme.typography.labelSmall,
-                color = textColor,
-                modifier = Modifier.padding(horizontal = 6.dp, vertical = 2.dp)
+            text = status.name,
+            style = MaterialTheme.typography.labelSmall,
+            color = textColor,
+            modifier = Modifier.padding(horizontal = 6.dp, vertical = 2.dp)
         )
     }
 }
@@ -140,15 +151,15 @@ fun StatusBadge(status: SurveyStatus, modifier: Modifier = Modifier) {
 fun SurveyListItemPreview() {
     ApplicationTheme {
         SurveyListItem(
-                survey =
-                        Survey(
-                                id = 1,
-                                title = "Jalan Sudirman - Lubang Aspal Besar",
-                                description = "Lubang besar di jalan utama, diameter ~50cm",
-                                latitude = -6.2088,
-                                longitude = 106.8000,
-                                status = SurveyStatus.OPEN
-                        )
+            survey =
+                Survey(
+                    id = 1,
+                    title = "Jalan Sudirman - Lubang Aspal Besar",
+                    description = "Lubang besar di jalan utama, diameter ~50cm",
+                    latitude = -6.2088,
+                    longitude = 106.8000,
+                    status = SurveyStatus.OPEN
+                )
         )
     }
 }

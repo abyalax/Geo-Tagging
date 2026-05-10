@@ -13,9 +13,9 @@ import kotlinx.coroutines.flow.collectLatest
 
 @Composable
 fun LoginRoute(
-        navigationManager: NavigationManager,
-        modifier: Modifier = Modifier,
-        viewModel: LoginViewModel = viewModel()
+    navigationManager: NavigationManager,
+    modifier: Modifier = Modifier,
+    viewModel: LoginViewModel = viewModel()
 ) {
     val uiState by viewModel.uiState.collectAsState()
 
@@ -26,10 +26,10 @@ fun LoginRoute(
     }
 
     LoginScreen(
-            uiState = uiState,
-            onUsernameChange = viewModel::onUsernameChange,
-            onPasswordChange = viewModel::onPasswordChange,
-            onLoginClick = viewModel::onLoginClick,
-            modifier = modifier
+        uiState = uiState,
+        onUsernameChange = viewModel::onUsernameChange,
+        onPasswordChange = viewModel::onPasswordChange,
+        onLoginClick = viewModel::onLoginClick,
+        modifier = modifier
     )
 }
