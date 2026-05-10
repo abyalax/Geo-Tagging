@@ -1,4 +1,5 @@
 package com.app.features.dashboard.model
+
 enum class SurveyStatus {
     OPEN,
     VERIFIED,

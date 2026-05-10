@@ -4,7 +4,7 @@ import android.content.Context
 import android.content.Intent
 import android.net.Uri
 
-object ImplicitIntentHelper {
+object ImplicitIntents {
 
     fun openMaps(context: Context, latitude: Double, longitude: Double) {
         val geoUri = "geo:$latitude,$longitude?q=$latitude,$longitude"
@@ -21,42 +21,58 @@ object ImplicitIntentHelper {
             context.startActivity(webIntent)
         }
     }
-    
-    fun shareSurvey(context: Context, title: String, description: String, latitude: Double, longitude: Double) {
-        val shareText = """
+
+    fun shareSurvey(
+            context: Context,
+            title: String,
+            description: String,
+            latitude: Double,
+            longitude: Double
+    ) {
+        val shareText =
+                """
             Survey Detail:
             Title: $title
             Description: $description
             Location: $latitude, $longitude
             Google Maps: https://maps.google.com/?q=$latitude,$longitude
         """.trimIndent()
-        
-        val sendIntent = Intent().apply {
-            action = Intent.ACTION_SEND
-            putExtra(Intent.EXTRA_TEXT, shareText)
-            type = "text/plain"
-        }
-        
+
+        val sendIntent =
+                Intent().apply {
+                    action = Intent.ACTION_SEND
+                    putExtra(Intent.EXTRA_TEXT, shareText)
+                    type = "text/plain"
+                }
+
         val shareIntent = Intent.createChooser(sendIntent, "Share Survey via")
         context.startActivity(shareIntent)
     }
 
-    fun shareToWhatsApp(context: Context, title: String, description: String, latitude: Double, longitude: Double) {
-        val shareText = """
+    fun shareToWhatsApp(
+            context: Context,
+            title: String,
+            description: String,
+            latitude: Double,
+            longitude: Double
+    ) {
+        val shareText =
+                """
             *Survey Detail*
             *Title:* $title
             *Description:* $description
             *Location:* $latitude, $longitude
             *Maps:* https://maps.google.com/?q=$latitude,$longitude
         """.trimIndent()
-        
-        val sendIntent = Intent().apply {
-            action = Intent.ACTION_SEND
-            putExtra(Intent.EXTRA_TEXT, shareText)
-            type = "text/plain"
-            setPackage("com.whatsapp")
-        }
-        
+
+        val sendIntent =
+                Intent().apply {
+                    action = Intent.ACTION_SEND
+                    putExtra(Intent.EXTRA_TEXT, shareText)
+                    type = "text/plain"
+                    setPackage("com.whatsapp")
+                }
+
         try {
             context.startActivity(sendIntent)
         } catch (e: Exception) {

@@ -21,222 +21,1622 @@ object SurveyRepository {
 // 200+ Mock Surveys - Field Survey & Geo-Tagging Data
 private val MOCK_SURVEYS = mutableListOf(
     // Jakarta Area (1-20)
-    Survey(1, "Jalan Sudirman - Lubang Aspal Besar", "Lubang besar di jalan utama, diameter ~50cm", -6.2088, 106.8000, SurveyStatus.OPEN),
-    Survey(2, "Bundaran HI - Lampu Jalan Mati", "5 lampu jalan tidak menyala di bundaran HI", -6.1905, 106.8148, SurveyStatus.VERIFIED),
-    Survey(3, "Jalan M.H. Thamrin - Banjir", "Area tergenang air setinggi 30cm saat hujan", -6.1851, 106.8224, SurveyStatus.OPEN),
-    Survey(4, "Depok Area - Jalan Rusak Parah", "Jalan poros Depok dengan retakan banyak", -6.4030, 106.7970, SurveyStatus.REJECTED),
-    Survey(5, "Kawasan Tebet - Gorong Tidak Berfungsi", "Saluran air tersumbat, menyebabkan genangan", -6.2304, 106.8501, SurveyStatus.OPEN),
-    Survey(6, "Jalan Gatot Subroto - Aspal Berlubang", "Aspal retak di beberapa titik", -6.2296, 106.7957, SurveyStatus.VERIFIED),
-    Survey(7, "Kawasan Kemayoran - Lampu Jalan Mati", "10 lampu jalan padam di kawasan industri", -6.1648, 106.8649, SurveyStatus.OPEN),
-    Survey(8, "Jalan Wahid Hasyim - Perkerasan Rusak", "Perkerasan jalan pecah di 3 lokasi", -6.1919, 106.8249, SurveyStatus.OPEN),
-    Survey(9, "Blok M Area - Bahu Jalan Amblas", "Bahu jalan empis/amblas sejauh 2 meter", -6.2681, 106.8000, SurveyStatus.VERIFIED),
-    Survey(10, "Kawasan Puri - Drainase Macet", "Saluran drainase tersumbat sampah", -6.2020, 106.7567, SurveyStatus.REJECTED),
-    Survey(11, "Jalan Merdeka - Garis Marka Hilang", "Garis marka di tengah jalan sudah tidak terlihat", -6.1754, 106.8263, SurveyStatus.OPEN),
-    Survey(12, "Kawasan Karet Semanggi - Banjir Kiriman", "Air meluap dari saluran induk ke jalan", -6.2305, 106.8097, SurveyStatus.OPEN),
-    Survey(13, "Jalan Pancoran - Rambu Rusak", "Rambu lalu lintas tidak terbaca dengan jelas", -6.2452, 106.8262, SurveyStatus.VERIFIED),
-    Survey(14, "Bekasi Area - Lubang Jalan Membesar", "Lubang jalan terus membesar karena air", -6.2349, 107.0078, SurveyStatus.OPEN),
-    Survey(15, "Kawasan Senayan - Jalur Khusus Rusak", "Aspal jalur khusus sudah berlapis", -6.2156, 106.8023, SurveyStatus.REJECTED),
-    Survey(16, "Jalan Casablanca - Kegemeteraan Parah", "Jalan bergetar saat ada kendaraan berat", -6.2614, 106.8335, SurveyStatus.OPEN),
-    Survey(17, "Kemang Area - Parkir Liar", "Parkir liar menyumbat jalan lintasan", -6.2703, 106.8039, SurveyStatus.VERIFIED),
-    Survey(18, "Jalan Cipete - Aspal Bergelombang", "Aspal bergelombang di beberapa ruas", -6.2548, 106.7824, SurveyStatus.OPEN),
-    Survey(19, "Kawasan Terogong - Lampu Mati Cluster", "Lampu jalan 20 unit mati di cluster ini", -6.2846, 106.8182, SurveyStatus.OPEN),
-    Survey(20, "Jalan Panjang - Genangan Air", "Genangan air 40cm saat hujan normal", -6.2143, 106.7690, SurveyStatus.VERIFIED),
+    Survey(
+        1,
+        "Jalan Sudirman - Lubang Aspal Besar",
+        "Lubang besar di jalan utama, diameter ~50cm",
+        -6.2088,
+        106.8000,
+        SurveyStatus.OPEN
+    ),
+    Survey(
+        2,
+        "Bundaran HI - Lampu Jalan Mati",
+        "5 lampu jalan tidak menyala di bundaran HI",
+        -6.1905,
+        106.8148,
+        SurveyStatus.VERIFIED
+    ),
+    Survey(
+        3,
+        "Jalan M.H. Thamrin - Banjir",
+        "Area tergenang air setinggi 30cm saat hujan",
+        -6.1851,
+        106.8224,
+        SurveyStatus.OPEN
+    ),
+    Survey(
+        4,
+        "Depok Area - Jalan Rusak Parah",
+        "Jalan poros Depok dengan retakan banyak",
+        -6.4030,
+        106.7970,
+        SurveyStatus.REJECTED
+    ),
+    Survey(
+        5,
+        "Kawasan Tebet - Gorong Tidak Berfungsi",
+        "Saluran air tersumbat, menyebabkan genangan",
+        -6.2304,
+        106.8501,
+        SurveyStatus.OPEN
+    ),
+    Survey(
+        6,
+        "Jalan Gatot Subroto - Aspal Berlubang",
+        "Aspal retak di beberapa titik",
+        -6.2296,
+        106.7957,
+        SurveyStatus.VERIFIED
+    ),
+    Survey(
+        7,
+        "Kawasan Kemayoran - Lampu Jalan Mati",
+        "10 lampu jalan padam di kawasan industri",
+        -6.1648,
+        106.8649,
+        SurveyStatus.OPEN
+    ),
+    Survey(
+        8,
+        "Jalan Wahid Hasyim - Perkerasan Rusak",
+        "Perkerasan jalan pecah di 3 lokasi",
+        -6.1919,
+        106.8249,
+        SurveyStatus.OPEN
+    ),
+    Survey(
+        9,
+        "Blok M Area - Bahu Jalan Amblas",
+        "Bahu jalan empis/amblas sejauh 2 meter",
+        -6.2681,
+        106.8000,
+        SurveyStatus.VERIFIED
+    ),
+    Survey(
+        10,
+        "Kawasan Puri - Drainase Macet",
+        "Saluran drainase tersumbat sampah",
+        -6.2020,
+        106.7567,
+        SurveyStatus.REJECTED
+    ),
+    Survey(
+        11,
+        "Jalan Merdeka - Garis Marka Hilang",
+        "Garis marka di tengah jalan sudah tidak terlihat",
+        -6.1754,
+        106.8263,
+        SurveyStatus.OPEN
+    ),
+    Survey(
+        12,
+        "Kawasan Karet Semanggi - Banjir Kiriman",
+        "Air meluap dari saluran induk ke jalan",
+        -6.2305,
+        106.8097,
+        SurveyStatus.OPEN
+    ),
+    Survey(
+        13,
+        "Jalan Pancoran - Rambu Rusak",
+        "Rambu lalu lintas tidak terbaca dengan jelas",
+        -6.2452,
+        106.8262,
+        SurveyStatus.VERIFIED
+    ),
+    Survey(
+        14,
+        "Bekasi Area - Lubang Jalan Membesar",
+        "Lubang jalan terus membesar karena air",
+        -6.2349,
+        107.0078,
+        SurveyStatus.OPEN
+    ),
+    Survey(
+        15,
+        "Kawasan Senayan - Jalur Khusus Rusak",
+        "Aspal jalur khusus sudah berlapis",
+        -6.2156,
+        106.8023,
+        SurveyStatus.REJECTED
+    ),
+    Survey(
+        16,
+        "Jalan Casablanca - Kegemeteraan Parah",
+        "Jalan bergetar saat ada kendaraan berat",
+        -6.2614,
+        106.8335,
+        SurveyStatus.OPEN
+    ),
+    Survey(
+        17,
+        "Kemang Area - Parkir Liar",
+        "Parkir liar menyumbat jalan lintasan",
+        -6.2703,
+        106.8039,
+        SurveyStatus.VERIFIED
+    ),
+    Survey(
+        18,
+        "Jalan Cipete - Aspal Bergelombang",
+        "Aspal bergelombang di beberapa ruas",
+        -6.2548,
+        106.7824,
+        SurveyStatus.OPEN
+    ),
+    Survey(
+        19,
+        "Kawasan Terogong - Lampu Mati Cluster",
+        "Lampu jalan 20 unit mati di cluster ini",
+        -6.2846,
+        106.8182,
+        SurveyStatus.OPEN
+    ),
+    Survey(
+        20,
+        "Jalan Panjang - Genangan Air",
+        "Genangan air 40cm saat hujan normal",
+        -6.2143,
+        106.7690,
+        SurveyStatus.VERIFIED
+    ),
 
     // Bandung Area (21-40)
-    Survey(21, "Jalan Diponegoro - Aspal Pecah", "Banyak retakan di aspal jalan utama", -6.9026, 107.6062, SurveyStatus.OPEN),
-    Survey(22, "Kawasan Riau - Lubang Besar", "Lubang diameter 60cm menyulitkan kendaraan", -6.8971, 107.5959, SurveyStatus.REJECTED),
-    Survey(23, "Jalan Cipaganti - Banjir Rutin", "Banjir setiap kali hujan lebat", -6.9235, 107.6299, SurveyStatus.OPEN),
-    Survey(24, "Bandara Husein Sastranegara - Akses Rusak", "Jalan akses ke bandara berlobang", -6.9088, 107.6825, SurveyStatus.VERIFIED),
-    Survey(25, "Kawasan Sunter - Drainase Penuh", "Drainase penuh sampah dan lumpur", -6.8676, 107.6452, SurveyStatus.OPEN),
-    Survey(26, "Jalan Ganesha - Jalur Sepeda Rusak", "Jalur sepeda retak dan tidak rata", -6.8819, 107.6110, SurveyStatus.OPEN),
-    Survey(27, "Cihampelas Area - Lampu Jalan Mati", "8 lampu jalan tidak menyala", -6.8937, 107.5950, SurveyStatus.VERIFIED),
-    Survey(28, "Jalan Peta - Perkerasan Aus", "Perkerasan aspal aus dan mengecil", -6.9006, 107.5894, SurveyStatus.REJECTED),
-    Survey(29, "Kawasan Cibadak - Saluran Rusak", "Saluran air retak dan bergeser", -6.9425, 107.6185, SurveyStatus.OPEN),
-    Survey(30, "Jalan Tangkuban Perahu - Garis Marka Hilang", "Marka jalan sudah sangat pudar", -6.8802, 107.6028, SurveyStatus.OPEN),
-    Survey(31, "Bandung Kulon - Bahu Jalan Ambles", "Bahu jalan turun 15cm di sisi kiri", -6.9312, 107.5754, SurveyStatus.VERIFIED),
-    Survey(32, "Jalan Setiabudi - Kerusakan Parah", "Aspal retak dan berlubang bersamaan", -6.8745, 107.6181, SurveyStatus.OPEN),
-    Survey(33, "Kawasan Lembang - Drainase Buntu", "Gorong-gorong tersumbat total", -6.8201, 107.6149, SurveyStatus.OPEN),
-    Survey(34, "Jalan Cikutra - Rambu Hilang", "Rambu lalu lintas tidak ada di simpang", -6.8980, 107.5880, SurveyStatus.REJECTED),
-    Survey(35, "Kawasan Merdeka - Polusi Air Jalan", "Air jalan berbau dan berwarna gelap", -6.9134, 107.5998, SurveyStatus.OPEN),
-    Survey(36, "Jalan Lengkong - Lubang Semakin Besar", "Lubang diameter 70cm, sangat berbahaya", -6.9289, 107.5715, SurveyStatus.VERIFIED),
-    Survey(37, "Bandung Timur - Banjir Genangan", "Genangan tinggi 50cm rutin terjadi", -6.8654, 107.6748, SurveyStatus.OPEN),
-    Survey(38, "Jalan Suniaraja - Aspal Berombang", "Permukaan aspal tidak rata", -6.8834, 107.6032, SurveyStatus.OPEN),
-    Survey(39, "Kawasan Jatinangor - Lampu Rusak", "Lampu jalan penyok dan tidak menyala", -6.9545, 107.7894, SurveyStatus.REJECTED),
-    Survey(40, "Jalan Batu Karya - Doline Mulai Terbentuk", "Turun drastis, indikasi gua di bawah", -6.9076, 107.5924, SurveyStatus.OPEN),
+    Survey(
+        21,
+        "Jalan Diponegoro - Aspal Pecah",
+        "Banyak retakan di aspal jalan utama",
+        -6.9026,
+        107.6062,
+        SurveyStatus.OPEN
+    ),
+    Survey(
+        22,
+        "Kawasan Riau - Lubang Besar",
+        "Lubang diameter 60cm menyulitkan kendaraan",
+        -6.8971,
+        107.5959,
+        SurveyStatus.REJECTED
+    ),
+    Survey(
+        23,
+        "Jalan Cipaganti - Banjir Rutin",
+        "Banjir setiap kali hujan lebat",
+        -6.9235,
+        107.6299,
+        SurveyStatus.OPEN
+    ),
+    Survey(
+        24,
+        "Bandara Husein Sastranegara - Akses Rusak",
+        "Jalan akses ke bandara berlobang",
+        -6.9088,
+        107.6825,
+        SurveyStatus.VERIFIED
+    ),
+    Survey(
+        25,
+        "Kawasan Sunter - Drainase Penuh",
+        "Drainase penuh sampah dan lumpur",
+        -6.8676,
+        107.6452,
+        SurveyStatus.OPEN
+    ),
+    Survey(
+        26,
+        "Jalan Ganesha - Jalur Sepeda Rusak",
+        "Jalur sepeda retak dan tidak rata",
+        -6.8819,
+        107.6110,
+        SurveyStatus.OPEN
+    ),
+    Survey(
+        27,
+        "Cihampelas Area - Lampu Jalan Mati",
+        "8 lampu jalan tidak menyala",
+        -6.8937,
+        107.5950,
+        SurveyStatus.VERIFIED
+    ),
+    Survey(
+        28,
+        "Jalan Peta - Perkerasan Aus",
+        "Perkerasan aspal aus dan mengecil",
+        -6.9006,
+        107.5894,
+        SurveyStatus.REJECTED
+    ),
+    Survey(
+        29,
+        "Kawasan Cibadak - Saluran Rusak",
+        "Saluran air retak dan bergeser",
+        -6.9425,
+        107.6185,
+        SurveyStatus.OPEN
+    ),
+    Survey(
+        30,
+        "Jalan Tangkuban Perahu - Garis Marka Hilang",
+        "Marka jalan sudah sangat pudar",
+        -6.8802,
+        107.6028,
+        SurveyStatus.OPEN
+    ),
+    Survey(
+        31,
+        "Bandung Kulon - Bahu Jalan Ambles",
+        "Bahu jalan turun 15cm di sisi kiri",
+        -6.9312,
+        107.5754,
+        SurveyStatus.VERIFIED
+    ),
+    Survey(
+        32,
+        "Jalan Setiabudi - Kerusakan Parah",
+        "Aspal retak dan berlubang bersamaan",
+        -6.8745,
+        107.6181,
+        SurveyStatus.OPEN
+    ),
+    Survey(
+        33,
+        "Kawasan Lembang - Drainase Buntu",
+        "Gorong-gorong tersumbat total",
+        -6.8201,
+        107.6149,
+        SurveyStatus.OPEN
+    ),
+    Survey(
+        34,
+        "Jalan Cikutra - Rambu Hilang",
+        "Rambu lalu lintas tidak ada di simpang",
+        -6.8980,
+        107.5880,
+        SurveyStatus.REJECTED
+    ),
+    Survey(
+        35,
+        "Kawasan Merdeka - Polusi Air Jalan",
+        "Air jalan berbau dan berwarna gelap",
+        -6.9134,
+        107.5998,
+        SurveyStatus.OPEN
+    ),
+    Survey(
+        36,
+        "Jalan Lengkong - Lubang Semakin Besar",
+        "Lubang diameter 70cm, sangat berbahaya",
+        -6.9289,
+        107.5715,
+        SurveyStatus.VERIFIED
+    ),
+    Survey(
+        37,
+        "Bandung Timur - Banjir Genangan",
+        "Genangan tinggi 50cm rutin terjadi",
+        -6.8654,
+        107.6748,
+        SurveyStatus.OPEN
+    ),
+    Survey(
+        38,
+        "Jalan Suniaraja - Aspal Berombang",
+        "Permukaan aspal tidak rata",
+        -6.8834,
+        107.6032,
+        SurveyStatus.OPEN
+    ),
+    Survey(
+        39,
+        "Kawasan Jatinangor - Lampu Rusak",
+        "Lampu jalan penyok dan tidak menyala",
+        -6.9545,
+        107.7894,
+        SurveyStatus.REJECTED
+    ),
+    Survey(
+        40,
+        "Jalan Batu Karya - Doline Mulai Terbentuk",
+        "Turun drastis, indikasi gua di bawah",
+        -6.9076,
+        107.5924,
+        SurveyStatus.OPEN
+    ),
 
     // Surabaya Area (41-60)
-    Survey(41, "Jalan Ahmad Yani - Lubang Parah", "Lubang diameter 80cm, sangat membahayakan", -7.2575, 112.7521, SurveyStatus.OPEN),
-    Survey(42, "Kawasan Darmo - Aspal Retak Total", "Aspal retak retakan di mana-mana", -7.2381, 112.7418, SurveyStatus.VERIFIED),
-    Survey(43, "Jalan Raya Kenjeran - Banjir Musiman", "Banjir setiap musim hujan, tinggi 60cm", -7.1768, 112.7648, SurveyStatus.OPEN),
-    Survey(44, "Surabaya Pusat - Lampu Jalan Mati", "15 lampu jalan padam di kawasan pusat", -7.2575, 112.7446, SurveyStatus.REJECTED),
-    Survey(45, "Jalan Jagir - Perkerasan Aus", "Perkerasan sudah tipis, beton terlihat", -7.2289, 112.7389, SurveyStatus.OPEN),
-    Survey(46, "Kawasan Manukan - Drainase Penuh Lumpur", "Saluran tidak berfungsi, penuh limbah", -7.2146, 112.8048, SurveyStatus.VERIFIED),
-    Survey(47, "Jalan Manyar - Jalur Bus Rusak", "Jalur khusus bus sudah hancur", -7.2397, 112.7603, SurveyStatus.OPEN),
-    Survey(48, "Suramadu Area - Akses Terputus", "Akses jembatan terputus sementara", -7.2117, 112.7566, SurveyStatus.OPEN),
-    Survey(49, "Jalan Darmahusada - Rambu Tidak Terlihat", "Rambu tertutup pohon dan debu", -7.2513, 112.7495, SurveyStatus.REJECTED),
-    Survey(50, "Kawasan Ngagel - Bahu Jalan Amblas", "Bahu jalan empis sejauh 1 meter", -7.2630, 112.7680, SurveyStatus.OPEN),
-    Survey(51, "Jalan Pemuda - Genangan Rutinitas", "Genangan air 35cm setiap hari hujan", -7.2485, 112.7504, SurveyStatus.VERIFIED),
-    Survey(52, "Suramadu - Lampu Mati Banyak", "Lampu penerangan jembatan padam", -7.2158, 112.7512, SurveyStatus.OPEN),
-    Survey(53, "Jalan Kembang Jepun - Aspal Berlapis", "Aspal sudah berlapis tebal", -7.2584, 112.7428, SurveyStatus.OPEN),
-    Survey(54, "Kawasan Dharmahusada - Kerusakan Struktural", "Kerusakan sudah menyentuh beton dasar", -7.2508, 112.7513, SurveyStatus.REJECTED),
-    Survey(55, "Jalan Gundih - Drainase Buntu Total", "Gorong-gorong tersumbat material berat", -7.2397, 112.7689, SurveyStatus.OPEN),
-    Survey(56, "Surabaya Selatan - Banjir Rob", "Genangan air asin dari laut, merusak aspal", -7.2750, 112.7589, SurveyStatus.VERIFIED),
-    Survey(57, "Jalan Tunjungan - Marka Jalan Hilang", "Marka tidak terlihat sama sekali", -7.2533, 112.7468, SurveyStatus.OPEN),
-    Survey(58, "Kawasan Rungkut - Lubang Membesar", "Lubang berkembang menjadi diameter 90cm", -7.3035, 112.7805, SurveyStatus.OPEN),
-    Survey(59, "Jalan Urip Sumoharjo - Lampu Rusak Penyok", "Lampu banyak yang penyok dan tidak menyala", -7.2485, 112.7556, SurveyStatus.REJECTED),
-    Survey(60, "Surabaya Utara - Aspal Bergelombang", "Aspal bergelombang di jalan utama", -7.1856, 112.7451, SurveyStatus.OPEN),
+    Survey(
+        41,
+        "Jalan Ahmad Yani - Lubang Parah",
+        "Lubang diameter 80cm, sangat membahayakan",
+        -7.2575,
+        112.7521,
+        SurveyStatus.OPEN
+    ),
+    Survey(
+        42,
+        "Kawasan Darmo - Aspal Retak Total",
+        "Aspal retak retakan di mana-mana",
+        -7.2381,
+        112.7418,
+        SurveyStatus.VERIFIED
+    ),
+    Survey(
+        43,
+        "Jalan Raya Kenjeran - Banjir Musiman",
+        "Banjir setiap musim hujan, tinggi 60cm",
+        -7.1768,
+        112.7648,
+        SurveyStatus.OPEN
+    ),
+    Survey(
+        44,
+        "Surabaya Pusat - Lampu Jalan Mati",
+        "15 lampu jalan padam di kawasan pusat",
+        -7.2575,
+        112.7446,
+        SurveyStatus.REJECTED
+    ),
+    Survey(
+        45,
+        "Jalan Jagir - Perkerasan Aus",
+        "Perkerasan sudah tipis, beton terlihat",
+        -7.2289,
+        112.7389,
+        SurveyStatus.OPEN
+    ),
+    Survey(
+        46,
+        "Kawasan Manukan - Drainase Penuh Lumpur",
+        "Saluran tidak berfungsi, penuh limbah",
+        -7.2146,
+        112.8048,
+        SurveyStatus.VERIFIED
+    ),
+    Survey(
+        47,
+        "Jalan Manyar - Jalur Bus Rusak",
+        "Jalur khusus bus sudah hancur",
+        -7.2397,
+        112.7603,
+        SurveyStatus.OPEN
+    ),
+    Survey(
+        48,
+        "Suramadu Area - Akses Terputus",
+        "Akses jembatan terputus sementara",
+        -7.2117,
+        112.7566,
+        SurveyStatus.OPEN
+    ),
+    Survey(
+        49,
+        "Jalan Darmahusada - Rambu Tidak Terlihat",
+        "Rambu tertutup pohon dan debu",
+        -7.2513,
+        112.7495,
+        SurveyStatus.REJECTED
+    ),
+    Survey(
+        50,
+        "Kawasan Ngagel - Bahu Jalan Amblas",
+        "Bahu jalan empis sejauh 1 meter",
+        -7.2630,
+        112.7680,
+        SurveyStatus.OPEN
+    ),
+    Survey(
+        51,
+        "Jalan Pemuda - Genangan Rutinitas",
+        "Genangan air 35cm setiap hari hujan",
+        -7.2485,
+        112.7504,
+        SurveyStatus.VERIFIED
+    ),
+    Survey(
+        52,
+        "Suramadu - Lampu Mati Banyak",
+        "Lampu penerangan jembatan padam",
+        -7.2158,
+        112.7512,
+        SurveyStatus.OPEN
+    ),
+    Survey(
+        53,
+        "Jalan Kembang Jepun - Aspal Berlapis",
+        "Aspal sudah berlapis tebal",
+        -7.2584,
+        112.7428,
+        SurveyStatus.OPEN
+    ),
+    Survey(
+        54,
+        "Kawasan Dharmahusada - Kerusakan Struktural",
+        "Kerusakan sudah menyentuh beton dasar",
+        -7.2508,
+        112.7513,
+        SurveyStatus.REJECTED
+    ),
+    Survey(
+        55,
+        "Jalan Gundih - Drainase Buntu Total",
+        "Gorong-gorong tersumbat material berat",
+        -7.2397,
+        112.7689,
+        SurveyStatus.OPEN
+    ),
+    Survey(
+        56,
+        "Surabaya Selatan - Banjir Rob",
+        "Genangan air asin dari laut, merusak aspal",
+        -7.2750,
+        112.7589,
+        SurveyStatus.VERIFIED
+    ),
+    Survey(
+        57,
+        "Jalan Tunjungan - Marka Jalan Hilang",
+        "Marka tidak terlihat sama sekali",
+        -7.2533,
+        112.7468,
+        SurveyStatus.OPEN
+    ),
+    Survey(
+        58,
+        "Kawasan Rungkut - Lubang Membesar",
+        "Lubang berkembang menjadi diameter 90cm",
+        -7.3035,
+        112.7805,
+        SurveyStatus.OPEN
+    ),
+    Survey(
+        59,
+        "Jalan Urip Sumoharjo - Lampu Rusak Penyok",
+        "Lampu banyak yang penyok dan tidak menyala",
+        -7.2485,
+        112.7556,
+        SurveyStatus.REJECTED
+    ),
+    Survey(
+        60,
+        "Surabaya Utara - Aspal Bergelombang",
+        "Aspal bergelombang di jalan utama",
+        -7.1856,
+        112.7451,
+        SurveyStatus.OPEN
+    ),
 
     // Medan Area (61-80)
-    Survey(61, "Jalan Gatot Subroto - Banjir Parah", "Banjir tinggi 70cm menghalangi lalu lintas", 2.1951, 98.6722, SurveyStatus.OPEN),
-    Survey(62, "Kawasan Petisah - Aspal Hancur", "Aspal sudah tidak utuh sama sekali", 2.2005, 98.6564, SurveyStatus.VERIFIED),
-    Survey(63, "Jalan Sudirman - Lubang Membahayakan", "Lubang diameter 75cm di jalur utama", 2.1910, 98.6690, SurveyStatus.OPEN),
-    Survey(64, "Medan Pusat - Lampu Jalan Mayoritas Mati", "20 lampu jalan tidak berfungsi", 2.1944, 98.6742, SurveyStatus.REJECTED),
-    Survey(65, "Jalan Sisingamangaraja - Drainase Macet", "Saluran air tersumbat limbah industri", 2.1876, 98.6745, SurveyStatus.OPEN),
-    Survey(66, "Kawasan Petisah Hulu - Kegemeteraan Luar Biasa", "Jalan bergetar hebat saat ada truk", 2.2043, 98.6598, SurveyStatus.VERIFIED),
-    Survey(67, "Jalan Merdeka - Perkerasan Retak", "Perkerasan batu bata retak parah", 2.1967, 98.6812, SurveyStatus.OPEN),
-    Survey(68, "Medan Timur - Bahu Jalan Bolong", "Bahu jalan ada lubang dalam, sangat bahaya", 2.2078, 98.6898, SurveyStatus.OPEN),
-    Survey(69, "Jalan Blahkuta - Rambu Hilang", "Rambu lalu lintas tidak ada di persimpangan", 2.1904, 98.6645, SurveyStatus.REJECTED),
-    Survey(70, "Kawasan Pringgan - Aspal Aus", "Aspal sudah sangat tipis", 2.2034, 98.6525, SurveyStatus.OPEN),
-    Survey(71, "Jalan Pelabuhan - Genangan Rutin", "Genangan air 45cm setiap hujan", 2.1678, 98.6956, SurveyStatus.VERIFIED),
-    Survey(72, "Medan Barat - Lampu Padam Total", "Lampu jalan 8 unit semuanya mati", 2.1826, 98.6489, SurveyStatus.OPEN),
-    Survey(73, "Jalan Putut Tengah - Garis Marka Pudar", "Marka jalan sudah tidak terlihat", 2.1945, 98.6734, SurveyStatus.OPEN),
-    Survey(74, "Kawasan Sampali - Doline Terbentuk", "Turun drastis, indikasi gua atau pipa retak", 2.2145, 98.7012, SurveyStatus.REJECTED),
-    Survey(75, "Jalan Besitang - Banjir Kiriman", "Air meluap dari saluran induk ke jalan", 2.2087, 98.6734, SurveyStatus.OPEN),
-    Survey(76, "Medan Selatan - Aspal Berlapis Tebal", "Aspal sudah berlapis hingga 10cm", 2.1745, 98.6678, SurveyStatus.VERIFIED),
-    Survey(77, "Jalan Cemara - Lubang Semakin Parah", "Lubang berkembang menjadi diameter 85cm", 2.1968, 98.6823, SurveyStatus.OPEN),
-    Survey(78, "Kawasan Kampus USU - Drainase Buntu", "Gorong-gorong tersumbat sampah organik", 2.1131, 98.6708, SurveyStatus.OPEN),
-    Survey(79, "Jalan Pelajar - Lampu Rusak Penyok", "Lampu penerangan jalan banyak penyok", 2.1876, 98.6812, SurveyStatus.REJECTED),
-    Survey(80, "Medan Utara - Kerusakan Parah Merata", "Kerusakan di hampir semua titik jalan", 2.1567, 98.6745, SurveyStatus.OPEN),
+    Survey(
+        61,
+        "Jalan Gatot Subroto - Banjir Parah",
+        "Banjir tinggi 70cm menghalangi lalu lintas",
+        2.1951,
+        98.6722,
+        SurveyStatus.OPEN
+    ),
+    Survey(
+        62,
+        "Kawasan Petisah - Aspal Hancur",
+        "Aspal sudah tidak utuh sama sekali",
+        2.2005,
+        98.6564,
+        SurveyStatus.VERIFIED
+    ),
+    Survey(
+        63,
+        "Jalan Sudirman - Lubang Membahayakan",
+        "Lubang diameter 75cm di jalur utama",
+        2.1910,
+        98.6690,
+        SurveyStatus.OPEN
+    ),
+    Survey(
+        64,
+        "Medan Pusat - Lampu Jalan Mayoritas Mati",
+        "20 lampu jalan tidak berfungsi",
+        2.1944,
+        98.6742,
+        SurveyStatus.REJECTED
+    ),
+    Survey(
+        65,
+        "Jalan Sisingamangaraja - Drainase Macet",
+        "Saluran air tersumbat limbah industri",
+        2.1876,
+        98.6745,
+        SurveyStatus.OPEN
+    ),
+    Survey(
+        66,
+        "Kawasan Petisah Hulu - Kegemeteraan Luar Biasa",
+        "Jalan bergetar hebat saat ada truk",
+        2.2043,
+        98.6598,
+        SurveyStatus.VERIFIED
+    ),
+    Survey(
+        67,
+        "Jalan Merdeka - Perkerasan Retak",
+        "Perkerasan batu bata retak parah",
+        2.1967,
+        98.6812,
+        SurveyStatus.OPEN
+    ),
+    Survey(
+        68,
+        "Medan Timur - Bahu Jalan Bolong",
+        "Bahu jalan ada lubang dalam, sangat bahaya",
+        2.2078,
+        98.6898,
+        SurveyStatus.OPEN
+    ),
+    Survey(
+        69,
+        "Jalan Blahkuta - Rambu Hilang",
+        "Rambu lalu lintas tidak ada di persimpangan",
+        2.1904,
+        98.6645,
+        SurveyStatus.REJECTED
+    ),
+    Survey(
+        70,
+        "Kawasan Pringgan - Aspal Aus",
+        "Aspal sudah sangat tipis",
+        2.2034,
+        98.6525,
+        SurveyStatus.OPEN
+    ),
+    Survey(
+        71,
+        "Jalan Pelabuhan - Genangan Rutin",
+        "Genangan air 45cm setiap hujan",
+        2.1678,
+        98.6956,
+        SurveyStatus.VERIFIED
+    ),
+    Survey(
+        72,
+        "Medan Barat - Lampu Padam Total",
+        "Lampu jalan 8 unit semuanya mati",
+        2.1826,
+        98.6489,
+        SurveyStatus.OPEN
+    ),
+    Survey(
+        73,
+        "Jalan Putut Tengah - Garis Marka Pudar",
+        "Marka jalan sudah tidak terlihat",
+        2.1945,
+        98.6734,
+        SurveyStatus.OPEN
+    ),
+    Survey(
+        74,
+        "Kawasan Sampali - Doline Terbentuk",
+        "Turun drastis, indikasi gua atau pipa retak",
+        2.2145,
+        98.7012,
+        SurveyStatus.REJECTED
+    ),
+    Survey(
+        75,
+        "Jalan Besitang - Banjir Kiriman",
+        "Air meluap dari saluran induk ke jalan",
+        2.2087,
+        98.6734,
+        SurveyStatus.OPEN
+    ),
+    Survey(
+        76,
+        "Medan Selatan - Aspal Berlapis Tebal",
+        "Aspal sudah berlapis hingga 10cm",
+        2.1745,
+        98.6678,
+        SurveyStatus.VERIFIED
+    ),
+    Survey(
+        77,
+        "Jalan Cemara - Lubang Semakin Parah",
+        "Lubang berkembang menjadi diameter 85cm",
+        2.1968,
+        98.6823,
+        SurveyStatus.OPEN
+    ),
+    Survey(
+        78,
+        "Kawasan Kampus USU - Drainase Buntu",
+        "Gorong-gorong tersumbat sampah organik",
+        2.1131,
+        98.6708,
+        SurveyStatus.OPEN
+    ),
+    Survey(
+        79,
+        "Jalan Pelajar - Lampu Rusak Penyok",
+        "Lampu penerangan jalan banyak penyok",
+        2.1876,
+        98.6812,
+        SurveyStatus.REJECTED
+    ),
+    Survey(
+        80,
+        "Medan Utara - Kerusakan Parah Merata",
+        "Kerusakan di hampir semua titik jalan",
+        2.1567,
+        98.6745,
+        SurveyStatus.OPEN
+    ),
 
     // Makassar Area (81-100)
-    Survey(81, "Jalan Urip Sumoharjo - Banjir Besar", "Banjir tinggi 80cm mengganggu lalu lintas", -5.1477, 119.4327, SurveyStatus.OPEN),
-    Survey(82, "Kawasan Panakkukang - Aspal Hancur Total", "Aspal sudah tidak bisa digunakan", -5.1534, 119.4204, SurveyStatus.VERIFIED),
-    Survey(83, "Jalan Ahmad Yani - Lubang Sangat Besar", "Lubang diameter 90cm, bahaya luar biasa", -5.1645, 119.4156, SurveyStatus.OPEN),
-    Survey(84, "Makassar Pusat - Lampu Jalan 25 Unit Mati", "Pencahayaan jalan sangat minim", -5.1477, 119.4327, SurveyStatus.REJECTED),
-    Survey(85, "Jalan Somba Opu - Drainase Macet Parah", "Saluran air tidak berfungsi sama sekali", -5.1456, 119.4389, SurveyStatus.OPEN),
-    Survey(86, "Kawasan Tallo - Kegemeteraan Ekstrem", "Jalan bergetar sangat hebat", -5.0945, 119.4512, SurveyStatus.VERIFIED),
-    Survey(87, "Jalan Rappocini - Perkerasan Retak Masif", "Perkerasan retak di mana-mana", -5.1723, 119.4234, SurveyStatus.OPEN),
-    Survey(88, "Makassar Timur - Bahu Jalan Amblas Luas", "Bahu jalan amblas sejauh 3 meter", -5.1634, 119.4567, SurveyStatus.OPEN),
-    Survey(89, "Jalan Perintis Kemerdekaan - Rambu Tidak Ada", "Rambu lalu lintas hilang di beberapa titik", -5.1523, 119.4401, SurveyStatus.REJECTED),
-    Survey(90, "Kawasan Mariso - Aspal Tipis Sekali", "Aspal sudah sangat tipis, beton muncul", -5.1398, 119.4156, SurveyStatus.OPEN),
-    Survey(91, "Jalan Penghibur - Genangan Dalam", "Genangan air 55cm saat hujan normal", -5.1612, 119.4289, SurveyStatus.VERIFIED),
-    Survey(92, "Makassar Barat - Lampu Padam Parah", "Lampu jalan 12 unit semuanya tidak menyala", -5.1456, 119.4023, SurveyStatus.OPEN),
-    Survey(93, "Jalan Gunung Lompobatang - Marka Sangat Pudar", "Marka jalan sudah tidak terlihat", -5.1534, 119.4234, SurveyStatus.OPEN),
-    Survey(94, "Kawasan Wajo - Doline Sudah Berbahaya", "Turun drastis, sangat membahayakan", -5.1623, 119.4312, SurveyStatus.REJECTED),
-    Survey(95, "Jalan Pengayoman - Banjir Genangan", "Genangan air 60cm rutin setiap musim hujan", -5.1445, 119.4178, SurveyStatus.OPEN),
-    Survey(96, "Makassar Selatan - Aspal Berlapis Sangat Tebal", "Aspal berlapis hingga 12cm", -5.1834, 119.4145, SurveyStatus.VERIFIED),
-    Survey(97, "Jalan Nusantara - Lubang Membesar Cepat", "Lubang berkembang menjadi diameter 100cm", -5.1612, 119.4023, SurveyStatus.OPEN),
-    Survey(98, "Kawasan Biringkanaya - Drainase Buntu Total", "Gorong-gorong tidak berfungsi", -5.1745, 119.4389, SurveyStatus.OPEN),
-    Survey(99, "Jalan Syech Yusuf - Lampu Penyok Banyak", "Lampu penerangan jalan mayoritas rusak", -5.1567, 119.4234, SurveyStatus.REJECTED),
-    Survey(100, "Makassar Utara - Kerusakan Menyeluruh", "Kerusakan parah di hampir semua ruas", -5.0923, 119.4234, SurveyStatus.OPEN),
+    Survey(
+        81,
+        "Jalan Urip Sumoharjo - Banjir Besar",
+        "Banjir tinggi 80cm mengganggu lalu lintas",
+        -5.1477,
+        119.4327,
+        SurveyStatus.OPEN
+    ),
+    Survey(
+        82,
+        "Kawasan Panakkukang - Aspal Hancur Total",
+        "Aspal sudah tidak bisa digunakan",
+        -5.1534,
+        119.4204,
+        SurveyStatus.VERIFIED
+    ),
+    Survey(
+        83,
+        "Jalan Ahmad Yani - Lubang Sangat Besar",
+        "Lubang diameter 90cm, bahaya luar biasa",
+        -5.1645,
+        119.4156,
+        SurveyStatus.OPEN
+    ),
+    Survey(
+        84,
+        "Makassar Pusat - Lampu Jalan 25 Unit Mati",
+        "Pencahayaan jalan sangat minim",
+        -5.1477,
+        119.4327,
+        SurveyStatus.REJECTED
+    ),
+    Survey(
+        85,
+        "Jalan Somba Opu - Drainase Macet Parah",
+        "Saluran air tidak berfungsi sama sekali",
+        -5.1456,
+        119.4389,
+        SurveyStatus.OPEN
+    ),
+    Survey(
+        86,
+        "Kawasan Tallo - Kegemeteraan Ekstrem",
+        "Jalan bergetar sangat hebat",
+        -5.0945,
+        119.4512,
+        SurveyStatus.VERIFIED
+    ),
+    Survey(
+        87,
+        "Jalan Rappocini - Perkerasan Retak Masif",
+        "Perkerasan retak di mana-mana",
+        -5.1723,
+        119.4234,
+        SurveyStatus.OPEN
+    ),
+    Survey(
+        88,
+        "Makassar Timur - Bahu Jalan Amblas Luas",
+        "Bahu jalan amblas sejauh 3 meter",
+        -5.1634,
+        119.4567,
+        SurveyStatus.OPEN
+    ),
+    Survey(
+        89,
+        "Jalan Perintis Kemerdekaan - Rambu Tidak Ada",
+        "Rambu lalu lintas hilang di beberapa titik",
+        -5.1523,
+        119.4401,
+        SurveyStatus.REJECTED
+    ),
+    Survey(
+        90,
+        "Kawasan Mariso - Aspal Tipis Sekali",
+        "Aspal sudah sangat tipis, beton muncul",
+        -5.1398,
+        119.4156,
+        SurveyStatus.OPEN
+    ),
+    Survey(
+        91,
+        "Jalan Penghibur - Genangan Dalam",
+        "Genangan air 55cm saat hujan normal",
+        -5.1612,
+        119.4289,
+        SurveyStatus.VERIFIED
+    ),
+    Survey(
+        92,
+        "Makassar Barat - Lampu Padam Parah",
+        "Lampu jalan 12 unit semuanya tidak menyala",
+        -5.1456,
+        119.4023,
+        SurveyStatus.OPEN
+    ),
+    Survey(
+        93,
+        "Jalan Gunung Lompobatang - Marka Sangat Pudar",
+        "Marka jalan sudah tidak terlihat",
+        -5.1534,
+        119.4234,
+        SurveyStatus.OPEN
+    ),
+    Survey(
+        94,
+        "Kawasan Wajo - Doline Sudah Berbahaya",
+        "Turun drastis, sangat membahayakan",
+        -5.1623,
+        119.4312,
+        SurveyStatus.REJECTED
+    ),
+    Survey(
+        95,
+        "Jalan Pengayoman - Banjir Genangan",
+        "Genangan air 60cm rutin setiap musim hujan",
+        -5.1445,
+        119.4178,
+        SurveyStatus.OPEN
+    ),
+    Survey(
+        96,
+        "Makassar Selatan - Aspal Berlapis Sangat Tebal",
+        "Aspal berlapis hingga 12cm",
+        -5.1834,
+        119.4145,
+        SurveyStatus.VERIFIED
+    ),
+    Survey(
+        97,
+        "Jalan Nusantara - Lubang Membesar Cepat",
+        "Lubang berkembang menjadi diameter 100cm",
+        -5.1612,
+        119.4023,
+        SurveyStatus.OPEN
+    ),
+    Survey(
+        98,
+        "Kawasan Biringkanaya - Drainase Buntu Total",
+        "Gorong-gorong tidak berfungsi",
+        -5.1745,
+        119.4389,
+        SurveyStatus.OPEN
+    ),
+    Survey(
+        99,
+        "Jalan Syech Yusuf - Lampu Penyok Banyak",
+        "Lampu penerangan jalan mayoritas rusak",
+        -5.1567,
+        119.4234,
+        SurveyStatus.REJECTED
+    ),
+    Survey(
+        100,
+        "Makassar Utara - Kerusakan Menyeluruh",
+        "Kerusakan parah di hampir semua ruas",
+        -5.0923,
+        119.4234,
+        SurveyStatus.OPEN
+    ),
 
     // Yogyakarta Area (101-120)
-    Survey(101, "Jalan Jenderal Sudirman - Banjir Setinggi 50cm", "Banjir rutin menghalangi kendaraan besar", -7.8008, 110.3689, SurveyStatus.OPEN),
-    Survey(102, "Kawasan Janti - Aspal Retak Parah", "Aspal retak di mana-mana, berbahaya", -7.7945, 110.4012, SurveyStatus.VERIFIED),
-    Survey(103, "Jalan Malioboro - Lubang Kecil Menjadi Besar", "Lubang diameter 70cm di jalur turis", -7.7905, 110.3699, SurveyStatus.OPEN),
-    Survey(104, "Yogyakarta Pusat - Lampu Jalan 18 Unit Mati", "Pencahayaan jalan kurang di pusat kota", -7.7956, 110.3688, SurveyStatus.REJECTED),
-    Survey(105, "Jalan Affandi - Drainase Tersumbat Sampah", "Saluran air penuh sampah organik", -7.8156, 110.3834, SurveyStatus.OPEN),
-    Survey(106, "Kawasan Mlati - Kegemeteraan Luar Biasa", "Jalan bergetar sangat keras saat ada truk", -7.7823, 110.3456, SurveyStatus.VERIFIED),
-    Survey(107, "Jalan Gejayan - Perkerasan Retak Masif", "Perkerasan batu retak parah", -7.8045, 110.3767, SurveyStatus.OPEN),
-    Survey(108, "Yogyakarta Timur - Bahu Jalan Amblas", "Bahu jalan turun 20cm di sisi kanan", -7.8134, 110.4156, SurveyStatus.OPEN),
-    Survey(109, "Jalan Sultan Agung - Rambu Tidak Ada", "Rambu lalu lintas hilang di persimpangan", -7.8012, 110.3645, SurveyStatus.REJECTED),
-    Survey(110, "Kawasan Sleman - Aspal Sangat Tipis", "Aspal sudah tipis, beton dasar terlihat", -7.7234, 110.3890, SurveyStatus.OPEN),
-    Survey(111, "Jalan Colombo - Genangan Air Dalam", "Genangan air 40cm saat hujan sedang", -7.8045, 110.3923, SurveyStatus.VERIFIED),
-    Survey(112, "Yogyakarta Barat - Lampu Jalan 10 Unit Padam", "Lampu penerangan sangat minim", -7.8112, 110.3234, SurveyStatus.OPEN),
-    Survey(113, "Jalan Borobudur - Marka Jalan Hilang", "Marka jalan tidak terlihat di malam hari", -7.8234, 110.3478, SurveyStatus.OPEN),
-    Survey(114, "Kawasan Pandansari - Doline Mulai Terbentuk", "Indikasi gua atau pipa bawah tanah retak", -7.8345, 110.3556, SurveyStatus.REJECTED),
-    Survey(115, "Jalan Laksda Adisucipto - Banjir Kiriman", "Air meluap dari saluran induk", -7.7945, 110.4089, SurveyStatus.OPEN),
-    Survey(116, "Yogyakarta Selatan - Aspal Berlapis 9cm", "Aspal sudah berlapis sangat tebal", -7.8345, 110.3867, SurveyStatus.VERIFIED),
-    Survey(117, "Jalan Pangeran Diponegoro - Lubang Berkembang", "Lubang diameter 75cm terus membesar", -7.8067, 110.3712, SurveyStatus.OPEN),
-    Survey(118, "Kawasan Depok - Drainase Buntu Total", "Gorong-gorong tidak berfungsi sama sekali", -7.8234, 110.4123, SurveyStatus.OPEN),
-    Survey(119, "Jalan Urip Sumoharjo - Lampu Penyok", "Lampu penerangan banyak yang rusak", -7.8145, 110.3834, SurveyStatus.REJECTED),
-    Survey(120, "Yogyakarta Utara - Kerusakan Menyeluruh", "Kerusakan parah di banyak ruas jalan", -7.7456, 110.3845, SurveyStatus.OPEN),
+    Survey(
+        101,
+        "Jalan Jenderal Sudirman - Banjir Setinggi 50cm",
+        "Banjir rutin menghalangi kendaraan besar",
+        -7.8008,
+        110.3689,
+        SurveyStatus.OPEN
+    ),
+    Survey(
+        102,
+        "Kawasan Janti - Aspal Retak Parah",
+        "Aspal retak di mana-mana, berbahaya",
+        -7.7945,
+        110.4012,
+        SurveyStatus.VERIFIED
+    ),
+    Survey(
+        103,
+        "Jalan Malioboro - Lubang Kecil Menjadi Besar",
+        "Lubang diameter 70cm di jalur turis",
+        -7.7905,
+        110.3699,
+        SurveyStatus.OPEN
+    ),
+    Survey(
+        104,
+        "Yogyakarta Pusat - Lampu Jalan 18 Unit Mati",
+        "Pencahayaan jalan kurang di pusat kota",
+        -7.7956,
+        110.3688,
+        SurveyStatus.REJECTED
+    ),
+    Survey(
+        105,
+        "Jalan Affandi - Drainase Tersumbat Sampah",
+        "Saluran air penuh sampah organik",
+        -7.8156,
+        110.3834,
+        SurveyStatus.OPEN
+    ),
+    Survey(
+        106,
+        "Kawasan Mlati - Kegemeteraan Luar Biasa",
+        "Jalan bergetar sangat keras saat ada truk",
+        -7.7823,
+        110.3456,
+        SurveyStatus.VERIFIED
+    ),
+    Survey(
+        107,
+        "Jalan Gejayan - Perkerasan Retak Masif",
+        "Perkerasan batu retak parah",
+        -7.8045,
+        110.3767,
+        SurveyStatus.OPEN
+    ),
+    Survey(
+        108,
+        "Yogyakarta Timur - Bahu Jalan Amblas",
+        "Bahu jalan turun 20cm di sisi kanan",
+        -7.8134,
+        110.4156,
+        SurveyStatus.OPEN
+    ),
+    Survey(
+        109,
+        "Jalan Sultan Agung - Rambu Tidak Ada",
+        "Rambu lalu lintas hilang di persimpangan",
+        -7.8012,
+        110.3645,
+        SurveyStatus.REJECTED
+    ),
+    Survey(
+        110,
+        "Kawasan Sleman - Aspal Sangat Tipis",
+        "Aspal sudah tipis, beton dasar terlihat",
+        -7.7234,
+        110.3890,
+        SurveyStatus.OPEN
+    ),
+    Survey(
+        111,
+        "Jalan Colombo - Genangan Air Dalam",
+        "Genangan air 40cm saat hujan sedang",
+        -7.8045,
+        110.3923,
+        SurveyStatus.VERIFIED
+    ),
+    Survey(
+        112,
+        "Yogyakarta Barat - Lampu Jalan 10 Unit Padam",
+        "Lampu penerangan sangat minim",
+        -7.8112,
+        110.3234,
+        SurveyStatus.OPEN
+    ),
+    Survey(
+        113,
+        "Jalan Borobudur - Marka Jalan Hilang",
+        "Marka jalan tidak terlihat di malam hari",
+        -7.8234,
+        110.3478,
+        SurveyStatus.OPEN
+    ),
+    Survey(
+        114,
+        "Kawasan Pandansari - Doline Mulai Terbentuk",
+        "Indikasi gua atau pipa bawah tanah retak",
+        -7.8345,
+        110.3556,
+        SurveyStatus.REJECTED
+    ),
+    Survey(
+        115,
+        "Jalan Laksda Adisucipto - Banjir Kiriman",
+        "Air meluap dari saluran induk",
+        -7.7945,
+        110.4089,
+        SurveyStatus.OPEN
+    ),
+    Survey(
+        116,
+        "Yogyakarta Selatan - Aspal Berlapis 9cm",
+        "Aspal sudah berlapis sangat tebal",
+        -7.8345,
+        110.3867,
+        SurveyStatus.VERIFIED
+    ),
+    Survey(
+        117,
+        "Jalan Pangeran Diponegoro - Lubang Berkembang",
+        "Lubang diameter 75cm terus membesar",
+        -7.8067,
+        110.3712,
+        SurveyStatus.OPEN
+    ),
+    Survey(
+        118,
+        "Kawasan Depok - Drainase Buntu Total",
+        "Gorong-gorong tidak berfungsi sama sekali",
+        -7.8234,
+        110.4123,
+        SurveyStatus.OPEN
+    ),
+    Survey(
+        119,
+        "Jalan Urip Sumoharjo - Lampu Penyok",
+        "Lampu penerangan banyak yang rusak",
+        -7.8145,
+        110.3834,
+        SurveyStatus.REJECTED
+    ),
+    Survey(
+        120,
+        "Yogyakarta Utara - Kerusakan Menyeluruh",
+        "Kerusakan parah di banyak ruas jalan",
+        -7.7456,
+        110.3845,
+        SurveyStatus.OPEN
+    ),
 
     // Palembang Area (121-140)
-    Survey(121, "Jalan Jenderal Sudirman - Banjir 75cm", "Banjir tinggi menghalangi akses jalan", -2.9708, 104.7469, SurveyStatus.OPEN),
-    Survey(122, "Kawasan Ilir - Aspal Hancur Parah", "Aspal sudah tidak dapat digunakan", -2.9523, 104.7612, SurveyStatus.VERIFIED),
-    Survey(123, "Jalan Merdeka - Lubang Diameter 95cm", "Lubang sangat besar di jalur utama", -2.9567, 104.7545, SurveyStatus.OPEN),
-    Survey(124, "Palembang Pusat - Lampu Jalan 22 Unit Mati", "Pencahayaan jalan sangat kurang", -2.9708, 104.7469, SurveyStatus.REJECTED),
-    Survey(125, "Jalan Rajawali - Drainase Macet Total", "Saluran air tidak berfungsi", -2.9634, 104.7534, SurveyStatus.OPEN),
-    Survey(126, "Kawasan Ogan Ilir - Kegemeteraan Parah", "Jalan bergetar luar biasa saat ada beban", -2.9745, 104.7678, SurveyStatus.VERIFIED),
-    Survey(127, "Jalan Sultan Thaha - Perkerasan Retak Masif", "Perkerasan retak di mana-mana", -2.9456, 104.7623, SurveyStatus.OPEN),
-    Survey(128, "Palembang Timur - Bahu Jalan Amblas 2.5m", "Bahu jalan amblas luas", -2.9834, 104.7845, SurveyStatus.OPEN),
-    Survey(129, "Jalan Letkol Soeprapto - Rambu Tidak Ada", "Rambu lalu lintas hilang di beberapa persimpangan", -2.9567, 104.7489, SurveyStatus.REJECTED),
-    Survey(130, "Kawasan Bukit Lama - Aspal Tipis Ekstrem", "Aspal sudah sangat tipis", -2.9423, 104.7234, SurveyStatus.OPEN),
-    Survey(131, "Jalan KH Agus Salim - Genangan 50cm", "Genangan air rutin saat hujan", -2.9678, 104.7534, SurveyStatus.VERIFIED),
-    Survey(132, "Palembang Barat - Lampu Jalan 14 Unit Padam", "Lampu penerangan kurang", -2.9834, 104.7012, SurveyStatus.OPEN),
-    Survey(133, "Jalan Tembusi - Marka Sangat Pudar", "Marka jalan tidak terlihat sama sekali", -2.9723, 104.7456, SurveyStatus.OPEN),
-    Survey(134, "Kawasan Plaju - Doline Berbahaya", "Turun drastis, sangat membahayakan", -2.9534, 104.7678, SurveyStatus.REJECTED),
-    Survey(135, "Jalan Alianyang - Banjir Genangan 65cm", "Genangan air 65cm setiap musim hujan", -2.9612, 104.7523, SurveyStatus.OPEN),
-    Survey(136, "Palembang Selatan - Aspal Berlapis 11cm", "Aspal berlapis sangat tebal", -3.0012, 104.7534, SurveyStatus.VERIFIED),
-    Survey(137, "Jalan 22 Ilir - Lubang Membesar Cepat", "Lubang diameter 88cm terus berkembang", -2.9834, 104.7612, SurveyStatus.OPEN),
-    Survey(138, "Kawasan Pulokerto - Drainase Buntu Parah", "Gorong-gorong tersumbat total", -2.9923, 104.7789, SurveyStatus.OPEN),
-    Survey(139, "Jalan Sisingamangaraja - Lampu Penyok Banyak", "Lampu penerangan mayoritas rusak", -2.9678, 104.7456, SurveyStatus.REJECTED),
-    Survey(140, "Palembang Utara - Kerusakan Menyeluruh", "Kerusakan parah di banyak ruas", -2.8934, 104.7567, SurveyStatus.OPEN),
+    Survey(
+        121,
+        "Jalan Jenderal Sudirman - Banjir 75cm",
+        "Banjir tinggi menghalangi akses jalan",
+        -2.9708,
+        104.7469,
+        SurveyStatus.OPEN
+    ),
+    Survey(
+        122,
+        "Kawasan Ilir - Aspal Hancur Parah",
+        "Aspal sudah tidak dapat digunakan",
+        -2.9523,
+        104.7612,
+        SurveyStatus.VERIFIED
+    ),
+    Survey(
+        123,
+        "Jalan Merdeka - Lubang Diameter 95cm",
+        "Lubang sangat besar di jalur utama",
+        -2.9567,
+        104.7545,
+        SurveyStatus.OPEN
+    ),
+    Survey(
+        124,
+        "Palembang Pusat - Lampu Jalan 22 Unit Mati",
+        "Pencahayaan jalan sangat kurang",
+        -2.9708,
+        104.7469,
+        SurveyStatus.REJECTED
+    ),
+    Survey(
+        125,
+        "Jalan Rajawali - Drainase Macet Total",
+        "Saluran air tidak berfungsi",
+        -2.9634,
+        104.7534,
+        SurveyStatus.OPEN
+    ),
+    Survey(
+        126,
+        "Kawasan Ogan Ilir - Kegemeteraan Parah",
+        "Jalan bergetar luar biasa saat ada beban",
+        -2.9745,
+        104.7678,
+        SurveyStatus.VERIFIED
+    ),
+    Survey(
+        127,
+        "Jalan Sultan Thaha - Perkerasan Retak Masif",
+        "Perkerasan retak di mana-mana",
+        -2.9456,
+        104.7623,
+        SurveyStatus.OPEN
+    ),
+    Survey(
+        128,
+        "Palembang Timur - Bahu Jalan Amblas 2.5m",
+        "Bahu jalan amblas luas",
+        -2.9834,
+        104.7845,
+        SurveyStatus.OPEN
+    ),
+    Survey(
+        129,
+        "Jalan Letkol Soeprapto - Rambu Tidak Ada",
+        "Rambu lalu lintas hilang di beberapa persimpangan",
+        -2.9567,
+        104.7489,
+        SurveyStatus.REJECTED
+    ),
+    Survey(
+        130,
+        "Kawasan Bukit Lama - Aspal Tipis Ekstrem",
+        "Aspal sudah sangat tipis",
+        -2.9423,
+        104.7234,
+        SurveyStatus.OPEN
+    ),
+    Survey(
+        131,
+        "Jalan KH Agus Salim - Genangan 50cm",
+        "Genangan air rutin saat hujan",
+        -2.9678,
+        104.7534,
+        SurveyStatus.VERIFIED
+    ),
+    Survey(
+        132,
+        "Palembang Barat - Lampu Jalan 14 Unit Padam",
+        "Lampu penerangan kurang",
+        -2.9834,
+        104.7012,
+        SurveyStatus.OPEN
+    ),
+    Survey(
+        133,
+        "Jalan Tembusi - Marka Sangat Pudar",
+        "Marka jalan tidak terlihat sama sekali",
+        -2.9723,
+        104.7456,
+        SurveyStatus.OPEN
+    ),
+    Survey(
+        134,
+        "Kawasan Plaju - Doline Berbahaya",
+        "Turun drastis, sangat membahayakan",
+        -2.9534,
+        104.7678,
+        SurveyStatus.REJECTED
+    ),
+    Survey(
+        135,
+        "Jalan Alianyang - Banjir Genangan 65cm",
+        "Genangan air 65cm setiap musim hujan",
+        -2.9612,
+        104.7523,
+        SurveyStatus.OPEN
+    ),
+    Survey(
+        136,
+        "Palembang Selatan - Aspal Berlapis 11cm",
+        "Aspal berlapis sangat tebal",
+        -3.0012,
+        104.7534,
+        SurveyStatus.VERIFIED
+    ),
+    Survey(
+        137,
+        "Jalan 22 Ilir - Lubang Membesar Cepat",
+        "Lubang diameter 88cm terus berkembang",
+        -2.9834,
+        104.7612,
+        SurveyStatus.OPEN
+    ),
+    Survey(
+        138,
+        "Kawasan Pulokerto - Drainase Buntu Parah",
+        "Gorong-gorong tersumbat total",
+        -2.9923,
+        104.7789,
+        SurveyStatus.OPEN
+    ),
+    Survey(
+        139,
+        "Jalan Sisingamangaraja - Lampu Penyok Banyak",
+        "Lampu penerangan mayoritas rusak",
+        -2.9678,
+        104.7456,
+        SurveyStatus.REJECTED
+    ),
+    Survey(
+        140,
+        "Palembang Utara - Kerusakan Menyeluruh",
+        "Kerusakan parah di banyak ruas",
+        -2.8934,
+        104.7567,
+        SurveyStatus.OPEN
+    ),
 
     // Semarang Area (141-160)
-    Survey(141, "Jalan Pandanaran - Banjir 60cm", "Banjir rutin menghalangi akses", -7.0051, 110.2028, SurveyStatus.OPEN),
-    Survey(142, "Kawasan Mijen - Aspal Hancur Masif", "Aspal sudah tidak utuh", -7.0234, 110.2567, SurveyStatus.VERIFIED),
-    Survey(143, "Jalan Citarum - Lubang 80cm Diameter", "Lubang sangat besar di jalan ramai", -7.0045, 110.1934, SurveyStatus.OPEN),
-    Survey(144, "Semarang Pusat - Lampu Jalan 20 Unit Mati", "Pencahayaan jalan minimal", -7.0051, 110.2028, SurveyStatus.REJECTED),
-    Survey(145, "Jalan Gajah Mada - Drainase Tersumbat", "Saluran air penuh sampah", -7.0123, 110.2145, SurveyStatus.OPEN),
-    Survey(146, "Kawasan Gunungpati - Kegemeteraan Luar Biasa", "Jalan bergetar sangat keras", -6.9834, 110.1234, SurveyStatus.VERIFIED),
-    Survey(147, "Jalan Imam Bonjol - Perkerasan Retak Parah", "Perkerasan retak di mana-mana", -7.0089, 110.2156, SurveyStatus.OPEN),
-    Survey(148, "Semarang Timur - Bahu Jalan Amblas 2m", "Bahu jalan turun signifikan", -7.0234, 110.2456, SurveyStatus.OPEN),
-    Survey(149, "Jalan Singosari - Rambu Lalu Lintas Hilang", "Rambu tidak ada di persimpangan", -7.0012, 110.2034, SurveyStatus.REJECTED),
-    Survey(150, "Kawasan Pedurungan - Aspal Sangat Tipis", "Aspal tipis, beton dasar terlihat", -6.9945, 110.2345, SurveyStatus.OPEN),
-    Survey(151, "Jalan Tanjungsari - Genangan 45cm", "Genangan air saat hujan sedang", -7.0134, 110.2267, SurveyStatus.VERIFIED),
-    Survey(152, "Semarang Barat - Lampu Jalan 12 Unit Padam", "Lampu penerangan kurang", -7.0234, 110.1756, SurveyStatus.OPEN),
-    Survey(153, "Jalan Veteran - Marka Pudar Total", "Marka jalan tidak terlihat", -7.0089, 110.2189, SurveyStatus.OPEN),
-    Survey(154, "Kawasan Banyumanik - Doline Mulai Terbentuk", "Indikasi gua atau pipa retak", -7.0456, 110.1923, SurveyStatus.REJECTED),
-    Survey(155, "Jalan Ngaliyan - Banjir Kiriman 55cm", "Air meluap dari saluran induk", -7.0178, 110.2089, SurveyStatus.OPEN),
-    Survey(156, "Semarang Selatan - Aspal Berlapis 10cm", "Aspal berlapis sangat tebal", -7.0456, 110.2234, SurveyStatus.VERIFIED),
-    Survey(157, "Jalan Candi - Lubang Diameter 85cm", "Lubang terus membesar", -7.0234, 110.2345, SurveyStatus.OPEN),
-    Survey(158, "Kawasan Gajahmungkur - Drainase Buntu", "Gorong-gorong tidak berfungsi", -7.0345, 110.2156, SurveyStatus.OPEN),
-    Survey(159, "Jalan Seteran - Lampu Penyok Banyak", "Lampu penerangan rusak", -7.0178, 110.2034, SurveyStatus.REJECTED),
-    Survey(160, "Semarang Utara - Kerusakan Menyeluruh", "Kerusakan parah di banyak titik", -6.9456, 110.2145, SurveyStatus.OPEN),
+    Survey(
+        141,
+        "Jalan Pandanaran - Banjir 60cm",
+        "Banjir rutin menghalangi akses",
+        -7.0051,
+        110.2028,
+        SurveyStatus.OPEN
+    ),
+    Survey(
+        142,
+        "Kawasan Mijen - Aspal Hancur Masif",
+        "Aspal sudah tidak utuh",
+        -7.0234,
+        110.2567,
+        SurveyStatus.VERIFIED
+    ),
+    Survey(
+        143,
+        "Jalan Citarum - Lubang 80cm Diameter",
+        "Lubang sangat besar di jalan ramai",
+        -7.0045,
+        110.1934,
+        SurveyStatus.OPEN
+    ),
+    Survey(
+        144,
+        "Semarang Pusat - Lampu Jalan 20 Unit Mati",
+        "Pencahayaan jalan minimal",
+        -7.0051,
+        110.2028,
+        SurveyStatus.REJECTED
+    ),
+    Survey(
+        145,
+        "Jalan Gajah Mada - Drainase Tersumbat",
+        "Saluran air penuh sampah",
+        -7.0123,
+        110.2145,
+        SurveyStatus.OPEN
+    ),
+    Survey(
+        146,
+        "Kawasan Gunungpati - Kegemeteraan Luar Biasa",
+        "Jalan bergetar sangat keras",
+        -6.9834,
+        110.1234,
+        SurveyStatus.VERIFIED
+    ),
+    Survey(
+        147,
+        "Jalan Imam Bonjol - Perkerasan Retak Parah",
+        "Perkerasan retak di mana-mana",
+        -7.0089,
+        110.2156,
+        SurveyStatus.OPEN
+    ),
+    Survey(
+        148,
+        "Semarang Timur - Bahu Jalan Amblas 2m",
+        "Bahu jalan turun signifikan",
+        -7.0234,
+        110.2456,
+        SurveyStatus.OPEN
+    ),
+    Survey(
+        149,
+        "Jalan Singosari - Rambu Lalu Lintas Hilang",
+        "Rambu tidak ada di persimpangan",
+        -7.0012,
+        110.2034,
+        SurveyStatus.REJECTED
+    ),
+    Survey(
+        150,
+        "Kawasan Pedurungan - Aspal Sangat Tipis",
+        "Aspal tipis, beton dasar terlihat",
+        -6.9945,
+        110.2345,
+        SurveyStatus.OPEN
+    ),
+    Survey(
+        151,
+        "Jalan Tanjungsari - Genangan 45cm",
+        "Genangan air saat hujan sedang",
+        -7.0134,
+        110.2267,
+        SurveyStatus.VERIFIED
+    ),
+    Survey(
+        152,
+        "Semarang Barat - Lampu Jalan 12 Unit Padam",
+        "Lampu penerangan kurang",
+        -7.0234,
+        110.1756,
+        SurveyStatus.OPEN
+    ),
+    Survey(
+        153,
+        "Jalan Veteran - Marka Pudar Total",
+        "Marka jalan tidak terlihat",
+        -7.0089,
+        110.2189,
+        SurveyStatus.OPEN
+    ),
+    Survey(
+        154,
+        "Kawasan Banyumanik - Doline Mulai Terbentuk",
+        "Indikasi gua atau pipa retak",
+        -7.0456,
+        110.1923,
+        SurveyStatus.REJECTED
+    ),
+    Survey(
+        155,
+        "Jalan Ngaliyan - Banjir Kiriman 55cm",
+        "Air meluap dari saluran induk",
+        -7.0178,
+        110.2089,
+        SurveyStatus.OPEN
+    ),
+    Survey(
+        156,
+        "Semarang Selatan - Aspal Berlapis 10cm",
+        "Aspal berlapis sangat tebal",
+        -7.0456,
+        110.2234,
+        SurveyStatus.VERIFIED
+    ),
+    Survey(
+        157,
+        "Jalan Candi - Lubang Diameter 85cm",
+        "Lubang terus membesar",
+        -7.0234,
+        110.2345,
+        SurveyStatus.OPEN
+    ),
+    Survey(
+        158,
+        "Kawasan Gajahmungkur - Drainase Buntu",
+        "Gorong-gorong tidak berfungsi",
+        -7.0345,
+        110.2156,
+        SurveyStatus.OPEN
+    ),
+    Survey(
+        159,
+        "Jalan Seteran - Lampu Penyok Banyak",
+        "Lampu penerangan rusak",
+        -7.0178,
+        110.2034,
+        SurveyStatus.REJECTED
+    ),
+    Survey(
+        160,
+        "Semarang Utara - Kerusakan Menyeluruh",
+        "Kerusakan parah di banyak titik",
+        -6.9456,
+        110.2145,
+        SurveyStatus.OPEN
+    ),
 
     // Medan Area Additional (161-180)
-    Survey(161, "Jalan Bukit Barisan - Aspal Retak Parah", "Aspal retak di mana-mana", 2.1945, 98.6734, SurveyStatus.OPEN),
-    Survey(162, "Kawasan Sempurna - Lubang 75cm", "Lubang besar di jalan ramai", 2.2034, 98.6823, SurveyStatus.VERIFIED),
-    Survey(163, "Jalan Nusantara Baru - Banjir 65cm", "Banjir rutin setiap musim", 2.1876, 98.6945, SurveyStatus.OPEN),
-    Survey(164, "Medan Deli - Lampu Jalan Mati Parah", "Lampu jalan 16 unit tidak menyala", 2.1756, 98.6812, SurveyStatus.REJECTED),
-    Survey(165, "Jalan Kesehatan - Drainase Macet", "Saluran air tersumbat total", 2.2045, 98.6734, SurveyStatus.OPEN),
-    Survey(166, "Kawasan Denai - Kegemeteraan Ekstrem", "Jalan bergetar sangat luar biasa", 2.1834, 98.6901, SurveyStatus.VERIFIED),
-    Survey(167, "Jalan Perjuangan - Perkerasan Retak Masif", "Perkerasan retak parah", 2.1956, 98.6823, SurveyStatus.OPEN),
-    Survey(168, "Medan Labuhan - Bahu Jalan Amblas", "Bahu jalan turun 25cm", 2.1456, 98.7234, SurveyStatus.OPEN),
-    Survey(169, "Jalan Mesjid - Rambu Tidak Ada", "Rambu lalu lintas hilang", 2.1923, 98.6812, SurveyStatus.REJECTED),
-    Survey(170, "Kawasan Pasar Besar - Aspal Sangat Tipis", "Aspal tipis, beton muncul", 2.1834, 98.6745, SurveyStatus.OPEN),
-    Survey(171, "Jalan Haji Zainul Arifin - Genangan 55cm", "Genangan air saat hujan", 2.2134, 98.6567, SurveyStatus.VERIFIED),
-    Survey(172, "Medan Johor - Lampu Padam 18 Unit", "Lampu penerangan minim", 2.1945, 98.6234, SurveyStatus.OPEN),
-    Survey(173, "Jalan Semarang - Marka Hilang", "Marka jalan tidak terlihat", 2.2034, 98.6678, SurveyStatus.OPEN),
-    Survey(174, "Kawasan Amplas - Doline Berbahaya", "Indikasi gua atau pipa retak", 2.2145, 98.7034, SurveyStatus.REJECTED),
-    Survey(175, "Jalan Putut - Banjir Genangan 70cm", "Genangan air tinggi", 2.1834, 98.6823, SurveyStatus.OPEN),
-    Survey(176, "Medan Helvetia - Aspal Berlapis", "Aspal berlapis 9cm", 2.1723, 98.6845, SurveyStatus.VERIFIED),
-    Survey(177, "Jalan Monginsidi - Lubang Diameter 82cm", "Lubang membesar terus", 2.1956, 98.6934, SurveyStatus.OPEN),
-    Survey(178, "Kawasan Patumbak - Drainase Buntu", "Gorong-gorong tersumbat", 2.2234, 98.7145, SurveyStatus.OPEN),
-    Survey(179, "Jalan Sarinah - Lampu Rusak Penyok", "Lampu penerangan rusak banyak", 2.1834, 98.6867, SurveyStatus.REJECTED),
-    Survey(180, "Medan Marelan - Kerusakan Parah", "Kerusakan di banyak ruas", 2.1345, 98.6523, SurveyStatus.OPEN),
+    Survey(
+        161,
+        "Jalan Bukit Barisan - Aspal Retak Parah",
+        "Aspal retak di mana-mana",
+        2.1945,
+        98.6734,
+        SurveyStatus.OPEN
+    ),
+    Survey(
+        162,
+        "Kawasan Sempurna - Lubang 75cm",
+        "Lubang besar di jalan ramai",
+        2.2034,
+        98.6823,
+        SurveyStatus.VERIFIED
+    ),
+    Survey(
+        163,
+        "Jalan Nusantara Baru - Banjir 65cm",
+        "Banjir rutin setiap musim",
+        2.1876,
+        98.6945,
+        SurveyStatus.OPEN
+    ),
+    Survey(
+        164,
+        "Medan Deli - Lampu Jalan Mati Parah",
+        "Lampu jalan 16 unit tidak menyala",
+        2.1756,
+        98.6812,
+        SurveyStatus.REJECTED
+    ),
+    Survey(
+        165,
+        "Jalan Kesehatan - Drainase Macet",
+        "Saluran air tersumbat total",
+        2.2045,
+        98.6734,
+        SurveyStatus.OPEN
+    ),
+    Survey(
+        166,
+        "Kawasan Denai - Kegemeteraan Ekstrem",
+        "Jalan bergetar sangat luar biasa",
+        2.1834,
+        98.6901,
+        SurveyStatus.VERIFIED
+    ),
+    Survey(
+        167,
+        "Jalan Perjuangan - Perkerasan Retak Masif",
+        "Perkerasan retak parah",
+        2.1956,
+        98.6823,
+        SurveyStatus.OPEN
+    ),
+    Survey(
+        168,
+        "Medan Labuhan - Bahu Jalan Amblas",
+        "Bahu jalan turun 25cm",
+        2.1456,
+        98.7234,
+        SurveyStatus.OPEN
+    ),
+    Survey(
+        169,
+        "Jalan Mesjid - Rambu Tidak Ada",
+        "Rambu lalu lintas hilang",
+        2.1923,
+        98.6812,
+        SurveyStatus.REJECTED
+    ),
+    Survey(
+        170,
+        "Kawasan Pasar Besar - Aspal Sangat Tipis",
+        "Aspal tipis, beton muncul",
+        2.1834,
+        98.6745,
+        SurveyStatus.OPEN
+    ),
+    Survey(
+        171,
+        "Jalan Haji Zainul Arifin - Genangan 55cm",
+        "Genangan air saat hujan",
+        2.2134,
+        98.6567,
+        SurveyStatus.VERIFIED
+    ),
+    Survey(
+        172,
+        "Medan Johor - Lampu Padam 18 Unit",
+        "Lampu penerangan minim",
+        2.1945,
+        98.6234,
+        SurveyStatus.OPEN
+    ),
+    Survey(
+        173,
+        "Jalan Semarang - Marka Hilang",
+        "Marka jalan tidak terlihat",
+        2.2034,
+        98.6678,
+        SurveyStatus.OPEN
+    ),
+    Survey(
+        174,
+        "Kawasan Amplas - Doline Berbahaya",
+        "Indikasi gua atau pipa retak",
+        2.2145,
+        98.7034,
+        SurveyStatus.REJECTED
+    ),
+    Survey(
+        175,
+        "Jalan Putut - Banjir Genangan 70cm",
+        "Genangan air tinggi",
+        2.1834,
+        98.6823,
+        SurveyStatus.OPEN
+    ),
+    Survey(
+        176,
+        "Medan Helvetia - Aspal Berlapis",
+        "Aspal berlapis 9cm",
+        2.1723,
+        98.6845,
+        SurveyStatus.VERIFIED
+    ),
+    Survey(
+        177,
+        "Jalan Monginsidi - Lubang Diameter 82cm",
+        "Lubang membesar terus",
+        2.1956,
+        98.6934,
+        SurveyStatus.OPEN
+    ),
+    Survey(
+        178,
+        "Kawasan Patumbak - Drainase Buntu",
+        "Gorong-gorong tersumbat",
+        2.2234,
+        98.7145,
+        SurveyStatus.OPEN
+    ),
+    Survey(
+        179,
+        "Jalan Sarinah - Lampu Rusak Penyok",
+        "Lampu penerangan rusak banyak",
+        2.1834,
+        98.6867,
+        SurveyStatus.REJECTED
+    ),
+    Survey(
+        180,
+        "Medan Marelan - Kerusakan Parah",
+        "Kerusakan di banyak ruas",
+        2.1345,
+        98.6523,
+        SurveyStatus.OPEN
+    ),
 
     // Bandung Area Additional (181-200)
-    Survey(181, "Jalan Setiabudhi Extended - Aspal Retak", "Aspal retak di ruas baru", -6.8745, 107.6181, SurveyStatus.OPEN),
-    Survey(182, "Kawasan Arcamanik - Lubang 70cm", "Lubang besar muncul", -6.9045, 107.5834, SurveyStatus.VERIFIED),
-    Survey(183, "Jalan Sukajadi - Banjir 50cm", "Banjir rutin setiap hujan", -6.8934, 107.5945, SurveyStatus.OPEN),
-    Survey(184, "Bandung Suburbs - Lampu Jalan Mati", "Lampu jalan 14 unit padam", -6.9234, 107.6234, SurveyStatus.REJECTED),
-    Survey(185, "Jalan Ismail Marzuki - Drainase Tersumbat", "Saluran air tidak berfungsi", -6.8823, 107.6089, SurveyStatus.OPEN),
-    Survey(186, "Kawasan Cibodas - Kegemeteraan Parah", "Jalan bergetar sangat keras", -6.9134, 107.5734, SurveyStatus.VERIFIED),
-    Survey(187, "Jalan Nelangsari - Perkerasan Retak", "Perkerasan retak parah", -6.9045, 107.5956, SurveyStatus.OPEN),
-    Survey(188, "Bandung Barat Extended - Bahu Jalan Amblas", "Bahu jalan turun 15cm", -6.9234, 107.5534, SurveyStatus.OPEN),
-    Survey(189, "Jalan Cipedes - Rambu Tidak Ada", "Rambu lalu lintas hilang", -6.8923, 107.6145, SurveyStatus.REJECTED),
-    Survey(190, "Kawasan Ciumbuleuit - Aspal Sangat Tipis", "Aspal tipis, beton terlihat", -6.8612, 107.6234, SurveyStatus.OPEN),
-    Survey(191, "Jalan Terusan Kopo - Genangan 40cm", "Genangan air saat hujan sedang", -6.9234, 107.5945, SurveyStatus.VERIFIED),
-    Survey(192, "Bandung Timur Extended - Lampu Padam", "Lampu penerangan 10 unit mati", -6.8534, 107.6567, SurveyStatus.OPEN),
-    Survey(193, "Jalan Isebu - Marka Pudar", "Marka jalan tidak jelas", -6.8945, 107.6012, SurveyStatus.OPEN),
-    Survey(194, "Kawasan Rancaekek - Doline Terbentuk", "Indikasi gua atau pipa retak", -6.9534, 107.6789, SurveyStatus.REJECTED),
-    Survey(195, "Jalan Siliwangi Extended - Banjir Kiriman", "Air meluap dari saluran", -6.8834, 107.6123, SurveyStatus.OPEN),
-    Survey(196, "Bandung Selatan Extended - Aspal Berlapis", "Aspal berlapis 8cm", -6.9345, 107.6234, SurveyStatus.VERIFIED),
-    Survey(197, "Jalan Pasirkaliki - Lubang Diameter 78cm", "Lubang terus berkembang", -6.9012, 107.6034, SurveyStatus.OPEN),
-    Survey(198, "Kawasan Nyengseret - Drainase Buntu", "Gorong-gorong tidak berfungsi", -6.8934, 107.5734, SurveyStatus.OPEN),
-    Survey(199, "Jalan Imam Bonjol Extended - Lampu Penyok", "Lampu penerangan rusak", -6.8745, 107.6145, SurveyStatus.REJECTED),
-    Survey(200, "Bandung Utara Extended - Kerusakan Menyeluruh", "Kerusakan parah di banyak ruas", -6.8234, 107.5945, SurveyStatus.OPEN)
+    Survey(
+        181,
+        "Jalan Setiabudhi Extended - Aspal Retak",
+        "Aspal retak di ruas baru",
+        -6.8745,
+        107.6181,
+        SurveyStatus.OPEN
+    ),
+    Survey(
+        182,
+        "Kawasan Arcamanik - Lubang 70cm",
+        "Lubang besar muncul",
+        -6.9045,
+        107.5834,
+        SurveyStatus.VERIFIED
+    ),
+    Survey(
+        183,
+        "Jalan Sukajadi - Banjir 50cm",
+        "Banjir rutin setiap hujan",
+        -6.8934,
+        107.5945,
+        SurveyStatus.OPEN
+    ),
+    Survey(
+        184,
+        "Bandung Suburbs - Lampu Jalan Mati",
+        "Lampu jalan 14 unit padam",
+        -6.9234,
+        107.6234,
+        SurveyStatus.REJECTED
+    ),
+    Survey(
+        185,
+        "Jalan Ismail Marzuki - Drainase Tersumbat",
+        "Saluran air tidak berfungsi",
+        -6.8823,
+        107.6089,
+        SurveyStatus.OPEN
+    ),
+    Survey(
+        186,
+        "Kawasan Cibodas - Kegemeteraan Parah",
+        "Jalan bergetar sangat keras",
+        -6.9134,
+        107.5734,
+        SurveyStatus.VERIFIED
+    ),
+    Survey(
+        187,
+        "Jalan Nelangsari - Perkerasan Retak",
+        "Perkerasan retak parah",
+        -6.9045,
+        107.5956,
+        SurveyStatus.OPEN
+    ),
+    Survey(
+        188,
+        "Bandung Barat Extended - Bahu Jalan Amblas",
+        "Bahu jalan turun 15cm",
+        -6.9234,
+        107.5534,
+        SurveyStatus.OPEN
+    ),
+    Survey(
+        189,
+        "Jalan Cipedes - Rambu Tidak Ada",
+        "Rambu lalu lintas hilang",
+        -6.8923,
+        107.6145,
+        SurveyStatus.REJECTED
+    ),
+    Survey(
+        190,
+        "Kawasan Ciumbuleuit - Aspal Sangat Tipis",
+        "Aspal tipis, beton terlihat",
+        -6.8612,
+        107.6234,
+        SurveyStatus.OPEN
+    ),
+    Survey(
+        191,
+        "Jalan Terusan Kopo - Genangan 40cm",
+        "Genangan air saat hujan sedang",
+        -6.9234,
+        107.5945,
+        SurveyStatus.VERIFIED
+    ),
+    Survey(
+        192,
+        "Bandung Timur Extended - Lampu Padam",
+        "Lampu penerangan 10 unit mati",
+        -6.8534,
+        107.6567,
+        SurveyStatus.OPEN
+    ),
+    Survey(
+        193,
+        "Jalan Isebu - Marka Pudar",
+        "Marka jalan tidak jelas",
+        -6.8945,
+        107.6012,
+        SurveyStatus.OPEN
+    ),
+    Survey(
+        194,
+        "Kawasan Rancaekek - Doline Terbentuk",
+        "Indikasi gua atau pipa retak",
+        -6.9534,
+        107.6789,
+        SurveyStatus.REJECTED
+    ),
+    Survey(
+        195,
+        "Jalan Siliwangi Extended - Banjir Kiriman",
+        "Air meluap dari saluran",
+        -6.8834,
+        107.6123,
+        SurveyStatus.OPEN
+    ),
+    Survey(
+        196,
+        "Bandung Selatan Extended - Aspal Berlapis",
+        "Aspal berlapis 8cm",
+        -6.9345,
+        107.6234,
+        SurveyStatus.VERIFIED
+    ),
+    Survey(
+        197,
+        "Jalan Pasirkaliki - Lubang Diameter 78cm",
+        "Lubang terus berkembang",
+        -6.9012,
+        107.6034,
+        SurveyStatus.OPEN
+    ),
+    Survey(
+        198,
+        "Kawasan Nyengseret - Drainase Buntu",
+        "Gorong-gorong tidak berfungsi",
+        -6.8934,
+        107.5734,
+        SurveyStatus.OPEN
+    ),
+    Survey(
+        199,
+        "Jalan Imam Bonjol Extended - Lampu Penyok",
+        "Lampu penerangan rusak",
+        -6.8745,
+        107.6145,
+        SurveyStatus.REJECTED
+    ),
+    Survey(
+        200,
+        "Bandung Utara Extended - Kerusakan Menyeluruh",
+        "Kerusakan parah di banyak ruas",
+        -6.8234,
+        107.5945,
+        SurveyStatus.OPEN
+    )
 )

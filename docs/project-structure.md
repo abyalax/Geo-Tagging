@@ -34,8 +34,8 @@ Ini adalah module utama yang berisi semua kode aplikasi dengan struktur yang ter
         └── 📁common
             ├── Constant.kt
         └── 📁navigation
-            ├── ImplicitIntentHelper.kt
-            ├── IntentManager.kt
+            ├── ImplicitIntents.kt
+            ├── ExplicitIntents.kt
         └── 📁utils
             ├── MapUtils.kt
             ├── VaildateCoordinate.kt
@@ -81,8 +81,8 @@ core/
 └── 📁common/           # Konstanta dan utilitas umum
     └── Constant.kt
 └── 📁navigation/       # Navigasi dan intent handling
-    ├── ImplicitIntentHelper.kt
-    ├── IntentManager.kt
+    ├── ImplicitIntents.kt
+    ├── ExplicitIntents.kt
 └── 📁utils/           # Utilitas spesifik
     ├── MapUtils.kt
     ├── VaildateCoordinate.kt
@@ -98,26 +98,26 @@ Berisi semua fitur aplikasi yang diorganisir berdasarkan domain:
 
 ```
 features/
-└── 📁auth/            # Fitur Autentikasi
-    └── 📁login/       # Login flow
-        ├── 📁activities/    # Activities Android
+└── 📁auth/                         # Fitur Autentikasi
+    └── 📁login/                    # Login flow
+        ├── 📁activities/           # Activities Android
         │   └── LoginActivity.kt
-        └── 📁ui/           # Komponen UI
-            ├── 📁components/  # UI components reusable
+        └── 📁ui/                   # Komponen UI
+            ├── 📁components/       # UI components reusable
             │   └── LoginForm.kt
-            └── 📁screen/      # Screen utama
+            └── 📁screen/           # Screen utama
                 └── LoginScreen.kt
-    └── 📁register/     # Registration flow (placeholder)
-└── 📁dashboard/       # Fitur Dashboard
-    ├── 📁activities/      # Activities Android
+    └── 📁register/                 # Registration flow (placeholder)
+└── 📁dashboard/                    # Fitur Dashboard
+    ├── 📁activities/               # Activities Android
     │   ├── DashboardActivity.kt
     │   └── VerificationActivity.kt
-    ├── 📁model/          # Data models
+    ├── 📁model/                    # Data models
     │   ├── Sensor.kt
     │   └── VerificationResult.kt
-    └── 📁ui/             # Komponen UI
-        ├── 📁components/  # UI components reusable
-        └── 📁screen/      # Screen utama
+    └── 📁ui/                       # Komponen UI
+        ├── 📁components/           # UI components reusable
+        └── 📁screen/               # Screen utama
             ├── DashboardScreen.kt
             └── VerificationScreen.kt
 ```
@@ -130,6 +130,8 @@ features/
 
 ```
 app/
+└── 📁core
+└── 📁features
 ├── MainActivity.kt        # Entry point utama aplikasi Android
 └── Platform.android.kt   # Implementasi platform-specific
 ```

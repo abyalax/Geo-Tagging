@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.app.features.dashboard.data.SurveyRepository
 import com.app.features.dashboard.model.Survey
+import com.app.features.dashboard.model.SurveyStats
 import com.app.features.dashboard.model.SurveyStatus
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -86,14 +87,15 @@ class DashboardViewModel : ViewModel() {
         _searchQuery.value = query
         viewModelScope.launch {
             val allSurveys = SurveyRepository.getAllSurveys()
-            _filteredSurveys.value = if (query.isBlank()) {
-                allSurveys
-            } else {
-                allSurveys.filter {
-                    it.title.contains(query, ignoreCase = true) ||
-                            it.description.contains(query, ignoreCase = true)
-                }
-            }
+            _filteredSurveys.value =
+                    if (query.isBlank()) {
+                        allSurveys
+                    } else {
+                        allSurveys.filter {
+                            it.title.contains(query, ignoreCase = true) ||
+                                    it.description.contains(query, ignoreCase = true)
+                        }
+                    }
         }
     }
 
@@ -102,11 +104,12 @@ class DashboardViewModel : ViewModel() {
         _selectedStatusFilter.value = status
         viewModelScope.launch {
             val allSurveys = SurveyRepository.getAllSurveys()
-            _filteredSurveys.value = if (status == null) {
-                allSurveys
-            } else {
-                allSurveys.filter { it.status == status }
-            }
+            _filteredSurveys.value =
+                    if (status == null) {
+                        allSurveys
+                    } else {
+                        allSurveys.filter { it.status == status }
+                    }
         }
     }
 
@@ -114,10 +117,10 @@ class DashboardViewModel : ViewModel() {
     fun getSurveyStats(): SurveyStats {
         val surveys = _surveyList.value
         return SurveyStats(
-            total = surveys.size,
-            open = surveys.count { it.status == SurveyStatus.OPEN },
-            verified = surveys.count { it.status == SurveyStatus.VERIFIED },
-            rejected = surveys.count { it.status == SurveyStatus.REJECTED }
+                total = surveys.size,
+                open = surveys.count { it.status == SurveyStatus.OPEN },
+                verified = surveys.count { it.status == SurveyStatus.VERIFIED },
+                rejected = surveys.count { it.status == SurveyStatus.REJECTED }
         )
     }
 
@@ -126,10 +129,3 @@ class DashboardViewModel : ViewModel() {
         _errorMessage.value = null
     }
 }
-
-data class SurveyStats(
-    val total: Int = 0,
-    val open: Int = 0,
-    val verified: Int = 0,
-    val rejected: Int = 0
-)

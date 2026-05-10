@@ -130,7 +130,7 @@ Complete reinstall (uninstall + install).
 ### Start App via ADB
 
 ```bash
-adb shell am start -n com.app/.MainActivity
+adb shell am start -n com.app.MainActivity
 ```
 
 Launch the app directly.
