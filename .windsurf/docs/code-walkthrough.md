@@ -1,62 +1,190 @@
-# Geo-Tagging App Code Walkthrough
+## Table of Contents
 
-## 📱 Penjelasan Stack Compose
+- [Table of Contents](#table-of-contents)
+- [Penjelasan Stack Compose](#penjelasan-stack-compose)
+  - [Jetpack Compose Architecture](#jetpack-compose-architecture)
+- [Key Compose Concepts](#key-compose-concepts)
+- [Folder Structure dan Pattern](#folder-structure-dan-pattern)
+  - [Separation of Concerns](#separation-of-concerns)
+- [Entry Point](#entry-point)
+  - [Application Entry Point](#application-entry-point)
+  - [MainActivity sebagai Single Entry Point](#mainactivity-sebagai-single-entry-point)
+- [Navigation dengan NavigationManager Pattern](#navigation-dengan-navigationmanager-pattern)
+  - [Modern Navigation Architecture](#modern-navigation-architecture)
+  - [Navigation Events](#navigation-events)
+  - [Usage in ViewModels](#usage-in-viewmodels)
+  - [AppNavHost Integration](#appnavhost-integration)
+- [Run Aplikasi Menggunakan Extension](#run-aplikasi-menggunakan-extension)
+  - [Android Studio Extension](#android-studio-extension)
+  - [Configuration untuk Development](#configuration-untuk-development)
+- [MainActivity dan Login](#mainactivity-dan-login)
+  - [MainActivity Structure](#mainactivity-structure)
+  - [Login Screen Implementation](#login-screen-implementation)
+- [Equivalensi Old Android dan Compose](#equivalensi-old-android-dan-compose)
+  - [View Binding → Compose](#view-binding-compose)
+  - [Constraint Layout & Linear Layout → Compose](#constraint-layout-linear-layout-compose)
+- [Login ke Aplikasi](#login-ke-aplikasi)
+  - [Modern ViewModel Pattern dengan StateFlow dan NavigationEvents](#modern-viewmodel-pattern-dengan-stateflow-dan-navigationevents)
+  - [UI State Pattern](#ui-state-pattern)
+  - [Input Validation](#input-validation)
+- [Clean Architecture Components](#clean-architecture-components)
+  - [Repository Pattern](#repository-pattern)
+  - [Use Cases Pattern](#use-cases-pattern)
+  - [Domain Models](#domain-models)
+  - [Dependency Injection Pattern](#dependency-injection-pattern)
+- [Explicit Intent (Login ke Dashboard)](#explicit-intent-login-ke-dashboard)
+  - [Implementasi Explicit Intent](#implementasi-explicit-intent)
+  - [Alasan Menggunakan Explicit Intent](#alasan-menggunakan-explicit-intent)
+- [Dashboard: LayoutManager, Adapter, ViewHolder Equivalency](#dashboard-layoutmanager-adapter-viewholder-equivalency)
+  - [Old Android RecyclerView Pattern](#old-android-recyclerview-pattern)
+  - [Compose LazyColumn Equivalent](#compose-lazycolumn-equivalent)
+  - [Performance Optimization](#performance-optimization)
+- [Filter dan Pencarian](#filter-dan-pencarian)
+  - [Search Implementation](#search-implementation)
+  - [Search UI](#search-ui)
+- [State Management & Rotation Handling](#state-management-rotation-handling)
+  - [State Persistence](#state-persistence)
+  - [rememberSaveable untuk Compose State](#remembersaveable-untuk-compose-state)
+  - [ViewModel State Management](#viewmodel-state-management)
+- [Penjelasan Intent Lebih Dalam](#penjelasan-intent-lebih-dalam)
+  - [Explicit Intent untuk Detail Page](#explicit-intent-untuk-detail-page)
+  - [Benefits of Single Activity Architecture](#benefits-of-single-activity-architecture)
+- [Summary](#summary)
+
+## Penjelasan Stack Compose
 
 ### Jetpack Compose Architecture
 
-Geo-Tagging application menggunakan **Jetpack Compose** sebagai UI framework modern yang menggantikan sistem View XML tradisional. Compose menggunakan pendekatan **declarative UI** dimana UI didefinisikan sebagai fungsi Kotlin yang bereaksi terhadap perubahan state.
+Geo-Tagging application menggunakan **Jetpack Compose** sebagai UI framework modern yang menggantikan sistem View XML tradisional. Compose menggunakan pendekatan **declarative UI** dimana UI didefinisikan sebagai fungsi Kotlin yang reactive terhadap perubahan state.
 
-```kotlin
-// Traditional XML View (Old Android)
+```xml
+<!-- Traditional XML View (Old Android) -->
 <TextView
     android:id="@+id/title"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:text="Hello World" />
+```
 
+```kotlin
 // Compose Equivalent (Modern)
 @Composable
 fun TitleText() {
-    Text(text = "Hello World")
+  Text(text = "Hello World")
 }
 ```
 
-### Key Compose Concepts
+## Key Compose Concepts
 
 1. **Composable Functions**: Fungsi yang diannotasi dengan `@Composable`
-2. **State Management**: Menggunakan `remember` dan `mutableStateOf`
-3. **Recomposition**: Otomatis update UI ketika state berubah
-4. **Modifiers**: Mengatur tampilan dan behavior komponen
+   **State Management**: Menggunakan `remember` dan `mutableStateOf`
+2. **Recomposition**: Otomatis update UI ketika state berubah
+3. ## **Modifiers**: Mengatur tampilan dan behavior komponen
 
----
+## Folder Structure dan Pattern
 
-## 📁 Folder Structure dan Pattern
-
-### Clean Architecture + Feature-Based Structure
+Clean Architecture + Feature-Based Structure
 
 ```
 composeApp/src/
-├── commonMain/kotlin/                    # Shared business logic
+├── commonMain/kotlin/                    # Shared business logic (KMP)
 │   ├── core/
 │   │   ├── domain/                       # Pure business logic
 │   │   │   ├── model/                    # Domain entities
+│   │   │   │   ├── UiState.kt           # Base UI state untuk state management
+│   │   │   │   └── UserSession.kt      # User authentication session model
 │   │   │   ├── repository/               # Repository interfaces
+│   │   │   │   └── AuthRepository.kt   # Interface untuk auth operations
 │   │   │   └── usecase/                  # Business use cases
-│   │   └── common/                       # Shared utilities
+│   │   │       ├── auth/
+│   │   │       │   ├── GetSessionUseCase.kt    # Mendapatkan current session
+│   │   │       │   ├── LoginUseCase.kt         # Handle login logic
+│   │   │       │   └── LogoutUseCase.kt        # Handle logout logic
+│   │   ├── navigation/                   # Navigation logic
+│   │   │   ├── AppNavHost.kt           # Navigation host setup
+│   │   │   ├── NavigationManager.kt      # Centralized navigation management
+│   │   │   ├── NavigationEvent.kt        # Type-safe navigation events
+│   │   │   └── Routes.kt               # Route definitions
+│   │   └── theme/                        # Shared theme
+│   │       ├── Color.kt               # Color scheme definitions
+│   │       └── Theme.kt              # Material theme setup
 │   └── features/
-│       └── [feature]/
-│           ├── domain/                   # Feature-specific domain
-│           └── presentation/             # Shared presentation logic
-├── androidMain/kotlin/                   # Android-specific implementation
-│   ├── core/
-│   │   └── data/                         # Repository implementations
-│   └── features/
-│       └── [feature]/
+│       ├── auth/
+│       │   ├── presentation/
+│       │   │   ├── route/
+│       │   │   │   ├── LoginRoute.kt           # Login screen navigation setup
+│       │   │   │   └── SplashScreenRoute.kt    # Splash screen navigation setup
+│       │   │   ├── screen/
+│       │   │   │   └── LoginScreen.kt          # Login UI implementation
+│       │   │   └── viewmodel/
+│       │   │       └── LoginViewModel.kt        # Login state management
+│       ├── dashboard/
+│       │   ├── domain/
+│       │   │   ├── model/
+│       │   │   │   ├── DashboardUiState.kt      # Dashboard state management
+│       │   │   │   ├── Survey.kt               # Survey domain model
+│       │   │   │   └── SurveyStatus.kt         # Survey status enum
+│       │   │   └── usecase/
+│       │   │       ├── GetSurveysUseCase.kt    # Fetch surveys logic
+│       │   │       ├── OpenSurveyMapUseCase.kt  # Open maps integration
+│       │   │       └── ShareSurveyUseCase.kt    # Share functionality
+│       │   └── presentation/
+│       │       ├── route/
+│       │       │   └── DashboardRoute.kt        # Dashboard navigation setup
+│       │       ├── screen/
+│       │       │   └── DashboardScreen.kt       # Dashboard UI implementation
+│       │       └── viewmodel/
+│       │           └── DashboardViewModel.kt     # Dashboard state management
+│       ├── profile/
+│       │   └── presentation/
+│       │       ├── route/ProfileRoute.kt          # Profile navigation setup
+│       │       ├── screen/ProfileScreen.kt       # Profile UI implementation
+│       │       └── viewmodel/ProfileViewModel.kt  # Profile state management
+│       └── verification/
 │           └── presentation/
-│               ├── ui/
-│               │   ├── screen/           # Screen composables
-│               │   └── component/        # Reusable components
-│               └── viewmodel/            # ViewModels
+│               ├── route/VerificationRoute.kt    # Verification navigation setup
+│               ├── screen/VerificationScreen.kt   # Verification UI implementation
+│               └── viewmodel/VerificationViewModel.kt # Verification state management
+├── androidMain/kotlin/                   # Android-specific implementation
+│   ├── MainActivity.kt                    # Single Activity entry point
+│   ├── core/
+│   │   ├── navigation/                   # Android navigation
+│   │   │   ├── AuthMiddleware.kt         # Authentication state management
+│   │   │   ├── ExplicitIntents.kt        # Internal navigation intents
+│   │   │   └── ImplicitIntents.kt        # External app integration
+│   │   └── utils/                        # Android utilities
+│   │       ├── MapUtils.kt               # Maps integration utilities
+│   │       └── VaildateCoordinate.kt     # Coordinate validation
+│   ├── features/
+│   │   ├── auth/
+│   │   │   └── login/
+│   │   │       └── ui/
+│   │   │           ├── components/LoginForm.kt # Login form components
+│   │   │           └── screen/LoginScreen.kt   # Android-specific login UI
+│   │   ├── dashboard/
+│   │   │   ├── data/
+│   │   │   │   └── SurveyRepository.kt   # Survey data implementation
+│   │   │   ├── model/
+│   │   │   │   ├── Sensor.kt           # Sensor data models
+│   │   │   │   ├── Survey.kt           # Android survey models
+│   │   │   │   ├── SurveyStats.kt      # Survey statistics
+│   │   │   │   └── VerificationResult.kt # Verification data
+│   │   │   ├── ui/
+│   │   │   │   ├── components/SurveyListItem.kt # Survey list components
+│   │   │   │   ├── screen/DashboardScreen.kt      # Android dashboard UI
+│   │   │   │   └── screen/VerificationScreen.kt  # Verification UI
+│   │   │   └── viewmodel/DashboardViewModel.kt      # Android-specific VM
+│   │   └── profile/
+│   │       └── ui/screen/ProfileScreen.kt        # Android profile UI
+│   ├── navigation/
+│   │   ├── AppNavHost.kt               # Android navigation host
+│   │   ├── IntentNavigation.kt          # Intent-based navigation
+│   │   └── Routes.kt                   # Android route definitions
+│   └── ui/
+│       └── components/
+│           ├── BottomNavigationBar.kt      # Bottom navigation component
+│           └── TopAppBar.kt             # Top app bar component
+└── iosMain/                             # iOS-specific implementation
 ```
 
 ### Separation of Concerns
@@ -79,7 +207,7 @@ composeApp/src/
 
 ---
 
-## 🚀 Entry Point
+## Entry Point
 
 ### Application Entry Point
 
@@ -134,42 +262,145 @@ class MainActivity : ComponentActivity() {
 
 ---
 
-## 🧭 Navigation Menggunakan Intent
+## Navigation dengan NavigationManager Pattern
 
-### Explicit Intent (Internal Navigation)
+### Modern Navigation Architecture
+
+Geo-Tagging menggunakan **NavigationManager pattern** untuk centralized navigation management dengan **NavigationEvent** system. Ini menggantikan direct NavController calls dan Intent-based navigation.
 
 ```kotlin
-// Dari Login ke Dashboard
-val intent = Intent(this, DashboardActivity::class.java)
-startActivity(intent)
+// NavigationManager.kt - Centralized navigation logic
+class NavigationManager {
+    private val _navigationEvents = MutableSharedFlow<NavigationEvent>()
+    val navigationEvents: SharedFlow<NavigationEvent> = _navigationEvents.asSharedFlow()
 
-// Dengan membawa data
-val intent = Intent(this, SurveyDetailActivity::class.java).apply {
-    putExtra("SURVEY_ID", surveyId)
-    putExtra("SURVEY_NAME", surveyName)
+    fun navigate(event: NavigationEvent) {
+        _navigationEvents.tryEmit(event)
+    }
+
+    fun handleNavigation(event: NavigationEvent, navController: NavController) {
+        when (event) {
+            is NavigationEvent.NavigateToLogin -> {
+                navController.navigate(Routes.Login.route) {
+                    popUpTo(Routes.Dashboard.route) { inclusive = true }
+                }
+            }
+            is NavigationEvent.NavigateToDashboard -> {
+                navController.navigate(Routes.Dashboard.route) {
+                    popUpTo(Routes.Splash.route) { inclusive = true }
+                }
+            }
+            is NavigationEvent.NavigateToVerification -> {
+                navController.navigate(
+                    Routes.Verification.createRoute(event.surveyId, event.locationName)
+                )
+            }
+            // ... other navigation events
+        }
+    }
 }
-startActivity(intent)
 ```
 
-### Implicit Intent (External Apps)
+### Navigation Events
 
 ```kotlin
-// Membuka Google Maps dengan koordinat
-val gmmIntentUri = Uri.parse("geo:$latitude,$longitude?q=$latitude,$longitude")
-val mapIntent = Intent(Intent.ACTION_VIEW, gmmIntentUri)
-mapIntent.setPackage("com.google.android.apps.maps")
-startActivity(mapIntent)
+// NavigationEvent.kt - Type-safe navigation events
+sealed class NavigationEvent {
+    data object NavigateToLogin : NavigationEvent()
+    data object NavigateToDashboard : NavigationEvent()
+    data object NavigateToProfile : NavigationEvent()
+    data object NavigateBack : NavigationEvent()
 
-// Membuka WhatsApp
-val intent = Intent(Intent.ACTION_VIEW).apply {
-    data = Uri.parse("https://wa.me/$phoneNumber?text=$message")
+    data class NavigateToVerification(
+        val surveyId: String,
+        val locationName: String
+    ) : NavigationEvent()
+
+    data class NavigateWithPopUp(
+        val route: String,
+        val popUpTo: String,
+        val inclusive: Boolean = false
+    ) : NavigationEvent()
+
+    data object ClearBackStackAndNavigate : NavigationEvent()
 }
-startActivity(intent)
+```
+
+### Usage in ViewModels
+
+```kotlin
+// DashboardViewModel.kt
+class DashboardViewModel(
+    private val navigationManager: NavigationManager
+) : ViewModel() {
+
+    fun onSurveyClick(survey: Survey) {
+        navigationManager.navigate(
+            NavigationEvent.NavigateToVerification(
+                surveyId = survey.id.toString(),
+                locationName = survey.title
+            )
+        )
+    }
+
+    fun onNavigateToProfile() {
+        navigationManager.navigate(NavigationEvent.NavigateToProfile)
+    }
+
+    fun onLogout() {
+        viewModelScope.launch {
+            logoutUseCase()
+                .onSuccess {
+                    navigationManager.navigate(NavigationEvent.NavigateToLogin)
+                }
+        }
+    }
+}
+```
+
+### AppNavHost Integration
+
+```kotlin
+// AppNavHost.kt - Modern navigation setup
+@Composable
+fun AppNavHost(
+    navController: NavHostController = rememberNavController(),
+    navigationManager: NavigationManager,
+    getSessionUseCase: GetSessionUseCase
+) {
+    LaunchedEffect(navigationManager.navigationEvents) {
+        navigationManager.navigationEvents.collect { event ->
+            navigationManager.handleNavigation(event, navController)
+        }
+    }
+
+    NavHost(
+        navController = navController,
+        startDestination = Routes.Splash.route
+    ) {
+        composable(Routes.Splash.route) {
+            SplashScreenRoute(
+                navigationManager = navigationManager,
+                getSessionUseCase = getSessionUseCase
+            )
+        }
+
+        composable(Routes.Login.route) {
+            LoginRoute(navigationManager = navigationManager)
+        }
+
+        composable(Routes.Dashboard.route) {
+            DashboardRoute(navigationManager = navigationManager)
+        }
+
+        // ... other routes
+    }
+}
 ```
 
 ---
 
-## 🔧 Run Aplikasi Menggunakan Extension
+## Run Aplikasi Menggunakan Extension
 
 ### Android Studio Extension
 
@@ -204,29 +435,35 @@ android {
 
 ---
 
-## 🏠 MainActivity dan Login
+## MainActivity dan Login
 
 ### MainActivity Structure
 
 ```kotlin
-@AndroidEntryPoint
+// MainActivity.kt - Simple and clean entry point
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
+        enableEdgeToEdge()
         super.onCreate(savedInstanceState)
 
-        setContent {
-            GeoTaggingTheme {
-                Surface(
-                    modifier = Modifier.fillMaxSize(),
-                    color = MaterialTheme.colorScheme.background
-                ) {
-                    AppNavigation()
-                }
-            }
-        }
+        setContent { ApplicationTheme { AppNavHost() } }
     }
 }
+
+@Preview
+@Composable
+fun AppAndroidPreview() {
+    App()
+}
 ```
+
+**Key Points:**
+
+- **Single Activity Pattern**: Hanya satu MainActivity untuk seluruh aplikasi
+- **Edge-to-Edge Support**: Menggunakan `enableEdgeToEdge()` untuk modern UI
+- **Clean Setup**: Hanya men-setup theme dan navigation host
+- **Preview Support**: Include preview untuk development
+- **No Business Logic**: MainActivity tidak mengandung business logic
 
 ### Login Screen Implementation
 
@@ -301,7 +538,7 @@ fun LoginScreen(onNavigateToDashboard: (String, String) -> Unit) {
 
 ---
 
-## 🔄 Equivalensi Old Android dan Compose
+## Equivalensi Old Android dan Compose
 
 ### View Binding → Compose
 
@@ -372,49 +609,125 @@ fun LoginLayout() {
 
 ---
 
-## 🔐 Login ke Aplikasi
+## Login ke Aplikasi
 
-### Login Flow Implementation
+### Modern ViewModel Pattern dengan StateFlow dan NavigationEvents
 
 ```kotlin
-// LoginViewModel.kt
-@HiltViewModel
-class LoginViewModel @Inject constructor(
-    private val loginUseCase: LoginUseCase
+// DashboardViewModel.kt - Current implementation
+class DashboardViewModel(
+    private val getSurveysUseCase: GetSurveysUseCase,
+    private val getSessionUseCase: GetSessionUseCase,
+    private val logoutUseCase: LogoutUseCase,
+    private val shareSurveyUseCase: ShareSurveyUseCase,
+    private val openSurveyMapUseCase: OpenSurveyMapUseCase
 ) : ViewModel() {
 
-    private val _uiState = MutableStateFlow(LoginUiState())
-    val uiState: StateFlow<LoginUiState> = _uiState.asStateFlow()
+    // UI State management dengan StateFlow
+    private val _uiState = MutableStateFlow<DashboardUiState>(DashboardUiState())
+    val uiState: StateFlow<DashboardUiState> = _uiState.asStateFlow()
 
-    fun login() {
+    // Navigation events untuk komunikasi dengan UI
+    private val _navigationEvents = MutableStateFlow<NavigationEvent?>(null)
+    val navigationEvents: StateFlow<NavigationEvent?> = _navigationEvents.asStateFlow()
+
+    init {
+        loadDashboardData()
+    }
+
+    private fun loadDashboardData() {
         viewModelScope.launch {
-            _uiState.update { it.copy(isLoading = true) }
+            _uiState.value = _uiState.value.copy(isLoading = true)
 
-            loginUseCase(
-                username = uiState.value.username,
-                password = uiState.value.password
-            ).fold(
-                onSuccess = { user ->
-                    _uiState.update {
-                        it.copy(
-                            isLoading = false,
-                            isLoggedIn = true,
-                            error = null
-                        )
-                    }
-                },
-                onFailure = { error ->
-                    _uiState.update {
-                        it.copy(
-                            isLoading = false,
-                            error = error.message
-                        )
-                    }
-                }
-            )
+            try {
+                val surveys = getSurveysUseCase()
+                val session = getSessionUseCase().first()
+
+                _uiState.value = _uiState.value.copy(
+                    surveys = surveys,
+                    filteredSurveys = surveys,
+                    username = session.username ?: "Field Officer",
+                    isLoading = false
+                )
+            } catch (e: Exception) {
+                _uiState.value = _uiState.value.copy(error = e.message, isLoading = false)
+            }
         }
     }
+
+    // Event handling dengan navigation events
+    fun onSurveyClick(survey: Survey) {
+        _navigationEvents.value = NavigationEvent.NavigateToVerification(
+            surveyId = survey.id.toString(),
+            locationName = survey.title
+        )
+    }
+
+    fun onNavigateToProfile() {
+        _navigationEvents.value = NavigationEvent.NavigateToProfile
+    }
+
+    fun onLogout() {
+        viewModelScope.launch {
+            logoutUseCase()
+                .onSuccess { _navigationEvents.value = NavigationEvent.NavigateToLogin }
+                .onFailure { error ->
+                    _uiState.value = _uiState.value.copy(error = error.message)
+                }
+        }
+    }
+
+    // State management untuk search dan filter
+    fun onSearchChange(query: String) {
+        _uiState.value = _uiState.value.copy(searchQuery = query)
+        filterSurveys()
+    }
+
+    fun onStatusFilterChange(status: SurveyStatus?) {
+        _uiState.value = _uiState.value.copy(selectedStatus = status)
+        filterSurveys()
+    }
+
+    private fun filterSurveys() {
+        val currentState = _uiState.value
+        val filtered = currentState.surveys.filter { survey ->
+            val matchesSearch = currentState.searchQuery.isBlank() ||
+                    survey.title.contains(currentState.searchQuery, ignoreCase = true) ||
+                    survey.description.contains(currentState.searchQuery, ignoreCase = true)
+
+            val matchesStatus = currentState.selectedStatus == null ||
+                    survey.status == currentState.selectedStatus
+
+            matchesSearch && matchesStatus
+        }
+
+        _uiState.value = currentState.copy(filteredSurveys = filtered)
+    }
+
+    // Utility functions
+    fun clearError() {
+        _uiState.value = _uiState.value.copy(error = null)
+    }
+
+    fun clearNavigationEvent() {
+        _navigationEvents.value = null
+    }
 }
+```
+
+### UI State Pattern
+
+```kotlin
+// DashboardUiState.kt - Immutable state management
+data class DashboardUiState(
+    val surveys: List<Survey> = emptyList(),
+    val filteredSurveys: List<Survey> = emptyList(),
+    val searchQuery: String = "",
+    val selectedStatus: SurveyStatus? = null,
+    val username: String = "",
+    val isLoading: Boolean = false,
+    val error: String? = null
+)
 ```
 
 ### Input Validation
@@ -433,7 +746,114 @@ fun validateLoginInput(username: String, password: String): LoginValidationResul
 
 ---
 
-## 🎯 Explicit Intent (Login ke Dashboard)
+## Clean Architecture Components
+
+### Repository Pattern
+
+Repository interfaces didefinisikan di domain layer dan diimplementasikan di data layer.
+
+```kotlin
+// AuthRepository.kt - Domain layer interface
+interface AuthRepository {
+    suspend fun login(username: String, password: String): Result<UserSession>
+    suspend fun logout(): Result<Unit>
+    fun getCurrentSession(): Flow<UserSession>
+    suspend fun updateProfile(username: String, password: String): Result<Unit>
+}
+```
+
+### Use Cases Pattern
+
+Use cases mengenkapsulasi business logic tunggal dan mengikuti Single Responsibility Principle.
+
+```kotlin
+// LoginUseCase.kt - Authentication use case
+class LoginUseCase(
+    private val authRepository: AuthRepository
+) {
+    suspend operator fun invoke(username: String, password: String): Result<UserSession> {
+        return authRepository.login(username, password)
+    }
+}
+
+// GetSessionUseCase.kt - Session management use case
+class GetSessionUseCase(
+    private val authRepository: AuthRepository
+) {
+    operator fun invoke(): Flow<UserSession> {
+        return authRepository.getCurrentSession()
+    }
+}
+
+// GetSurveysUseCase.kt - Dashboard data use case
+class GetSurveysUseCase {
+    suspend operator fun invoke(): List<Survey> {
+        // TODO: Implement actual data fetching from repository
+        return emptyList()
+    }
+}
+```
+
+### Domain Models
+
+Pure Kotlin data classes tanpa framework dependencies.
+
+```kotlin
+// UserSession.kt - Authentication domain model
+data class UserSession(
+    val username: String?,
+    val isLoggedIn: Boolean = false,
+    val timestamp: Long = System.currentTimeMillis()
+)
+
+// Survey.kt - Dashboard domain model
+data class Survey(
+    val id: Long,
+    val title: String,
+    val description: String,
+    val latitude: Double,
+    val longitude: Double,
+    val status: SurveyStatus,
+    val createdAt: Long = System.currentTimeMillis()
+)
+
+// SurveyStatus.kt - Enum untuk status survey
+enum class SurveyStatus {
+    PENDING,
+    IN_PROGRESS,
+    COMPLETED,
+    CANCELLED
+}
+```
+
+### Dependency Injection Pattern
+
+ViewModels menerima dependencies melalui constructor injection.
+
+```kotlin
+// DashboardViewModel dengan dependency injection
+class DashboardViewModel(
+    private val getSurveysUseCase: GetSurveysUseCase,
+    private val getSessionUseCase: GetSessionUseCase,
+    private val logoutUseCase: LogoutUseCase,
+    private val shareSurveyUseCase: ShareSurveyUseCase,
+    private val openSurveyMapUseCase: OpenSurveyMapUseCase
+) : ViewModel() {
+    // Implementation...
+}
+```
+
+**Benefits of Clean Architecture:**
+
+1. **Testability**: Business logic terisolasi dari framework
+2. **Maintainability**: Clear separation of concerns
+3. **Scalability**: Mudah menambah fitur baru
+4. **Reusability**: Use cases dapat digunakan di berbagai platform
+5. **Independence**: Domain layer tidak bergantung pada external dependencies
+
+---
+
+## Explicit Intent (Login ke Dashboard)
 
 ### Implementasi Explicit Intent
 
@@ -527,7 +947,7 @@ fun AppNavHost(
 
 ---
 
-## 📊 Dashboard: LayoutManager, Adapter, ViewHolder Equivalency
+## Dashboard: LayoutManager, Adapter, ViewHolder Equivalency
 
 ### Old Android RecyclerView Pattern
 
@@ -644,7 +1064,7 @@ LazyColumn(
 
 ---
 
-## 🔍 Filter dan Pencarian
+## Filter dan Pencarian
 
 ### Search Implementation
 
@@ -722,7 +1142,7 @@ private fun SearchAndFilterBar(
 
 ---
 
-## 💾 State Management & Rotation Handling
+## State Management & Rotation Handling
 
 ### State Persistence
 
@@ -794,7 +1214,7 @@ data class DashboardUiState(
 
 ---
 
-## 🧭 Penjelasan Intent Lebih Dalam
+## Penjelasan Intent Lebih Dalam
 
 ### Explicit Intent untuk Detail Page
 
@@ -820,19 +1240,60 @@ fun SurveyListScreen(
     }
 }
 
-### Navigation setup - Routes.kt
+### Routes Implementation - Type-Safe Navigation
 
 ```kotlin
-// Routes.kt
+// Routes.kt - Current implementation with proper navigation arguments
+import androidx.navigation.NavType
+import androidx.navigation.navArgument
+
 sealed class Routes(val route: String) {
     data object Splash : Routes("splash")
     data object Login : Routes("login")
     data object Dashboard : Routes("dashboard")
     data object Profile : Routes("profile")
+
     data object Verification : Routes("verification/{surveyId}/{locationName}") {
-        fun createRoute(surveyId: String, locationName: String) =
-                "verification/${Uri.encode(surveyId)}/${Uri.encode(locationName)}"
+        val arguments = listOf(
+            navArgument("surveyId") { type = NavType.StringType },
+            navArgument("locationName") { type = NavType.StringType }
+        )
+
+        fun createRoute(surveyId: String, locationName: String): String {
+            return "verification/$surveyId/$locationName"
+        }
     }
+}
+```
+
+### Route Usage in Navigation
+
+```kotlin
+// NavigationManager usage
+fun handleNavigation(event: NavigationEvent, navController: NavController) {
+    when (event) {
+        is NavigationEvent.NavigateToVerification -> {
+            navController.navigate(
+                Routes.Verification.createRoute(event.surveyId, event.locationName)
+            )
+        }
+        // ... other routes
+    }
+}
+
+// AppNavHost composable setup
+composable(
+    route = Routes.Verification.route,
+    arguments = Routes.Verification.arguments
+) { backStackEntry ->
+    val surveyId = backStackEntry.arguments?.getString("surveyId") ?: ""
+    val locationName = backStackEntry.arguments?.getString("locationName") ?: ""
+
+    VerificationRoute(
+        surveyId = surveyId,
+        locationName = locationName,
+        navigationManager = navigationManager
+    )
 }
 ```
 
@@ -846,11 +1307,11 @@ object IntentNavigation {
     fun shareSurveyViaWhatsApp(context: Context, survey: Survey) {
         val shareText =
                 """
-            📍 Survey Report
-            📍 Lokasi: ${survey.title}
-            📝 Deskripsi: ${survey.description}
-            🗺️ Koordinat: ${survey.latitude}, ${survey.longitude}
-            📊 Status: ${survey.status.name}
+Survey Report
+            Lokasi: ${survey.title}
+            Deskripsi: ${survey.description}
+            Koordinat: ${survey.latitude}, ${survey.longitude}
+            Status: ${survey.status.name}
 
             Lihat lokasi di Google Maps:
             https://maps.google.com/?q=${survey.latitude},${survey.longitude}
@@ -928,7 +1389,7 @@ private fun navigateToDetail(surveyId: String) {
 
 ---
 
-## 🏗️ Single Activity Architecture dengan Bottom Navigation
+## Single Activity Architecture dengan Bottom Navigation
 
 ### Architecture Overview
 
@@ -1065,7 +1526,7 @@ fun DashboardScreen(
 
 ---
 
-## 📝 Summary
+## Summary
 
 Geo-Tagging application mengimplementasikan:
 

@@ -11,6 +11,8 @@ data class Survey(
     val title: String,
     val description: String,
     val status: SurveyStatus,
+    val latitude: Double = 0.0,
+    val longitude: Double = 0.0,
     val location: String,
     val createdDate: String
 )

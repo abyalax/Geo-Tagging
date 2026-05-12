@@ -25,6 +25,10 @@ import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.setValue
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
@@ -42,105 +46,131 @@ import com.app.ui.components.TopAppBar
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun DashboardScreen(
-    surveys: List<Survey> = emptyList(),
-    isLoading: Boolean = false,
-    onSurveyClick: (Survey) -> Unit = {},
-    onShareSurvey: (Survey) -> Unit = {},
-    onOpenSurveyMap: (Survey) -> Unit = {},
-    searchQuery: String = "",
-    onSearchChange: (String) -> Unit = {},
-    selectedStatus: SurveyStatus? = null,
-    onStatusFilterChange: (SurveyStatus?) -> Unit = {},
-    username: String = "Field Officer",
-    onNavigateToProfile: () -> Unit = {},
-    onNavigateToVerification: (String, String) -> Unit = { _, _ -> },
-    onNavigateToLogin: () -> Unit = {},
-    onNotificationClick: () -> Unit = {},
-    onStatsClick: () -> Unit = {},
-    onLogout: () -> Unit = {},
-    surveyStats: SurveyStats = SurveyStats()
+        isLoading: Boolean = false,
+        surveys: List<Survey> = emptyList(),
+        onSurveyClick: (Survey) -> Unit = {},
+        onShareSurvey: (Survey) -> Unit = {},
+        onOpenSurveyMap: (Survey) -> Unit = {},
+        searchQuery: String = "",
+        onSearchChange: (String) -> Unit = {},
+        selectedStatus: SurveyStatus? = null,
+        onStatusFilterChange: (SurveyStatus?) -> Unit = {},
+        username: String = "",
+        onNavigateToProfile: () -> Unit = {},
+        onNavigateToVerification: (String, String) -> Unit = { _, _ -> },
+        onNavigateToLogin: () -> Unit = {},
+        onNotificationClick: () -> Unit = {},
+        onStatsClick: () -> Unit = {},
+        onLogout: () -> Unit = {},
+        surveyStats: SurveyStats = SurveyStats(),
+        modifier: Modifier = Modifier
 ) {
-    // Debug logging
+    var savedSearchQuery by rememberSaveable { mutableStateOf(searchQuery) }
+    var savedSelectedStatusName by rememberSaveable { mutableStateOf(selectedStatus?.name) }
+    val visibleSurveys =
+            surveys.filter { survey ->
+                val matchesSearch =
+                        savedSearchQuery.isBlank() ||
+                                survey.title.contains(savedSearchQuery, ignoreCase = true) ||
+                                survey.description.contains(savedSearchQuery, ignoreCase = true)
+                val matchesStatus =
+                        savedSelectedStatusName == null || survey.status.name == savedSelectedStatusName
+                matchesSearch && matchesStatus
+            }
+
     android.util.Log.d("DashboardScreen", "DashboardScreen called! Username: $username")
     android.util.Log.d("DashboardScreen", "Surveys count: ${surveys.size}")
     android.util.Log.d("DashboardScreen", "Is loading: $isLoading")
 
-    Surface(modifier = Modifier.fillMaxSize(), color = MaterialTheme.colorScheme.background) {
+    Surface(modifier = modifier.fillMaxSize(), color = MaterialTheme.colorScheme.background) {
         Column(modifier = Modifier.fillMaxSize()) {
             // Top App Bar
             TopAppBar(
-                username = username,
-                onProfileClick = onNavigateToProfile,
-                onNotificationClick = onNotificationClick,
-                onStatsClick = onStatsClick,
-                onLogout = onLogout
+                    username = username,
+                    onProfileClick = onNavigateToProfile,
+                    onNotificationClick = onNotificationClick,
+                    onStatsClick = onStatsClick,
+                    onLogout = onLogout
             )
 
             // Main content with weight
-            Column(
-                modifier = Modifier
-                    .weight(1f)
-                    .fillMaxWidth()
-            ) {
+            Column(modifier = Modifier.weight(1f).fillMaxWidth()) {
                 // Search bar
                 OutlinedTextField(
-                    value = searchQuery,
-                    onValueChange = onSearchChange,
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(12.dp),
-                    placeholder = { Text("Search surveys...") },
-                    leadingIcon = {
-                        Icon(
-                            Icons.Default.Search,
-                            contentDescription = "Search",
-                            tint = MaterialTheme.colorScheme.onSurfaceVariant
-                        )
-                    },
-                    trailingIcon = {
-                        if (searchQuery.isNotEmpty()) {
-                            IconButton(onClick = { onSearchChange("") }) {
-                                Icon(Icons.Default.Close, contentDescription = "Clear")
+                        value = savedSearchQuery,
+                        onValueChange = {
+                            savedSearchQuery = it
+                            onSearchChange(it)
+                        },
+                        modifier = Modifier.fillMaxWidth().padding(12.dp),
+                        placeholder = { Text("Search surveys...") },
+                        leadingIcon = {
+                            Icon(
+                                    Icons.Default.Search,
+                                    contentDescription = "Search",
+                                    tint = MaterialTheme.colorScheme.onSurfaceVariant
+                            )
+                        },
+                        trailingIcon = {
+                            if (savedSearchQuery.isNotEmpty()) {
+                                IconButton(
+                                        onClick = {
+                                            savedSearchQuery = ""
+                                            onSearchChange("")
+                                        }
+                                ) {
+                                    Icon(Icons.Default.Close, contentDescription = "Clear")
+                                }
                             }
-                        }
-                    },
-                    singleLine = true
+                        },
+                        singleLine = true
                 )
 
                 // Filter chips
                 Row(
-                    modifier =
-                        Modifier
-                            .fillMaxWidth()
-                            .padding(horizontal = 12.dp, vertical = 4.dp)
-                            .horizontalScroll(rememberScrollState()),
-                    horizontalArrangement = Arrangement.spacedBy(8.dp),
-                    verticalAlignment = Alignment.CenterVertically
+                        modifier =
+                                Modifier.fillMaxWidth()
+                                        .padding(horizontal = 12.dp, vertical = 4.dp)
+                                        .horizontalScroll(rememberScrollState()),
+                        horizontalArrangement = Arrangement.spacedBy(8.dp),
+                        verticalAlignment = Alignment.CenterVertically
                 ) {
                     Text("Filter:", style = MaterialTheme.typography.labelSmall)
 
                     FilterChip(
-                        selected = selectedStatus == null,
-                        onClick = { onStatusFilterChange(null) },
-                        label = { Text("All (${surveyStats.total})") }
+                            selected = savedSelectedStatusName == null,
+                            onClick = {
+                                savedSelectedStatusName = null
+                                onStatusFilterChange(null)
+                            },
+                            label = { Text("All (${surveyStats.total})") }
                     )
 
                     FilterChip(
-                        selected = selectedStatus == SurveyStatus.OPEN,
-                        onClick = { onStatusFilterChange(SurveyStatus.OPEN) },
-                        label = { Text("Open (${surveyStats.open})") }
+                            selected = savedSelectedStatusName == SurveyStatus.OPEN.name,
+                            onClick = {
+                                savedSelectedStatusName = SurveyStatus.OPEN.name
+                                onStatusFilterChange(SurveyStatus.OPEN)
+                            },
+                            label = { Text("Open (${surveyStats.open})") }
                     )
 
                     FilterChip(
-                        selected = selectedStatus == SurveyStatus.VERIFIED,
-                        onClick = { onStatusFilterChange(SurveyStatus.VERIFIED) },
-                        label = { Text("Verified (${surveyStats.verified})") }
+                            selected = savedSelectedStatusName == SurveyStatus.VERIFIED.name,
+                            onClick = {
+                                savedSelectedStatusName = SurveyStatus.VERIFIED.name
+                                onStatusFilterChange(SurveyStatus.VERIFIED)
+                            },
+                            label = { Text("Verified (${surveyStats.verified})") }
                     )
 
                     FilterChip(
-                        selected = selectedStatus == SurveyStatus.REJECTED,
-                        onClick = { onStatusFilterChange(SurveyStatus.REJECTED) },
-                        label = { Text("Rejected (${surveyStats.rejected})") }
+                            selected = savedSelectedStatusName == SurveyStatus.REJECTED.name,
+                            onClick = {
+                                savedSelectedStatusName = SurveyStatus.REJECTED.name
+                                onStatusFilterChange(SurveyStatus.REJECTED)
+                            },
+                            label = { Text("Rejected (${surveyStats.rejected})") }
                     )
                 }
 
@@ -151,16 +181,16 @@ fun DashboardScreen(
                     }
                 } else {
                     LazyColumn(
-                        modifier = Modifier.fillMaxSize(),
-                        contentPadding = PaddingValues(12.dp),
-                        verticalArrangement = Arrangement.spacedBy(8.dp)
+                            modifier = Modifier.fillMaxSize(),
+                            contentPadding = PaddingValues(12.dp),
+                            verticalArrangement = Arrangement.spacedBy(8.dp)
                     ) {
-                        items(surveys, key = { it.id }) { survey ->
+                        items(visibleSurveys, key = { it.id }) { survey ->
                             SurveyListItem(
-                                survey = survey,
-                                onClick = { onSurveyClick(it) },
-                                onShare = { onShareSurvey(it) },
-                                onOpenMap = { onOpenSurveyMap(it) }
+                                    survey = survey,
+                                    onClick = { onSurveyClick(it) },
+                                    onShare = { onShareSurvey(it) },
+                                    onOpenMap = { onOpenSurveyMap(it) }
                             )
                         }
                     }
@@ -169,22 +199,36 @@ fun DashboardScreen(
 
             // Bottom Navigation
             BottomNavigationBar(
-                selectedItem = BottomNavItem.Home,
-                onItemSelected = { item ->
-                    when (item) {
-                        BottomNavItem.Login -> {
-                            onNavigateToLogin()
-                        }
-
-                        BottomNavItem.Home -> {
-                            // Already on home
-                        }
-
-                        BottomNavItem.Profile -> {
-                            onNavigateToProfile()
+                    selectedItem = BottomNavItem.Home,
+                    onItemSelected = { item ->
+                        android.util.Log.d(
+                                "DashboardScreen",
+                                "BottomNavigationBar item selected: ${item.label}"
+                        )
+                        when (item) {
+                            BottomNavItem.Login -> {
+                                android.util.Log.d(
+                                        "DashboardScreen",
+                                        "Login selected - calling onNavigateToLogin"
+                                )
+                                onNavigateToLogin()
+                            }
+                            BottomNavItem.Home -> {
+                                android.util.Log.d(
+                                        "DashboardScreen",
+                                        "Home selected - already on home"
+                                )
+                                // Already on home
+                            }
+                            BottomNavItem.Profile -> {
+                                android.util.Log.d(
+                                        "DashboardScreen",
+                                        "Profile selected - calling onNavigateToProfile"
+                                )
+                                onNavigateToProfile()
+                            }
                         }
                     }
-                }
             )
         }
     }
@@ -193,9 +237,5 @@ fun DashboardScreen(
 @Preview(showBackground = true)
 @Composable
 fun DashboardScreenPreview() {
-    ApplicationTheme {
-        DashboardScreen(
-            surveys = listOf(Survey(1, "Title", "Description", 0.0, 0.0, SurveyStatus.OPEN))
-        )
-    }
+    ApplicationTheme { DashboardScreen() }
 }

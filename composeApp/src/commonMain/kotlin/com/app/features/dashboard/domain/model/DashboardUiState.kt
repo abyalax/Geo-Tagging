@@ -5,7 +5,7 @@ data class DashboardUiState(
     val filteredSurveys: List<Survey> = emptyList(),
     val searchQuery: String = "",
     val selectedStatus: SurveyStatus? = null,
-    val username: String = "Field Officer",
+    val username: String = "",
     val isLoading: Boolean = false,
     val error: String? = null,
     val surveyStats: SurveyStats = SurveyStats(0, 0, 0, 0)

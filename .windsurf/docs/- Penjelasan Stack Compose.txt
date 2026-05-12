@@ -1,0 +1,19 @@
+- Penjelasan Stack Compose
+- Folder Structure dan penjelasan terkait pattern serta separation of concern + feature based
+- Entry point
+- Navigation menggunakan Intent
+- Run Aplikasi menggunakan extension
+- penjelasan tentang Main Activity dan Login
+
+- Equivalensi old android dan compose
+    - Penjelasan tentang view binding digantikan compose
+    - Penjelasan tentang Constraint Layout dan Linearlayout  
+- Login ke Aplikasi, masukkan nama dan password
+- Penjelasan tentang Explicit Intent (dari login ke dashboard), dan alasan menggunakan explicit intent
+- Masuk ke dashboard, jelaskan tentang equivalensi `LayoutManager`, custom `Adapter`, dan `ViewHolder` di old android xml ke compose.
+- Filter dan Pencarian,
+- state managemenet, state pencarian dan filter tidak hilang ketika aplikasi di rotate
+- Penjelasan intent lebih dalam
+    - Explicit intent dilist membuka halaman detail dengan membawa state data
+    - Implicit Intent, membuka halaman/ aplikasi lain yaitu gmaps dengan membawa state koordinat langitude dan latitude.
+- Penjelasan tentang arsitektur single activity denngan bottom navigation

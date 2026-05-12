@@ -24,7 +24,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
-import com.app.core.navigation.AuthMiddleware
 import com.app.features.dashboard.data.SurveyRepository
 import com.app.features.dashboard.model.SurveyStatus
 import com.app.ui.components.BottomNavItem
@@ -51,13 +50,8 @@ fun VerificationScreen(
     val context = LocalContext.current
     val actualUsername =
         if (username.isEmpty()) {
-            // If no username provided, get from AuthMiddleware (must be authenticated)
-            AuthMiddleware.getUsername(context)
-                ?: run {
-                    // This should not happen if properly protected, but as safety net
-                    AuthMiddleware.logout(context, navController)
-                    return
-                }
+            context.getSharedPreferences("app_prefs", android.content.Context.MODE_PRIVATE)
+                .getString("username", "") ?: ""
         } else {
             username
         }

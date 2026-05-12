@@ -201,7 +201,7 @@ emulator-kill-all:
 # ============================================
 
 logs:
-	adb logcat -s App
+	adb logcat -s "LoginScreen:*" "LoginViewModel:*" "App:*" "MainActivity:*" "AuthMiddleware:*" "SplashScreenRoute:*" "DashboardRoute:*" "AppNavHost:*" "TopAppBar:*" "BottomNavigationBar:*" "AndroidNavigationManager:*"
 
 logcat:
 	adb logcat

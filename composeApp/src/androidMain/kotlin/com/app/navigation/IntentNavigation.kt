@@ -3,6 +3,7 @@ package com.app.navigation
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
+import android.content.ActivityNotFoundException
 import com.app.features.dashboard.model.Survey
 
 object IntentNavigation {
@@ -38,15 +39,18 @@ object IntentNavigation {
 
     /** Open survey location in Google Maps */
     fun openSurveyInGoogleMaps(context: Context, survey: Survey) {
-        val intent =
-            Intent(
-                Intent.ACTION_VIEW,
+        val geoUri =
                 Uri.parse(
-                    "geo:${survey.latitude},${survey.longitude}?q=${survey.latitude},${survey.longitude}(${survey.title})"
+                        "geo:${survey.latitude},${survey.longitude}?q=${survey.latitude},${survey.longitude}(${Uri.encode(survey.title)})"
                 )
-            )
-                .apply { setPackage("com.google.android.apps.maps") }
-        context.startActivity(intent)
+        val intent =
+                Intent(Intent.ACTION_VIEW, geoUri).apply { setPackage("com.google.android.apps.maps") }
+
+        try {
+            context.startActivity(intent)
+        } catch (_: ActivityNotFoundException) {
+            context.startActivity(Intent(Intent.ACTION_VIEW, Uri.parse("https://maps.google.com/?q=${survey.latitude},${survey.longitude}")))
+        }
     }
 
     /** General share functionality for fallback */

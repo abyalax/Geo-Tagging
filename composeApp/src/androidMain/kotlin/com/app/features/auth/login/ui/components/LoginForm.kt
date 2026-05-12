@@ -16,36 +16,30 @@ import com.app.core.theme.ApplicationTheme
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun LoginForm(
-    username: String,
-    onUsernameChange: (String) -> Unit,
-    password: String,
-    onPasswordChange: (String) -> Unit,
-    modifier: Modifier = Modifier
+        username: String,
+        onUsernameChange: (String) -> Unit,
+        password: String,
+        onPasswordChange: (String) -> Unit,
+        modifier: Modifier = Modifier
 ) {
-    Column(
-        modifier = modifier
-            .fillMaxWidth()
-            .padding(top = 16.dp)
-    ) {
+    Column(modifier = modifier.fillMaxWidth().padding(top = 16.dp)) {
         OutlinedTextField(
-            label = { Text("Username") },
-            value = username,
-            onValueChange = onUsernameChange,
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(bottom = 12.dp),
-            placeholder = { Text("Enter your username") },
-            singleLine = true
+                label = { Text("Username") },
+                value = username,
+                onValueChange = onUsernameChange,
+                modifier = Modifier.fillMaxWidth().padding(bottom = 12.dp),
+                placeholder = { Text("Enter your username") },
+                singleLine = true
         )
 
         OutlinedTextField(
-            label = { Text("Password") },
-            value = password,
-            onValueChange = onPasswordChange,
-            modifier = Modifier.fillMaxWidth(),
-            placeholder = { Text("Enter your password") },
-            visualTransformation = PasswordVisualTransformation(),
-            singleLine = true
+                label = { Text("Password") },
+                value = password,
+                onValueChange = onPasswordChange,
+                modifier = Modifier.fillMaxWidth(),
+                placeholder = { Text("Enter your password") },
+                visualTransformation = PasswordVisualTransformation(),
+                singleLine = true
         )
     }
 }
@@ -55,10 +49,10 @@ fun LoginForm(
 fun LoginFormPreview() {
     ApplicationTheme {
         LoginForm(
-            username = "admin",
-            onUsernameChange = {},
-            password = "password123",
-            onPasswordChange = {}
+                username = "admin",
+                onUsernameChange = {},
+                password = "password123",
+                onPasswordChange = {}
         )
     }
 }
